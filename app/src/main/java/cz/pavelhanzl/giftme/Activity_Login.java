@@ -10,23 +10,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 public class Activity_Login extends AppCompatActivity {
     ImageView mImageViewLogo;
     LinearLayout mLinearLayout;
     Button mButtonLogin, mButtonSignup;
+    AVLoadingIndicatorView avi;
+
 
     Handler mHandler = new Handler();
     Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             mLinearLayout.setVisibility(View.VISIBLE);
-
+            mButtonSignup.setVisibility(View.VISIBLE);
             TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, -150.0f);
             animation.setDuration(700);
             animation.setFillAfter(true);
             mImageViewLogo.startAnimation(animation);
-
-
+            stopAnim();
         }
     };
 
@@ -38,6 +41,18 @@ public class Activity_Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mLinearLayout = findViewById(R.id.linearLayout_login_fields);
         mImageViewLogo = findViewById(R.id.imageView_logo);
-        mHandler.postDelayed(mRunnable,2500);// 2,5s timeout pro splash screen
+        mButtonSignup = findViewById(R.id.button_signup);
+        avi = findViewById(R.id.avi);
+        mHandler.postDelayed(mRunnable,3000);// 3s timeout pro splash screen
+        startAnim();
+    }
+    void startAnim(){
+        avi.show();
+        //avi.smoothToShow();
+    }
+
+    void stopAnim(){
+        avi.hide();
+        //avi.smoothToHide();
     }
 }

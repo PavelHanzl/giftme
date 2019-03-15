@@ -22,6 +22,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:indicatorName="BallPulseIndicator"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
+
     <LinearLayout
         android:id="@+id/linearLayout_login_fields"
         android:layout_width="0dp"
@@ -38,11 +48,11 @@
             android:id="@+id/textView_login_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:fontFamily="sans-serif-medium"
             android:text="@string/login_title"
             android:textColor="@color/white80transparent"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+           />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_login_username"
@@ -64,7 +74,10 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:imeOptions="actionNext"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_login_password"
@@ -86,7 +99,10 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            />
 
 
         <Button
@@ -107,21 +123,23 @@
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout_login_fields" />
 
-        <Button
-            android:id="@+id/button_signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@color/transparent"
-            android:text="@string/login_signup_btn"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/transparent"
+        android:text="@string/login_signup_btn"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -136,6 +154,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.9" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_icons_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
