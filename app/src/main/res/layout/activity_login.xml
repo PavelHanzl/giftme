@@ -111,7 +111,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:background="@drawable/btn_background"
+            android:background="@drawable/btn_with_stroke_background"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
@@ -126,13 +126,14 @@
 
     </LinearLayout>
 
+
     <Button
         android:id="@+id/button_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:background="@color/transparent"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_transparent_background"
         android:text="@string/login_signup_btn"
         android:textAllCaps="true"
         android:textColor="@color/white"

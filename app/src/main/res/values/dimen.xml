@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_radius_large">20dp</dimen>
+    <dimen name="btn_radius_small">5dp</dimen>
+</resources>
