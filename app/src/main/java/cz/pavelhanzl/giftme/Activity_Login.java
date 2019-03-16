@@ -11,18 +11,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.wang.avi.AVLoadingIndicatorView;
 
 public class Activity_Login extends AppCompatActivity {
-    //členské proměnné
-    ImageView mImageViewLogo;
-    LinearLayout mLinearLayout;
-    Button mButtonLogin, mButtonSignup;
-    AVLoadingIndicatorView avi; //progress animace
+    //Deklarace členských proměnné
+    private ImageView mImageViewLogo;
+    private LinearLayout mLinearLayout;
+    private Button mButtonLogin, mButtonSignup;
+    private AVLoadingIndicatorView avi; //progress animace
+    private FirebaseAuth mAuth;
 
-    Handler mHandler = new Handler();
+    private Handler mHandler = new Handler();
     //spustí se v on create po nastaveném timeout
-    Runnable mRunnable = new Runnable() {
+    private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             mLinearLayout.setVisibility(View.VISIBLE); //zobrazí kolonky pro přihlášení
@@ -42,8 +45,11 @@ public class Activity_Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //initializuje FirebaseAuth instance
+        FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
 
-        //Linkuje views ze xml s java kódem
+        //Link xml a java kódu
         mLinearLayout = findViewById(R.id.linearLayout_login_fields);
         mImageViewLogo = findViewById(R.id.imageView_logo);
         mButtonSignup = findViewById(R.id.button_signup);
