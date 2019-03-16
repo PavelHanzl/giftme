@@ -9,4 +9,6 @@
     <color name="transparent">#00000000</color>
     <color name="gradientStart">#FF3162</color>
     <color name="gradientEnd">#FF4BAB</color>
+    <color name="gradientStartDark">#FF0022</color>
+    <color name="gradientEndDark">#FF0088</color>
 </resources>

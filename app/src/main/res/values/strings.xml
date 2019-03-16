@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Giftme</string>
     <string name="login_title">Login</string>
-    <string name="login_username">Username</string>
+    <string name="login_username">E-mail</string>
     <string name="login_password">Password</string>
     <string name="login_login_btn">Login Now</string>
     <string name="login_signup_btn">Signup</string>
     <string name="login_forgot_pass">Forgot password?</string>
+
+    <string name="signup_title">Signup</string>
+    <string name="signup_confirm_pass">Confirm password</string>
+    <string name="signup_email">Your e-mail</string>
+    <string name="signup_back_btn">Back</string>
+    <string name="signup_create_account_btn">Create Account</string>
 </resources>
