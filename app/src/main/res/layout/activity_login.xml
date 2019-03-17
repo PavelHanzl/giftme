@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@drawable/gradient_background"
-    tools:context=".Activity_Login">
+    tools:context=".Activity_Login"
+    >
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imageView_logo"

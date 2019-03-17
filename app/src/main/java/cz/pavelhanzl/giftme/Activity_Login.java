@@ -1,11 +1,15 @@
 package cz.pavelhanzl.giftme;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.wang.avi.AVLoadingIndicatorView;
 
 public class Activity_Login extends AppCompatActivity {
-    //Deklarace členských proměnné
+    //Deklarace členských proměnných
     private ImageView mImageViewLogo;
     private LinearLayout mLinearLayout;
     private Button mButtonLogin, mButtonSignup;
@@ -45,14 +49,21 @@ public class Activity_Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //initializuje FirebaseAuth instance
-        FirebaseApp.initializeApp(this);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = getWindow();
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.BLUE);
+//        }
+
+        //Získá odkaz na FirebaseAuth instanci
         mAuth = FirebaseAuth.getInstance();
 
         //Link xml a java kódu
         mLinearLayout = findViewById(R.id.linearLayout_login_fields);
         mImageViewLogo = findViewById(R.id.imageView_logo);
         mButtonSignup = findViewById(R.id.button_signup);
+        mButtonLogin =findViewById(R.id.button_login_now);
         avi = findViewById(R.id.avi);
 
 
@@ -65,6 +76,15 @@ public class Activity_Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(signupIntent);
+            }
+        });
+
+        final Intent mainScreenIntent = new Intent(this, Activity_Main.class);
+        mButtonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(mainScreenIntent);
+                finish();
             }
         });
     }

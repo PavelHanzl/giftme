@@ -54,7 +54,7 @@
             android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/editText_login_username"
+            android:id="@+id/editText_signup_email"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"

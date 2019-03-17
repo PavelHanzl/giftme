@@ -13,9 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity_Signup"
+        <activity android:name=".Activity_Main"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.transparentStatusBar"
+            />
+        <activity
+            android:name=".Activity_Signup"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity_Login"
             android:configChanges="orientation"

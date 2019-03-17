@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Giftme</string>
+
+
+    <!--Login screen-->
     <string name="login_title">Login</string>
     <string name="login_username">E-mail</string>
     <string name="login_password">Password</string>
@@ -7,9 +10,28 @@
     <string name="login_signup_btn">Signup</string>
     <string name="login_forgot_pass">Forgot password?</string>
 
+    <!--Signup screen-->
     <string name="signup_title">Signup</string>
     <string name="signup_confirm_pass">Confirm password</string>
     <string name="signup_email">Your e-mail</string>
     <string name="signup_back_btn">Back</string>
     <string name="signup_create_account_btn">Create Account</string>
+    <string name="registration_failed">Registration failed.</string>
+    <string name="account_created">Account created.</string>
+
+    <string name="error_invalid_password">Passwords do not match or password is not min. 6 characters long!</string>
+    <string name="error_field_required">This field is required.</string>
+    <string name="error_invalid_email">Invalid e-mail!</string>
+
+    <!--Drawer menu-->
+    <string name="giftlist">Giftlist</string>
+    <string name="groups">Your groups</string>
+    <string name="stats">Stats</string>
+    <string name="other">Other</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="loged_in_as">Logged in as:</string>
+    
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
