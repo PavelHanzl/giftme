@@ -10,6 +10,9 @@
     <string name="login_signup_btn">Signup</string>
     <string name="login_forgot_pass">Forgot password?</string>
 
+    <string name="login_failed">Login failed! Try it one more time…</string>
+    <string name="login_successful">Login was successful.</string>
+
     <!--Signup screen-->
     <string name="signup_title">Signup</string>
     <string name="signup_confirm_pass">Confirm password</string>
@@ -34,4 +37,6 @@
     
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
 </resources>

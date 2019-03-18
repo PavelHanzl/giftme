@@ -4,19 +4,27 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.wang.avi.AVLoadingIndicatorView;
 
 public class Activity_Login extends AppCompatActivity {
@@ -24,8 +32,10 @@ public class Activity_Login extends AppCompatActivity {
     private ImageView mImageViewLogo;
     private LinearLayout mLinearLayout;
     private Button mButtonLogin, mButtonSignup;
+    private EditText mEditTextEmail, mEditTextPassword;
     private AVLoadingIndicatorView avi; //progress animace
     private FirebaseAuth mAuth;
+    private Intent mMainScreenIntent;
 
     private Handler mHandler = new Handler();
     //spustí se v on create po nastaveném timeout
@@ -45,16 +55,27 @@ public class Activity_Login extends AppCompatActivity {
         }
     };
 
+    //kontroluje zdali je někdo přihlášen, pokud ano, přesměruje ho to na hlavní aktivitu
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            Toast.makeText(getApplicationContext(), "nikdo neprihlasen",
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Prihlasen:" + currentUser.getEmail(),
+                    Toast.LENGTH_SHORT).show();
+            startActivity(mMainScreenIntent);
+            finish();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Window window = getWindow();
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.BLUE);
-//        }
 
         //Získá odkaz na FirebaseAuth instanci
         mAuth = FirebaseAuth.getInstance();
@@ -64,13 +85,18 @@ public class Activity_Login extends AppCompatActivity {
         mImageViewLogo = findViewById(R.id.imageView_logo);
         mButtonSignup = findViewById(R.id.button_signup);
         mButtonLogin =findViewById(R.id.button_login_now);
+        mEditTextEmail=findViewById(R.id.editText_login_username);
+        mEditTextPassword=findViewById(R.id.editText_login_password);
         avi = findViewById(R.id.avi);
+
+        //inicializuje intent
+        mMainScreenIntent = new Intent(this, Activity_Main.class);
 
 
         mHandler.postDelayed(mRunnable,3000);// 3s timeout pro splash screen
         startAnim();//startuje animaci progress
 
-        // Přepne uživatele na activity signup
+        // Přepne uživatele na aktivitu signup
         final Intent signupIntent = new Intent(this, Activity_Signup.class);
         mButtonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,12 +105,12 @@ public class Activity_Login extends AppCompatActivity {
             }
         });
 
-        final Intent mainScreenIntent = new Intent(this, Activity_Main.class);
+        // Přepne uživatele na hlavni aktivitu, pokud se uspesne prihlasi
+        //final Intent mainScreenIntent = new Intent(this, Activity_Main.class);
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(mainScreenIntent);
-                finish();
+                signIn(mEditTextEmail.getText().toString(),mEditTextPassword.getText().toString());
             }
         });
     }
@@ -105,4 +131,43 @@ public class Activity_Login extends AppCompatActivity {
         avi.hide();
         //avi.smoothToHide();
     }
+
+
+    void signIn(String email, String password){
+    // validuje email a heslo na prázdné hodnoty
+    email = makeNotEmpty(email);
+    password = makeNotEmpty(password);
+
+
+    mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            if (task.isSuccessful()) {
+                // Sign in success, update UI with the signed-in user's information
+                Log.d("Giftme", "signInWithEmail:success");
+                Toast.makeText(getApplicationContext(), R.string.login_successful,
+                        Toast.LENGTH_SHORT).show();
+                FirebaseUser user = mAuth.getCurrentUser();
+                startActivity(mMainScreenIntent);
+                finish();
+            } else {
+                // If sign in fails, display a message to the user.
+                Log.w("Giftme", "signInWithEmail:failure", task.getException());
+                Toast.makeText(getApplicationContext(), R.string.login_failed,
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            // ...
+        }
+    });
+    }
+    private String makeNotEmpty(String validatedText){
+        if(validatedText.isEmpty()){
+            return validatedText+" ";
+        }  else{
+            return validatedText;
+        }
+    }
+
 }
