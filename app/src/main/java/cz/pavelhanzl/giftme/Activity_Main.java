@@ -1,5 +1,6 @@
 package cz.pavelhanzl.giftme;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.LoginFilter;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,16 +52,16 @@ public class Activity_Main extends AppCompatActivity {
         setLoggedInUserInDrawerMenu();
 
 
-
         //přidá ikonku pro vyvolání drawer menu do toolbaru
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState(); //synchronizuje animaci ikonky s polohou drawer menu
 
         //nastavi fragment na giftlist pri prvnim otevreni aktivity - neni predana zadne savedInstanceState
-        if(savedInstanceState == null){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Fragment_Giftlist()).commit();
-        mNavigationView.setCheckedItem(R.id.nav_giftlist);}
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Giftlist()).commit();
+            mNavigationView.setCheckedItem(R.id.nav_giftlist);
+        }
 
         //Listenery:
         setActionsForDrawerMenuItems();
@@ -72,15 +74,15 @@ public class Activity_Main extends AppCompatActivity {
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.nav_giftlist:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Fragment_Giftlist()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Giftlist()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_groups:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Fragment_Groups()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Groups()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_stats:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Fragment_Stats()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Stats()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_settings:
                         //TODO: dodělat settings
@@ -114,13 +116,20 @@ public class Activity_Main extends AppCompatActivity {
     }
 
     /**
+     * Přepisuje funkci tlačítka back.
      * Pokud je otevřené drawer menu, tak se při stisknutí tlačítka BACK zavře.
+     * Pokud není otevřené menu, tak se vrací mezi procházenými fragmenty.
      */
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        }else {
-        super.onBackPressed();}
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            Log.i("Giftme Activity main", "popping backstack");
+            getSupportFragmentManager().popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
     }
 }
