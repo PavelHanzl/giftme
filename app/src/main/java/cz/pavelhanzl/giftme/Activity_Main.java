@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.LoginFilter;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,14 +39,17 @@ public class Activity_Main extends AppCompatActivity {
 
         //Link xml a java kódu
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        mTextViewUserEmail = findViewById(R.id.nav_textview_user_email);
         mNavigationView = findViewById(R.id.nav_view);
+
+        //nastaví Intents
+        mIntentLogin = new Intent(this, Activity_Login.class);
 
         //Získá instanci FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
-        //nastaví Intents
-        mIntentLogin = new Intent(this, Activity_Login.class);
+        setLoggedInUserInDrawerMenu();
+
+
 
         //přidá ikonku pro vyvolání drawer menu do toolbaru
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -58,7 +62,12 @@ public class Activity_Main extends AppCompatActivity {
         mNavigationView.setCheckedItem(R.id.nav_giftlist);}
 
         //Listenery:
+        setActionsForDrawerMenuItems();
 
+
+    }
+
+    private void setActionsForDrawerMenuItems() {
         //řídí navigaci
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -79,7 +88,6 @@ public class Activity_Main extends AppCompatActivity {
                         break;
                     case R.id.nav_logout:
                         LogOut();
-
                         break;
                 }
 
@@ -87,10 +95,12 @@ public class Activity_Main extends AppCompatActivity {
                 return true;
             }
         });
+    }
 
-        //TODO: nastaví jméno uživatele v drawer menu
-
-
+    private void setLoggedInUserInDrawerMenu() {
+        View headerView = mNavigationView.getHeaderView(0);
+        mTextViewUserEmail = headerView.findViewById(R.id.nav_textview_user_email);
+        mTextViewUserEmail.setText(mAuth.getCurrentUser().getEmail());
     }
 
     /**
