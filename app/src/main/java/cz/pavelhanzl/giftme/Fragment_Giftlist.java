@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +26,7 @@ import com.google.firebase.firestore.Query;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Fragment_Giftlist extends Fragment {
+public class Fragment_Giftlist extends Logic_DrawerFragment {
     private Button mButtonTestDb;
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
@@ -52,26 +53,7 @@ public class Fragment_Giftlist extends Fragment {
 
         setUpRecyclerView();
 
-//        mButtonTestDb = view.findViewById(R.id.fragment_button_testDb);
-
-//        mButtonTestDb.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               saveToDB();
-//            }
-//        });
         return mView;
-    }
-
-    private void setUpRecyclerView() {
-        Query query = mNameReference.orderBy("budget", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Name> options = new FirestoreRecyclerOptions.Builder<Name>().setQuery(query, Name.class).build();
-        mAdapter_name = new Adapter_Name(options);
-
-        RecyclerView recyclerView = mView.findViewById(R.id.frag_giftlist_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(mAdapter_name);
     }
 
     @Override
@@ -86,22 +68,31 @@ public class Fragment_Giftlist extends Fragment {
         mAdapter_name.stopListening();
     }
 
-    //    private void saveToDB(){
-//        Map<String,Object> note = new HashMap<>();
-//        note.put("Title","První data přepiš");
-//        note.put("Desription","Lorem ipsum sit dolor amut.");
-//
-//        mDb.collection("Users").document("FirstDocument").set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(getContext(), "Failure", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setActiveMenuIcon(0);
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        setActiveMenuIcon(0);
+    }
+
+    /**
+     * Nastavuje recyclerView.
+     */
+    private void setUpRecyclerView() {
+        Query query = mNameReference.orderBy("budget", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Name> options = new FirestoreRecyclerOptions.Builder<Name>().setQuery(query, Name.class).build();
+        mAdapter_name = new Adapter_Name(options);
+
+        RecyclerView recyclerView = mView.findViewById(R.id.frag_giftlist_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mAdapter_name);
+    }
 
 }

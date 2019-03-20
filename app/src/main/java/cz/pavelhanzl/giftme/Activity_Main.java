@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,7 +26,7 @@ public class Activity_Main extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mStringUserEmail;
     private TextView mTextViewUserEmail;
-    private NavigationView mNavigationView;
+    public NavigationView mNavigationView;
     private FirebaseAuth mAuth;
     private Intent mIntentLogin;
 
@@ -124,7 +125,7 @@ public class Activity_Main extends AppCompatActivity {
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             Log.i("Giftme Activity main", "popping backstack");
             getSupportFragmentManager().popBackStack();
         } else {
@@ -132,4 +133,5 @@ public class Activity_Main extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }
