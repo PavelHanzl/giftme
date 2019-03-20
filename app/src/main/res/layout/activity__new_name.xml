@@ -7,19 +7,25 @@
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".Activity_NewName">
-    
+
     <EditText
+        android:drawableLeft="@drawable/ic_user_color_primary_dark"
+        android:drawablePadding="10dp"
         android:id="@+id/activity_NewName_EditText_Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/activity_newname_name"
-        android:inputType="text"/>
+        android:inputType="text"
+        />
 
     <EditText
+        android:drawableLeft="@drawable/ic_money_color_primary_dark"
+        android:drawablePadding="10dp"
         android:id="@+id/activity_NewName_EditText_Budget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/activity_newname_budget"
-        android:inputType="number"/>
+        android:inputType="number"
+        />
 
 </LinearLayout>

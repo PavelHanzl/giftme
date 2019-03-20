@@ -9,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,10 +83,10 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     }
 
     /**
-     * Nastavuje recyclerView.
+     * Nastavuje recyclerView. Řadí podle jména.
      */
     private void setUpRecyclerView() {
-        Query query = mNameReference.orderBy("budget", Query.Direction.DESCENDING);
+        Query query = mNameReference.orderBy("name", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Name> options = new FirestoreRecyclerOptions.Builder<Name>().setQuery(query, Name.class).build();
         mAdapter_name = new Adapter_Name(options);
 
@@ -93,6 +94,29 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter_name);
+
+        deleteItemFromRecyclerView(recyclerView);
+    }
+
+    /**
+     * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
+     * @param recyclerView
+     */
+    private void deleteItemFromRecyclerView(RecyclerView recyclerView) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                mAdapter_name.deleteItem(viewHolder.getAdapterPosition());
+
+
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
 }

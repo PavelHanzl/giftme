@@ -1,6 +1,7 @@
 package cz.pavelhanzl.giftme;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,15 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_name, viewGroup, false);
         return new NameHolder(v);
     }
+
+    public void deleteItem(int position){
+        getSnapshots().getSnapshot(position).getReference().delete();
+        
+
+    }
+
+
+
 
     class NameHolder extends RecyclerView.ViewHolder{
         TextView textViewName;

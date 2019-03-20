@@ -1,5 +1,6 @@
 package cz.pavelhanzl.giftme;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,8 +23,11 @@ public class Activity_NewName extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__new_name);
 
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
         setTitle(R.string.activity_newname_add_new_name);
+
+
+
 
         //link xml a java kódu
         mEditTextName = findViewById(R.id.activity_NewName_EditText_Name);
