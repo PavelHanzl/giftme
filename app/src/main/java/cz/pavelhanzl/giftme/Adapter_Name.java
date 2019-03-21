@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.NameHolder> {
+    private OnItemClickListener mOnItemClickListener;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -38,7 +40,7 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
 
     public void deleteItem(int position){
         getSnapshots().getSnapshot(position).getReference().delete();
-        
+
 
     }
 
@@ -55,10 +57,24 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
             textViewName = itemView.findViewById(R.id.card_name_name);
             textViewBudget = itemView.findViewById(R.id.card_name_budget);
 
-
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION && mOnItemClickListener != null){ //noposition je konstanta pro -1, může nastat, když omylem klikneme, např. na odstraňovanou kartu uprostřed animace
+                        mOnItemClickListener.OnItemClick(getSnapshots().getSnapshot(position),position);
+                    }
+                }
+            });
 
         }
     }
 
+    public interface OnItemClickListener{
+        void OnItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mOnItemClickListener = listener;
+    }
 }

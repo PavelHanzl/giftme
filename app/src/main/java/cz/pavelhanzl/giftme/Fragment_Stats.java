@@ -13,14 +13,11 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setActiveMenuIcon(2);
         return inflater.inflate(R.layout.fragment_stats,container,false);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setActiveMenuIcon(2);
-    }
+
 
     @Override
     public void onResume() {

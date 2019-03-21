@@ -47,6 +47,7 @@
     <string name="activity_newname_unfilled_fields">Please fill in all values.</string>
     <string name="activity_newname_name_added">Name added.</string>
     <string name="activity_newname_add_new_name">Add new name</string>
+    <string name="giftlist_title">Giftlist</string>
 
 
 </resources>

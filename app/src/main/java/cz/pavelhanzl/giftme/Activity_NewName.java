@@ -3,6 +3,7 @@ package cz.pavelhanzl.giftme;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ public class Activity_NewName extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__new_name);
+
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
         setTitle(R.string.activity_newname_add_new_name);
@@ -57,13 +59,17 @@ public class Activity_NewName extends AppCompatActivity {
 
     private void saveName(){
         String name = mEditTextName.getText().toString();
-        int budget = Integer.parseInt(mEditTextBudget.getText().toString());
-
-        if (name.trim().isEmpty() || mEditTextBudget.getText().toString().trim().isEmpty()){
+        String budgetString = mEditTextBudget.getText().toString();
+        //kontrola zda-li nějaké z polí není prázdné
+        if (name.trim().isEmpty() || budgetString.trim().isEmpty()){
             Toast.makeText(this, getString(R.string.activity_newname_unfilled_fields), Toast.LENGTH_LONG).show();
             return;
         }
 
+        //převede stringový edittext na int
+        int budget = Integer.parseInt(mEditTextBudget.getText().toString());
+
+        //přidá hodnotu do databáze
         CollectionReference nameReference = FirebaseFirestore.getInstance().collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names");
         nameReference.add(new Name(name,budget));
         Toast.makeText(this, getString(R.string.activity_newname_name_added), Toast.LENGTH_SHORT).show();

@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -28,7 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Fragment_Giftlist extends Logic_DrawerFragment {
-    private Button mButtonTestDb;
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mNameReference;
@@ -44,18 +44,16 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         mAuth = FirebaseAuth.getInstance();
 
         mNameReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names");
-        FloatingActionButton buttonAddName = mView.findViewById(R.id.frag_giftlist_floatingButton_add_name);
-        buttonAddName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(),Activity_NewName.class));
-            }
-        });
 
+
+        setUpFloatingButton();
+        setActiveMenuIcon(0);
         setUpRecyclerView();
 
         return mView;
     }
+
+
 
     @Override
     public void onStart() {
@@ -69,11 +67,6 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         mAdapter_name.stopListening();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setActiveMenuIcon(0);
-    }
 
     @Override
     public void onResume() {
@@ -96,7 +89,10 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         recyclerView.setAdapter(mAdapter_name);
 
         deleteItemFromRecyclerView(recyclerView);
+        setCardsOnClickAction();
     }
+
+
 
     /**
      * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
@@ -117,6 +113,35 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
 
             }
         }).attachToRecyclerView(recyclerView);
+    }
+
+    /**
+     * Nastaví floating button pro přidání uživatele.
+     */
+    private void setUpFloatingButton() {
+        FloatingActionButton buttonAddName = mView.findViewById(R.id.frag_giftlist_floatingButton_add_name);
+        buttonAddName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), Activity_NewName.class));
+            }
+        });
+    }
+
+    /**
+     * Nastavuje co se stane po kliknutí na kartu s uživatelem.
+     */
+    private void setCardsOnClickAction() {
+        mAdapter_name.setOnItemClickListener(new Adapter_Name.OnItemClickListener() {
+            @Override
+            public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Name name = documentSnapshot.toObject(Name.class);
+                String id = documentSnapshot.getId();
+                String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
+                //Toast.makeText(getContext(), "Position: " +position+" ID:"+ id, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path",path));
+            }
+        });
     }
 
 }

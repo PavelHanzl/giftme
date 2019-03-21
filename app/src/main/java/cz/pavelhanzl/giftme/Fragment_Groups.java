@@ -14,16 +14,13 @@ public class Fragment_Groups extends Logic_DrawerFragment  {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_groups,container,false);
-    }
-
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setActiveMenuIcon(1);
+        return inflater.inflate(R.layout.fragment_groups,container,false);
+
     }
+
+
+
 
     @Override
     public void onResume() {

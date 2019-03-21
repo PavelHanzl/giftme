@@ -13,15 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity_NewName"
+        <activity android:name=".Activity_Persons_Gitflist"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:parentActivityName=".Activity_Main"
             android:theme="@style/AppTheme.darkActionBar"/>
         <activity
-            android:name=".Activity_Main"
-            android:launchMode="singleTop"
+            android:name=".Activity_NewName"
+            android:parentActivityName=".Activity_Main"
             android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.darkActionBar" />
+        <activity
+            android:name=".Activity_Main"
+            android:configChanges="orientation"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.transparentStatusBar" />
         <activity
