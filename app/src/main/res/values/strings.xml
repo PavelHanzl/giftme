@@ -58,6 +58,8 @@
     <string name="activity_newgift_budget">Enter price of the gift</string>
     <string name="activity_newgift_gift_added">Gift added.</string>
     <string name="activity_newgift_add_new_name">Add new gift</string>
+    <string name="checkbox_isBought_true_toast">Gift is setted as bought.</string>
+    <string name="checkbox_isBought_false_toast">Gift is setted as unbought.</string>
 
 
 </resources>

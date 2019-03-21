@@ -135,8 +135,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         mAdapter_name.setOnItemClickListener(new Adapter_Name.OnItemClickListener() {
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
-                Name name = documentSnapshot.toObject(Name.class);
-                String id = documentSnapshot.getId();
+
                 String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
                 //Toast.makeText(getContext(), "Position: " +position+" ID:"+ id, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path", path));

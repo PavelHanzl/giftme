@@ -146,17 +146,18 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Gift gift = documentSnapshot.toObject(Gift.class);
+
+                //pokud není checkbox "bought" zaškrtlý, tak ho zaškrtne a naopak...
                 if(!gift.isBought()){
                     gift.setBought(true);
+                    Toast.makeText(getApplicationContext(),getString(R.string.checkbox_isBought_true_toast), Toast.LENGTH_SHORT).show();
                 }else {
                     gift.setBought(false);
+                    Toast.makeText(getApplicationContext(),getString(R.string.checkbox_isBought_false_toast), Toast.LENGTH_SHORT).show();
                 }
 
-                //String id = documentSnapshot.getId();
-                //String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
                 documentSnapshot.getReference().set(gift);
-                 Toast.makeText(getApplicationContext(), "Position: " +position+" Checked:"+gift.isBought(), Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path", path));
+
             }
         });
     }
