@@ -70,7 +70,7 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
 //            buttonArchivate = itemView.findViewById(R.id.card_giftDefault_button_archivate);
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            checkBoxBought.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();

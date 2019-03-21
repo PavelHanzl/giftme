@@ -106,7 +106,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter_gift_default);
 
         //deleteItemFromRecyclerView(recyclerView);
-        //setCardsOnClickAction();
+        setCardsOnClickAction();
     }
 
     /**
@@ -134,6 +134,29 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Activity_NewGift.class).putExtra("personsID",mDocumentReferenceName.getId()));
+            }
+        });
+    }
+
+    /**
+     * Nastavuje co se stane po kliknutí na kartu s uživatelem.
+     */
+    private void setCardsOnClickAction() {
+        mAdapter_gift_default.setOnItemClickListener(new Adapter_Gift_Default.OnItemClickListener() {
+            @Override
+            public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Gift gift = documentSnapshot.toObject(Gift.class);
+                if(!gift.isBought()){
+                    gift.setBought(true);
+                }else {
+                    gift.setBought(false);
+                }
+
+                //String id = documentSnapshot.getId();
+                //String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
+                documentSnapshot.getReference().set(gift);
+                 Toast.makeText(getApplicationContext(), "Position: " +position+" Checked:"+gift.isBought(), Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path", path));
             }
         });
     }

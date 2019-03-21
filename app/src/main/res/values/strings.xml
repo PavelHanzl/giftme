@@ -57,6 +57,7 @@
     <string name="activity_newgift_name">Enter name of a gift</string>
     <string name="activity_newgift_budget">Enter price of the gift</string>
     <string name="activity_newgift_gift_added">Gift added.</string>
+    <string name="activity_newgift_add_new_name">Add new gift</string>
 
 
 </resources>

@@ -31,4 +31,20 @@ public class Gift {
     public boolean isBought() {
         return bought;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
+
+    public void setBought(boolean bought) {
+        this.bought = bought;
+    }
 }

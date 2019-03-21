@@ -24,7 +24,7 @@ public class Activity_NewGift extends AppCompatActivity {
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
 
-        setTitle(R.string.activity_newname_add_new_name);
+        setTitle(R.string.activity_newgift_add_new_name);
 
 
         //link xml a java kódu
