@@ -38,7 +38,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_giftlist,container,false);
+        mView = inflater.inflate(R.layout.fragment_giftlist, container, false);
 
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -52,7 +52,6 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
 
         return mView;
     }
-
 
 
     @Override
@@ -93,13 +92,13 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     }
 
 
-
     /**
      * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
+     *
      * @param recyclerView
      */
     private void deleteItemFromRecyclerView(RecyclerView recyclerView) {
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
@@ -139,7 +138,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
                 String id = documentSnapshot.getId();
                 String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
                 //Toast.makeText(getContext(), "Position: " +position+" ID:"+ id, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path",path));
+                startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path", path));
             }
         });
     }
