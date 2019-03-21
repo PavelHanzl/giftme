@@ -44,13 +44,19 @@
 
     <string name="activity_newname_name">Name of your relative or friend</string>
     <string name="activity_newname_budget">Your budget on him/her?</string>
-    <string name="activity_newname_unfilled_fields">Please fill in all values.</string>
+    <string name="activity_newname_unfilled_fields">Please fill in empty fields.</string>
     <string name="activity_newname_name_added">Name added.</string>
     <string name="activity_newname_add_new_name">Add new name</string>
+
     <string name="giftlist_title">Giftlist</string>
     <string name="giftlist_gift_heading">Gift</string>
     <string name="giftlist_bought_heading">Bought</string>
     <string name="card_giftDefault_price">Price:</string>
+
+
+    <string name="activity_newgift_name">Enter name of a gift</string>
+    <string name="activity_newgift_budget">Enter price of the gift</string>
+    <string name="activity_newgift_gift_added">Gift added.</string>
 
 
 </resources>

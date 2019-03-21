@@ -1,7 +1,9 @@
 package cz.pavelhanzl.giftme;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,10 +33,13 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
 
     private DocumentSnapshot mDocumentSnapshotName;
     private Name mSelectedNameObject;
+    private DocumentReference mDocumentReferenceName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d("Persons_Giftlist","Processing oncreate");
         setContentView(R.layout.activity_persons_gitflist);
         setTitle(getString(R.string.giftlist_title));
 
@@ -51,8 +56,12 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
      * Získávání dat z databáze firestore probíhá asynchronně, a kód této třídy závisí na získaném objektu, proto se zbytek kodu nachází až v onComplete isSuccessful metodě.
      */
     private void getDocumentSnapshotForSelectedName() {
-        final DocumentReference documentReferenceName = mDb.document(getIntent().getStringExtra("path"));
-        documentReferenceName.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        if(getIntent().getStringExtra("path") != null){
+            Log.d("Persons_Giftlist","Getting intent, setting DocumentReference");
+            mDocumentReferenceName = mDb.document(getIntent().getStringExtra("path"));
+        }
+
+        mDocumentReferenceName.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -64,10 +73,11 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
                         setTitle(getString(R.string.giftlist_title) + " - " + mSelectedNameObject.getName());
                         Log.d("Activity_Persons_Giftli", " mSelectedNameObject " + mSelectedNameObject.getName());
 
-                        mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(documentReferenceName.getId()).collection("Giftlist");
-                            Log.d("Activity persons Giftli",mGiftReference.getPath());
+                        mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("Giftlist");
+                        Log.d("Activity persons Giftli", mGiftReference.getPath());
 
-                            setUpRecyclerView();
+                        setUpFloatingButton();
+                        setUpRecyclerView();
                         mAdapter_gift_default.startListening();
 
 
@@ -99,6 +109,14 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
         //setCardsOnClickAction();
     }
 
+    /**
+     * Znovu inicializuje obrazovku při statu této aktivity. Důléžité při přechodu zpět z vytvoření nové item, aby se znovu spustilo poslochání na Adaptéru.
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDocumentSnapshotForSelectedName();
+    }
 
 
     @Override
@@ -106,4 +124,18 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
         super.onStop();
         mAdapter_gift_default.stopListening();
     }
+
+    /**
+     * Nastaví floating button pro přidání dárku na giftlist. A v extra odešle ID otevřené osoby, pro kterou je určen otevřený giftlist.
+     */
+    private void setUpFloatingButton() {
+        FloatingActionButton buttonAddGift = findViewById(R.id.activity_personsGiftlist_floatingButton_add_gift);
+        buttonAddGift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Activity_NewGift.class).putExtra("personsID",mDocumentReferenceName.getId()));
+            }
+        });
+    }
+
 }
