@@ -24,31 +24,24 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
     private DocumentSnapshot mDocumentSnapshotName;
     private Name mSelectedNameObject;
 
-    private Handler mHandler = new Handler();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persons_gitflist);
+        setTitle(getString(R.string.giftlist_title));
 
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-
         getDocumentSnapshotForSelectedName();
-        mHandler.postDelayed(mRunnable,500);// 0,5s timeout pro získání snapshotu
-
 
     }
 
-    private Runnable mRunnable = new Runnable() {
-        @Override
-        public void run() {
-            setTitle(getString(R.string.giftlist_title) + " - " + mSelectedNameObject.getName());
-        }
-    };
 
-
+    /**
+     * Získá objekt ze zvolené položky v předchozí aktivitě.
+     * Získávání dat z databáze firestore probíhá asynchronně, a kód této třídy závisí na získaném objektu, proto se zbytek kodu nachází až v onComplete isSuccessful metodě.
+     */
     private void getDocumentSnapshotForSelectedName() {
         DocumentReference documentReferenceName = mDb.document(getIntent().getStringExtra("path"));
         documentReferenceName.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -57,14 +50,21 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     mDocumentSnapshotName = task.getResult();
                     if (mDocumentSnapshotName.exists()) {
-                        Log.d("Activity_Persons_Giftli", "DocumentSnapshot data: " + mDocumentSnapshotName.getData());
+                        // Logika po načtení objektu zvoleného jména
                         mSelectedNameObject = mDocumentSnapshotName.toObject(Name.class);
+                        setTitle(getString(R.string.giftlist_title) + " - " + mSelectedNameObject.getName());
                         Log.d("Activity_Persons_Giftli", " mSelectedNameObject " + mSelectedNameObject.getName());
+
+
+
+
+
+
                     } else {
                         Log.d("Activity_Persons_Giftli", "No such document");
                     }
                 } else {
-                    Log.d("Activity_Persons_Giftli", "get failed with ", task.getException());
+                    Log.d("Activity_Persons_Giftli", "get snapshot failed with ", task.getException());
                 }
             }
         });
