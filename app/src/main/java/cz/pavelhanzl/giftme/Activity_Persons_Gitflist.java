@@ -96,7 +96,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
      * Nastavuje recyclerView. Řadí podle jména.
      */
     private void setUpRecyclerView() {
-        Query query = mGiftReference.orderBy("name", Query.Direction.ASCENDING);
+        Query query = mGiftReference.orderBy("bought", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Gift> options = new FirestoreRecyclerOptions.Builder<Gift>().setQuery(query, Gift.class).build();
         mAdapter_gift_default = new Adapter_Gift_Default(options);
 
