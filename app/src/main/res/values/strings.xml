@@ -63,5 +63,9 @@
     <string name="checkbox_isBought_true_toast">Gift is setted as bought.</string>
     <string name="checkbox_isBought_false_toast">Gift is setted as unbought.</string>
 
+    <string name="swipe_archived">Archived</string>
+    <string name="swipe_unarchived">Unarchived</string>
+    <string name="swipe_deleted">Deleted</string>
+
 
 </resources>

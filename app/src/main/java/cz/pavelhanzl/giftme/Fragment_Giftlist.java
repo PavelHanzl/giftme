@@ -1,6 +1,9 @@
 package cz.pavelhanzl.giftme;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -111,9 +115,48 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 mAdapter_name.deleteItem(viewHolder.getAdapterPosition());
+                Toast.makeText( getContext(),  getString(R.string.swipe_archived), Toast.LENGTH_SHORT ).show();
+            }
 
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                View itemView = viewHolder.itemView;
+                int backgroundCornerOffset = 20;
+                ColorDrawable background;
+                Drawable icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_archive);
+
+                int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+                int iconTop = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+                int iconBottom = iconTop + icon.getIntrinsicHeight();
+
+                if (dX < 0) { // Swiping to the left
+                    Log.d("Swiping:","Left");
+
+                    //nastaví background a ikonku
+                    background = new ColorDrawable(getResources().getColor(R.color.swipeToDelete));
+                    icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_sweep_white);
+
+                    //vypočítá pozici pro background
+                    background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
+                            itemView.getTop(), itemView.getRight(), itemView.getBottom());
+
+                    //vypočítá pozici pro ikonku
+                    int iconLeft = itemView.getRight() - iconMargin - icon.getIntrinsicWidth();
+                    int iconRight = itemView.getRight() - iconMargin;
+                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+
+                    background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
+                            itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                } else { // view is unSwiped
+                    background = new ColorDrawable(getResources().getColor(R.color.transparent));
+                    background.setBounds(0, 0, 0, 0);
+                }
+                background.draw(c);
+                icon.draw(c);
 
             }
+
         }).attachToRecyclerView(recyclerView);
     }
 
