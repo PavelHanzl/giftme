@@ -133,7 +133,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
                 if (i == ItemTouchHelper.RIGHT) {
-                    mAdapter_gift_default.archivateItem(viewHolder.getAdapterPosition());
+                    mAdapter_gift_default.archiveItem(viewHolder.getAdapterPosition());
                     Toast.makeText( getApplicationContext(), getString(R.string.swipe_archived), Toast.LENGTH_SHORT ).show();
                 } else if (i == ItemTouchHelper.LEFT) {
                     mAdapter_gift_default.deleteItem(viewHolder.getAdapterPosition());

@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * Adaptér dostává data ze zdroje dat do recycleviev. Extendujeme FirestoreRecyclerAdapter,
@@ -52,6 +54,23 @@ public class Adapter_Gift_Archive extends FirestoreRecyclerAdapter<Gift, Adapter
 
     }
 
+    public void unarchiveItem(int position){
+        //získá objekt dárku ze snapshotu na dané pozici
+        Gift gift =getSnapshots().getSnapshot(position).toObject(Gift.class);
+
+        //získá cestu k snapshotu na dané pozici a z něj vytvoří cestu do kolekce Archive
+        CollectionReference giftlist = FirebaseFirestore.getInstance().collection(getSnapshots().getSnapshot(position).getReference().getParent().getParent().collection("Giftlist").getPath());
+
+        //přidá objekt do předem definované kolekce v db
+        giftlist.add(gift);
+
+        //smaže objekt z původního umístění;
+        getSnapshots().getSnapshot(position).getReference().delete();
+
+
+
+    }
+
 
 
 
@@ -59,7 +78,6 @@ public class Adapter_Gift_Archive extends FirestoreRecyclerAdapter<Gift, Adapter
         TextView textViewName;
         TextView textViewPrice;
         CheckBox checkBoxBought;
-        Button buttonArchivate;
 
 
         public GiftHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
@@ -67,7 +85,6 @@ public class Adapter_Gift_Archive extends FirestoreRecyclerAdapter<Gift, Adapter
             textViewName = itemView.findViewById(R.id.card_giftArchive_name);
             textViewPrice = itemView.findViewById(R.id.card_giftArchive_price);
             checkBoxBought = itemView.findViewById(R.id.card_giftArchive_checkbox_bought);
-//            buttonArchivate = itemView.findViewById(R.id.card_giftDefault_button_archivate);
 
 
             checkBoxBought.setOnClickListener(new View.OnClickListener() {

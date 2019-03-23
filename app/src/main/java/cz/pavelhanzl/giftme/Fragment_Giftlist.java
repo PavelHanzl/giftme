@@ -115,7 +115,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 mAdapter_name.deleteItem(viewHolder.getAdapterPosition());
-                Toast.makeText( getContext(),  getString(R.string.swipe_archived), Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getContext(),  getString(R.string.swipe_deleted), Toast.LENGTH_SHORT ).show();
             }
 
             @Override

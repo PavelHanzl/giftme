@@ -56,7 +56,7 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
 
     }
 
-    public void archivateItem(int position){
+    public void archiveItem(int position){
         //získá objekt dárku ze snapshotu na dané pozici
         Gift gift =getSnapshots().getSnapshot(position).toObject(Gift.class);
 
@@ -79,7 +79,7 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
         TextView textViewName;
         TextView textViewPrice;
         CheckBox checkBoxBought;
-        Button buttonArchivate;
+
 
 
         public GiftHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
@@ -87,7 +87,7 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
             textViewName = itemView.findViewById(R.id.card_giftDefault_name);
             textViewPrice = itemView.findViewById(R.id.card_giftDefault_price);
             checkBoxBought = itemView.findViewById(R.id.card_giftDefault_checkbox_bought);
-//            buttonArchivate = itemView.findViewById(R.id.card_giftDefault_button_archivate);
+
 
 
             checkBoxBought.setOnClickListener(new View.OnClickListener() {
