@@ -1,6 +1,7 @@
 package cz.pavelhanzl.giftme;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
@@ -76,7 +78,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
                         mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("Giftlist");
                         Log.d("Activity persons Giftli", mGiftReference.getPath());
 
-                        setUpFloatingButton();
+                        setUpFloatingButtons();
                         setUpRecyclerView();
                         mAdapter_gift_default.startListening();
 
@@ -105,8 +107,53 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter_gift_default);
 
-        //deleteItemFromRecyclerView(recyclerView);
+        deleteItemFromRecyclerView(recyclerView);
         setCardsOnClickAction();
+    }
+
+    /**
+     * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
+     *
+     * @param recyclerView
+     */
+    private void deleteItemFromRecyclerView(RecyclerView recyclerView) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+                int adapterPosition = viewHolder.getAdapterPosition();
+                if (i == ItemTouchHelper.RIGHT) {
+                    mAdapter_gift_default.archivateItem(viewHolder.getAdapterPosition());
+                    Toast.makeText( getApplicationContext(), "Archivated", Toast.LENGTH_SHORT ).show();
+                } else if (i == ItemTouchHelper.LEFT) {
+                    mAdapter_gift_default.deleteItem(viewHolder.getAdapterPosition());
+                    Toast.makeText( getApplicationContext(), "Deleted", Toast.LENGTH_SHORT ).show();
+                }
+
+
+            }
+
+//            @Override
+//            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+//                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+//                    // Here, if dX > 0 then swiping right.
+//                    // If dX < 0 then swiping left.
+//                    // If dX == 0 then at at start position.
+//                    if (dX>80){
+//                        Toast.makeText(Activity_Persons_Gitflist.this, "20 doprava", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+//                }
+//            }
+        }).attachToRecyclerView(recyclerView);
     }
 
     /**
@@ -128,7 +175,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
     /**
      * Nastaví floating button pro přidání dárku na giftlist. A v extra odešle ID otevřené osoby, pro kterou je určen otevřený giftlist.
      */
-    private void setUpFloatingButton() {
+    private void setUpFloatingButtons() {
         FloatingActionButton buttonAddGift = findViewById(R.id.activity_personsGiftlist_floatingButton_add_gift);
         buttonAddGift.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,11 +183,20 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Activity_NewGift.class).putExtra("personsID",mDocumentReferenceName.getId()));
             }
         });
+
+        FloatingActionButton buttonShowArchive = findViewById(R.id.activity_personsGiftlist_floatingButton_show_archive);
+        buttonShowArchive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Activity_Persons_Gitflist_Archive.class).putExtra("path",mDocumentReferenceName.getPath()));
+            }
+        });
     }
 
     /**
-     * Nastavuje co se stane po kliknutí na kartu s uživatelem.
+     * Nastavuje co se stane po kliknutí na na checkbox u itemu.
      */
+    //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
     private void setCardsOnClickAction() {
         mAdapter_gift_default.setOnItemClickListener(new Adapter_Gift_Default.OnItemClickListener() {
             @Override

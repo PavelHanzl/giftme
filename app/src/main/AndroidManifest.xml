@@ -18,6 +18,11 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar"/>
+        <activity android:name=".Activity_Persons_Gitflist_Archive"
+            android:launchMode="singleTop"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.darkActionBar"/>
         <activity
             android:name=".Activity_NewName"
             android:parentActivityName=".Activity_Main"

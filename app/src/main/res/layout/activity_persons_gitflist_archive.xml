@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordinatorLayoutPersonsGiftlistArchive"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity_Persons_Gitflist">
+    <TextView
+        android:id="@+id/activity_personsGiftlistArchive_TextView_giftTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/giftlist_gift_heading"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="16dp"
+        android:drawableLeft="@drawable/ic_gift_color_primary"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_gift_color_primary" />
+    <TextView
+        android:id="@+id/activity_personsGiftlistArchive_TextView_bought"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/giftlist_bought_heading"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="16dp"
+        android:layout_gravity="end"
+        android:drawableRight="@drawable/ic_done_color_primary"
+        android:drawablePadding="5dp"
+        android:drawableEnd="@drawable/ic_done_color_primary" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_personsGiftlistArchive_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchor="@id/activity_personsGiftlistArchive_TextView_giftTitle"
+        android:layout_marginTop="50dp"/>
+
+
+</android.support.design.widget.CoordinatorLayout>

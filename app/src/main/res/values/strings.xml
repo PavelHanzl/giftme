@@ -53,6 +53,8 @@
     <string name="giftlist_bought_heading">Bought</string>
     <string name="card_giftDefault_price">Price:</string>
 
+    <string name="archive_title">Archive</string>
+
 
     <string name="activity_newgift_name">Enter name of a gift</string>
     <string name="activity_newgift_budget">Enter price of the gift</string>
