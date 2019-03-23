@@ -66,7 +66,7 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
         //přidá objekt do předem definované kolekce v db
         giftlistArchive.add(gift);
 
-        //smaže objekt z původního umístění
+        //smaže objekt z původního umístění;
         getSnapshots().getSnapshot(position).getReference().delete();
 
 

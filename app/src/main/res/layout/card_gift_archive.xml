@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:background="#333333">
 
      <TextView
          android:id="@+id/card_giftArchive_name"
@@ -20,6 +21,7 @@
          android:maxLines="1"
          android:drawableLeft="@drawable/ic_card_gift_light_grey"
          android:drawablePadding="5dp"
+         android:textColor="@color/white"
          />
 
         <TextView
@@ -30,6 +32,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:maxLines="1"
             android:layout_below="@id/card_giftArchive_name"
+            android:textColor="#999"
             />
 
         <TextView
@@ -42,7 +45,8 @@
             android:maxLines="1"
             android:layout_toRightOf="@id/card_giftArchive_price_title"
             android:layout_toEndOf="@id/card_giftArchive_price_title"
-            android:layout_below="@id/card_giftArchive_name"/>
+            android:layout_below="@id/card_giftArchive_name"
+            android:textColor="#999"/>
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/card_giftArchive_checkbox_bought"
@@ -60,7 +64,8 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/card_giftArchive_name"
             android:layout_marginLeft="20dp"
-            android:backgroundTint="@color/lightGrey"/>
+            android:backgroundTint="#999"
+            />
 
     </RelativeLayout>
 

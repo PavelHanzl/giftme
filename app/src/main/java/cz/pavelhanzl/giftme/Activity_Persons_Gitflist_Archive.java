@@ -25,7 +25,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mGiftReference;
-    private Adapter_Gift_Default mAdapter_gift_archive;
+    private Adapter_Gift_Archive mAdapter_gift_archive;
 
     private DocumentSnapshot mDocumentSnapshotName;
     private Name mSelectedNameObject;
@@ -93,7 +93,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     private void setUpRecyclerView() {
         Query query = mGiftReference.orderBy("bought", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Gift> options = new FirestoreRecyclerOptions.Builder<Gift>().setQuery(query, Gift.class).build();
-        mAdapter_gift_archive = new Adapter_Gift_Default(options);
+        mAdapter_gift_archive = new Adapter_Gift_Archive(options);
 
         RecyclerView recyclerView = findViewById(R.id.activity_personsGiftlistArchive_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -127,7 +127,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
      */
     //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
     private void setCardsOnClickAction() {
-        mAdapter_gift_archive.setOnItemClickListener(new Adapter_Gift_Default.OnItemClickListener() {
+        mAdapter_gift_archive.setOnItemClickListener(new Adapter_Gift_Archive.OnItemClickListener() {
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Gift gift = documentSnapshot.toObject(Gift.class);
