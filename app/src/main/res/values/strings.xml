@@ -67,5 +67,12 @@
     <string name="swipe_unarchived">Unarchived</string>
     <string name="swipe_deleted">Deleted</string>
 
+    <string name="eventIsActiveTitle">Merry Christmas!</string>
+    <string name="eventIsNotActiveTitle">Days until Christmas:</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+
 
 </resources>

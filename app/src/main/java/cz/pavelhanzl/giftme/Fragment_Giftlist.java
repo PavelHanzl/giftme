@@ -49,7 +49,11 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
+
+        //získá kolekci jmen pro přihlášeného uživatele
         mNameReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names");
+
+
 
 
         setUpFloatingButton();
@@ -57,6 +61,11 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         setUpRecyclerView();
 
         return mView;
+    }
+
+    private void getDataForStatistics() {
+        //získá data potřebná pro fragment se statistikami (realizováno singletonem)
+        StatsManagerSingleton.getInstance().getStatsData();
     }
 
 
@@ -78,6 +87,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
 
         super.onResume();
         setActiveMenuIcon(0);
+        getDataForStatistics();
     }
 
     /**

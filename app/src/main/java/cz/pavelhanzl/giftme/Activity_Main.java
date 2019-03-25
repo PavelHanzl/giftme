@@ -50,6 +50,8 @@ public class Activity_Main extends AppCompatActivity {
         //Získá instanci FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
+
+
         setLoggedInUserInDrawerMenu();
 
 
