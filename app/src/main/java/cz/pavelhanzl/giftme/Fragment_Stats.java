@@ -1,35 +1,31 @@
 package cz.pavelhanzl.giftme;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.StringValue;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,12 +38,13 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
     private View mView;
-    private TextView mTextViewValueOfBoughtGifts,mTextViewValueOfUnoughtGifts,mTextViewValueOfAllGifts,mTextViewCountOfBoughtGifts,mTextViewCountOfUnoughtGifts,mTextViewCountOfAllGifts,mTextViewSumOfAllPersonsBudgets,mTextViewNumberOfPersons;
+    private TextView mTextViewValueOfBoughtGifts,mTextViewValueOfBoughtGifts2,mTextViewValueOfUnoughtGifts,mTextViewValueOfAllGifts,mTextViewCountOfBoughtGifts,mTextViewCountOfUnoughtGifts,mTextViewCountOfAllGifts,mTextViewSumOfAllPersonsBudgets,mTextViewNumberOfPersons;
     private StatsManagerSingleton stats = StatsManagerSingleton.getInstance();
-    PieChart mPieChartValueOfGifts;
 
-    private TextView txtTimerDay, txtTimerHour, txtTimerMinute, txtTimerSecond;
-    private TextView tvEvent;
+    private PieChart mPieChartValueOfGifts, mPieChartCountOfGifts;
+    private HorizontalBarChart mHorizontalBarChartBudgetsInfo;
+
+    private TextView txtTimerDay, txtTimerHour, txtTimerMinute, txtTimerSecond, tvEvent;
     private Handler handler;
     private Runnable runnable;
 
@@ -61,7 +58,9 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
+        //link xml a java kódu
         mTextViewValueOfBoughtGifts = mView.findViewById(R.id.fragment_stats_TextView_Value_of_bought_gifts);
+        mTextViewValueOfBoughtGifts2 = mView.findViewById(R.id.fragment_stats_TextView_Value_of_bought_gifts2);
         mTextViewValueOfUnoughtGifts = mView.findViewById(R.id.fragment_stats_TextView_Value_of_unbought_gifts);
         mTextViewValueOfAllGifts = mView.findViewById(R.id.fragment_stats_TextView_Value_of_all_gifts);
 
@@ -73,9 +72,9 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         mTextViewNumberOfPersons = mView.findViewById(R.id.fragment_stats_TextView_Number_of_persons);
 
         mPieChartValueOfGifts = mView.findViewById(R.id.fragment_stats_PieChart_valueOfGifts);
+        mPieChartCountOfGifts = mView.findViewById(R.id.fragment_stats_PieChart_countOfGifts);
+        mHorizontalBarChartBudgetsInfo = mView.findViewById(R.id.fragment_stats_HorizontalBarChart_budgetsInfo);
 
-
-        //link xml a java kódu
         txtTimerDay = mView.findViewById(R.id.txtTimerDay);
         txtTimerHour = mView.findViewById(R.id.txtTimerHour);
         txtTimerMinute = mView.findViewById(R.id.txtTimerMinute);
@@ -92,10 +91,65 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     }
 
     private void setGraphs() {
+        setPieChartValueOfGifts();
+        setPieChartCountOfGifts();
+        setHorizontalBarChartBudgetsInfo();
+    }
+
+    private void setHorizontalBarChartBudgetsInfo() {
+        // arraylist pro hodnoty sloupců
+        ArrayList<BarEntry> yValues = new ArrayList<>();
+
+        float barWidth = 9f;
+        float spaceForBar = 10f;
+
+        //přidá hodnoty do sloupců
+        yValues.add(new BarEntry(2*spaceForBar, stats.getValueOfBoughtGifts()));
+        yValues.add(new BarEntry(1*spaceForBar, stats.getSumOfAllPersonsBudgets()));
+
+        BarDataSet barDataSet = new BarDataSet(yValues,"Budgets info dataset");
+        BarData barData = new BarData(barDataSet);
+        barData.setBarWidth(barWidth);
+
+        ArrayList<String> xValues = new ArrayList<>();
+        xValues.add("Yours overall budget");
+        xValues.add("Money already spent");
+
+
+
+        // Display labels for bars
+        mHorizontalBarChartBudgetsInfo.setData(barData);
+
+        mHorizontalBarChartBudgetsInfo.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xValues));
+        mHorizontalBarChartBudgetsInfo.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+        mHorizontalBarChartBudgetsInfo.getXAxis().setXOffset(100);
+
+
+        // Display scores inside the bars
+        mHorizontalBarChartBudgetsInfo.setDrawValueAboveBar(false);
+
+        // Hide grid lines
+        mHorizontalBarChartBudgetsInfo.getAxisLeft().setEnabled(false);
+        mHorizontalBarChartBudgetsInfo.getAxisRight().setEnabled(false);
+        // Hide graph description
+        mHorizontalBarChartBudgetsInfo.getDescription().setEnabled(false);
+        // Hide graph legend
+        mHorizontalBarChartBudgetsInfo.getLegend().setEnabled(false);
+
+        // Design
+        barDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        barData.setValueTextSize(13f);
+        barData.setValueTextColor(getResources().getColor(R.color.white80transparent));
+
+        mHorizontalBarChartBudgetsInfo.invalidate();
+
+    }
+
+    private void setPieChartValueOfGifts() {
         List<PieEntry> entries = new ArrayList<>();
 
-        entries.add(new PieEntry(StatsManagerSingleton.getInstance().getValueOfBoughtGifts(), "Bought"));
-        entries.add(new PieEntry(StatsManagerSingleton.getInstance().getValueOfUnboughtGifts(), "Unbought"));
+        entries.add(new PieEntry(stats.getValueOfBoughtGifts(), "Bought"));
+        entries.add(new PieEntry(stats.getValueOfUnboughtGifts(), "Unbought"));
 
 
         PieDataSet pieDataSet = new PieDataSet(entries, "Un/bought stats");
@@ -113,8 +167,37 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         mPieChartValueOfGifts.getLegend().setEnabled(false);
         mPieChartValueOfGifts.setCenterText(getString(R.string.value_of_all_gifts_pie_chart_label)+"\n"+stats.getValueOfAllGifts());
 
-
         mPieChartValueOfGifts.invalidate(); // refresh
+    }
+
+
+    private void setPieChartCountOfGifts() {
+        List<PieEntry> entries = new ArrayList<>();
+
+        entries.add(new PieEntry(stats.getCountOfBoughtGifts(), "Bought"));
+        entries.add(new PieEntry(stats.getCountOfUnBoughtGifts(), "Unbought"));
+
+
+        PieDataSet pieDataSet = new PieDataSet(entries, "Un/bought stats");
+        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSelectionShift(5f);
+        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+        pieDataSet.setValueTextColor(getResources().getColor(R.color.white80transparent));
+        pieDataSet.setValueTextSize(20);
+
+        PieData data = new PieData(pieDataSet);
+        data.setValueFormatter(new DecimalFormater(0));//odstraní desetinná místa
+        mPieChartCountOfGifts.setUsePercentValues(false);
+
+        mPieChartCountOfGifts.setData(data);
+        mPieChartCountOfGifts.animateY(1000, Easing.EaseInOutCubic);
+        mPieChartCountOfGifts.getDescription().setEnabled(false);
+        mPieChartCountOfGifts.getLegend().setEnabled(false);
+        mPieChartCountOfGifts.setCenterText(getString(R.string.count_of_all_gifts_pie_chart_label)+"\n"+stats.getCountOfAllGifts());
+
+
+        mPieChartCountOfGifts.invalidate(); // refresh
     }
 
 
@@ -169,6 +252,7 @@ public class Fragment_Stats extends Logic_DrawerFragment {
 
     private void setTextViews() {
         mTextViewValueOfBoughtGifts.setText(String.valueOf(stats.getValueOfBoughtGifts()));
+        mTextViewValueOfBoughtGifts2.setText(String.valueOf(stats.getValueOfBoughtGifts()));
         mTextViewValueOfUnoughtGifts.setText(String.valueOf(stats.getValueOfUnboughtGifts()));
         mTextViewValueOfAllGifts.setText(String.valueOf(stats.getValueOfAllGifts()));
 
@@ -178,8 +262,6 @@ public class Fragment_Stats extends Logic_DrawerFragment {
 
         mTextViewSumOfAllPersonsBudgets.setText(String.valueOf(stats.getSumOfAllPersonsBudgets()));
         mTextViewNumberOfPersons.setText(String.valueOf(stats.getNumberOfPersons()));
-
-
 
     }
 

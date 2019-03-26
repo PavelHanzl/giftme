@@ -207,14 +207,14 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/fragment_stats_PieChart_valueOfGifts"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:paddingBottom="300dp"/>
+            android:layout_height="300dp" />
 
         <LinearLayout
             android:id="@+id/fragment_stats_LinearLayout_Value_of_bought_gifts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingTop="20dp"
             android:paddingBottom="10dp">
 
             <TextView
@@ -312,13 +312,15 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/fragment_stats_PieChart_countOfGifts"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="300dp"
+            android:paddingBottom="300dp"/>
 
         <LinearLayout
             android:id="@+id/fragment_stats_LinearLayout_Count_of_bought_gifts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingTop="20dp"
             android:paddingBottom="10dp">
 
             <TextView
@@ -412,10 +414,36 @@
             android:textStyle="bold"
             android:visibility="visible" />
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/fragment_stats_PieChart_budgetsInfo"
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/fragment_stats_HorizontalBarChart_budgetsInfo"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="150dp"
+            />
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Value_of_bought_gifts2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Value_of_bought_gifts_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Value of bought gifts:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Value_of_bought_gifts2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="5dp"
+                android:text="retrieving" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/fragment_stats_LinearLayout_Sum_of_all_persons_budgets"
