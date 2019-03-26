@@ -1,5 +1,6 @@
 package cz.pavelhanzl.giftme;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -14,6 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,14 +32,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.StringValue;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class Fragment_Stats extends Logic_DrawerFragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
     private View mView;
-    private TextView mTextViewTest;
-    private int mOverallBudget = 0;
+    private TextView mTextViewValueOfBoughtGifts,mTextViewValueOfUnoughtGifts,mTextViewValueOfAllGifts,mTextViewCountOfBoughtGifts,mTextViewCountOfUnoughtGifts,mTextViewCountOfAllGifts,mTextViewSumOfAllPersonsBudgets,mTextViewNumberOfPersons;
+
+    PieChart mPieChartValueOfGifts;
 
     private TextView txtTimerDay, txtTimerHour, txtTimerMinute, txtTimerSecond;
     private TextView tvEvent;
@@ -48,10 +61,21 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        mTextViewTest = mView.findViewById(R.id.fragment_stats_TextView_1);
-        setTextviews();
+        mTextViewValueOfBoughtGifts = mView.findViewById(R.id.fragment_stats_TextView_Value_of_bought_gifts);
+        mTextViewValueOfUnoughtGifts = mView.findViewById(R.id.fragment_stats_TextView_Value_of_unbought_gifts);
+        mTextViewValueOfAllGifts = mView.findViewById(R.id.fragment_stats_TextView_Value_of_all_gifts);
+
+        mTextViewCountOfBoughtGifts = mView.findViewById(R.id.fragment_stats_TextView_Count_of_bought_gifts);
+        mTextViewCountOfUnoughtGifts = mView.findViewById(R.id.fragment_stats_TextView_Count_of_unbought_gifts);
+        mTextViewCountOfAllGifts = mView.findViewById(R.id.fragment_stats_TextView_Count_of_all_gifts);
+
+        mTextViewSumOfAllPersonsBudgets = mView.findViewById(R.id.fragment_stats_TextView_Sum_of_all_persons_budgets);
+        mTextViewNumberOfPersons = mView.findViewById(R.id.fragment_stats_TextView_Number_of_persons);
+
+        mPieChartValueOfGifts = mView.findViewById(R.id.fragment_stats_PieChart_valueOfGifts);
 
 
+        //link xml a java kódu
         txtTimerDay = mView.findViewById(R.id.txtTimerDay);
         txtTimerHour = mView.findViewById(R.id.txtTimerHour);
         txtTimerMinute = mView.findViewById(R.id.txtTimerMinute);
@@ -59,43 +83,47 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         tvEvent = mView.findViewById(R.id.eventIsActiveTitle);
 
         countDownStart();
+        setTextViews();
+        setGraphs();
 
-
-//        CollectionReference aca = mDb.collection("/Users/"+mAuth.getCurrentUser().getEmail()+"/Names/4OXDLAgSWSxnpFitvLOW/Giftlist");
-//        aca.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                int price = 0;
-//                int numberOfPollAnswers = 0;
-//                int pollAnswerSize = task.getResult().size();
-//                for (DocumentSnapshot answer : task.getResult()) {
-//                    if((boolean)answer.get("bought")){
-//                    numberOfPollAnswers++;
-//                    price += ((Long) answer.get("price")).intValue();}
-//                }
-//                Log.v("NUMBER OF POLL BOUGHT ", String.valueOf(numberOfPollAnswers));
-//                Log.v("SIZE", String.valueOf(pollAnswerSize));
-//                Log.v("price", String.valueOf(price));
-//
-//            }});
 
 
         return mView;
+    }
+
+    private void setGraphs() {
+        List<PieEntry> entries = new ArrayList<>();
+
+        entries.add(new PieEntry(StatsManagerSingleton.getInstance().getValueOfBoughtGifts(), "Bought"));
+        entries.add(new PieEntry(StatsManagerSingleton.getInstance().getValueOfUnboughtGifts(), "Unbought"));
+
+
+        PieDataSet pieDataSet = new PieDataSet(entries, "Un/bought stats");
+        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSelectionShift(5f);
+        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+
+        PieData data = new PieData(pieDataSet);
+        mPieChartValueOfGifts.setData(data);
+        mPieChartValueOfGifts.animateY(1000, Easing.EaseInOutCubic);
+
+        mPieChartValueOfGifts.invalidate(); // refresh
     }
 
 
     public void countDownStart() {
         handler = new Handler();
         runnable = new Runnable() {
+            @SuppressLint({"SetTextI18n", "DefaultLocale"})
             @Override
             public void run() {
                 handler.postDelayed(this, 1000);
                 try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat(
-                            "yyyy-MM-dd");
-                    // Please here set your event date//YYYY-MM-DD
-                    Date futureDate = dateFormat.parse("2019-12-25");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    Date futureDate = dateFormat.parse(Calendar.getInstance().get(Calendar.YEAR) + "-12-25");
                     Date currentDate = new Date();
+                    //pokud ještě nebyly Vánoce a pokud nenastal nový rok, tak odpočítávej. Po přechodu na nový rok se spustí nové odpočítávání.
                     if (!currentDate.after(futureDate)) {
                         long diff = futureDate.getTime()
                                 - currentDate.getTime();
@@ -106,16 +134,16 @@ public class Fragment_Stats extends Logic_DrawerFragment {
                         long minutes = diff / (60 * 1000);
                         diff -= minutes * (60 * 1000);
                         long seconds = diff / 1000;
+
+                        //formát kdy jsou zobrazena minimálně 2 decimální čísla, pokud je jich míň tak se doplní nulama
                         txtTimerDay.setText("" + String.format("%02d", days));
                         txtTimerHour.setText("" + String.format("%02d", hours));
-                        txtTimerMinute.setText(""
-                                + String.format("%02d", minutes));
-                        txtTimerSecond.setText(""
-                                + String.format("%02d", seconds));
+                        txtTimerMinute.setText("" + String.format("%02d", minutes));
+                        txtTimerSecond.setText("" + String.format("%02d", seconds));
                     } else {
                         tvEvent.setVisibility(View.VISIBLE);
-                        tvEvent.setText("The event started!");
-                        textViewGone();
+                        tvEvent.setText(R.string.eventIsActiveTitle);
+                        textViewsCountdownGone();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -124,7 +152,7 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         };
         handler.postDelayed(runnable, 0);
     }
-    public void textViewGone() {
+    public void textViewsCountdownGone() {
         mView.findViewById(R.id.LinearLayout10).setVisibility(View.GONE);
         mView.findViewById(R.id.LinearLayout11).setVisibility(View.GONE);
         mView.findViewById(R.id.LinearLayout12).setVisibility(View.GONE);
@@ -133,8 +161,20 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     }
 
 
-    private void setTextviews() {
-        mTextViewTest.setText(String.valueOf(StatsManagerSingleton.getInstance().getOverallBudget()));
+    private void setTextViews() {
+        mTextViewValueOfBoughtGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getValueOfBoughtGifts()));
+        mTextViewValueOfUnoughtGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getValueOfUnboughtGifts()));
+        mTextViewValueOfAllGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getValueOfAllGifts()));
+
+        mTextViewCountOfBoughtGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getCountOfBoughtGifts()));
+        mTextViewCountOfUnoughtGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getCountOfUnBoughtGifts()));
+        mTextViewCountOfAllGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getCountOfAllGifts()));
+
+        mTextViewSumOfAllPersonsBudgets.setText(String.valueOf(StatsManagerSingleton.getInstance().getSumOfAllPersonsBudgets()));
+        mTextViewNumberOfPersons.setText(String.valueOf(StatsManagerSingleton.getInstance().getNumberOfPersons()));
+
+
+
     }
 
     @Override

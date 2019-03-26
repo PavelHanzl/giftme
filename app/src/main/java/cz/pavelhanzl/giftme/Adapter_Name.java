@@ -45,6 +45,7 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
 
     public void deleteItem(int position){
         getSnapshots().getSnapshot(position).getReference().delete();
+        StatsManagerSingleton.getInstance().getStatsData();
 
 
     }
