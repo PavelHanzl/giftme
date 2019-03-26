@@ -74,5 +74,15 @@
     <string name="minutes">Minutes</string>
     <string name="seconds">Seconds</string>
 
+    <string name="value_of_gifts">Value of gifts:</string>
+    <string name="value_of_all_gifts_pie_chart_label">Value of all gifts:</string>
+
+    <string name="count_of_gifts">Count of gifts:</string>
+    <string name="count_of_all_gifts_pie_chart_label">Count of all gifts:</string>
+
+    <string name="budgetsInfo">Aren\'t you spending too much?</string>
+
+
+
 
 </resources>

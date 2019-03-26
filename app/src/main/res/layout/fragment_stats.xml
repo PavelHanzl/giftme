@@ -2,21 +2,31 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="@android:color/white">
 
-    <RelativeLayout
-        android:id="@+id/fragment_stats_relative_conteiner"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/ic_snow_flakes" />
+
 
         <RelativeLayout
             android:id="@+id/fragment_stats_countdown_conteiner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="40dp">
+            android:layout_margin="40dp"
+            android:paddingBottom="70dp">
 
             <TextView
                 android:id="@+id/eventIsNotActiveTitle"
@@ -25,7 +35,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@string/eventIsNotActiveTitle"
-                android:textColor="@color/lightGrey"
+                android:textColor="@color/colorPrimaryLight"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:visibility="visible" />
@@ -172,240 +182,293 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <LinearLayout
+        <ImageView
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="0dp"
+            android:scaleType="fitStart"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/ic_snow_flakes" />
+
+        <TextView
+            android:id="@+id/fragment_stats_TextView_value_of_gifts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_stats_countdown_conteiner"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="@string/value_of_gifts"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/fragment_stats_PieChart_valueOfGifts"
-                android:layout_width="match_parent"
-                android:layout_height="350dp" />
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/fragment_stats_PieChart_valueOfGifts"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:paddingBottom="300dp"/>
 
-            <LinearLayout
-                android:id="@+id/fragment_stats_LinearLayout_Value_of_bought_gifts"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Value_of_bought_gifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Value_of_bought_gifts_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Value_of_bought_gifts_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Value of bought gifts:"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Value_of_bought_gifts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:text="retrieving" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/fragment_stats_LinearLayout_Value_of_unbought_gifts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Value_of_unbought_gifts_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Value of unbought gifts:"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Value_of_unbought_gifts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:text="retrieving" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/fragment_stats_LinearLayout_Value_of_all_gifts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Value_of_all_gifts_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Value of all gifts:"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Value_of_all_gifts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:text="retrieving" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
                 android:layout_weight="1"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="@color/lightGrey"
-                android:layout_margin="5dp"/>
+                android:gravity="end"
+                android:text="Value of bought gifts:"
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/fragment_stats_LinearLayout_Count_of_bought_gifts"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Value_of_bought_gifts"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Count_of_bought_gifts_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Count of bought gifts:"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Count_of_bought_gifts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:text="retrieving" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/fragment_stats_LinearLayout_Count_of_unbought_gifts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Count_of_unbought_gifts_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Count of unbought gifts:"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Count_of_unbought_gifts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:text="retrieving" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/fragment_stats_LinearLayout_Count_of_all_gifts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Count_of_all_gifts_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Count of all gifts:"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Count_of_all_gifts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:text="retrieving" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
                 android:layout_weight="1"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="@color/lightGrey"
-                android:layout_margin="5dp"/>
+                android:paddingStart="5dp"
+                android:text="retrieving" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/fragment_stats_LinearLayout_Sum_of_all_persons_budgets"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Value_of_unbought_gifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Value_of_unbought_gifts_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Value of unbought gifts:"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Sum_of_all_persons_budgets_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Sum of all persons budgets:"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Sum_of_all_persons_budgets"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:text="retrieving" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/fragment_stats_LinearLayout_Number_of_persons"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Value_of_unbought_gifts"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:paddingStart="5dp"
+                android:text="retrieving" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Number_of_persons_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Number of persons:"
-                    android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Value_of_all_gifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
 
-                <TextView
-                    android:id="@+id/fragment_stats_TextView_Number_of_persons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:text="retrieving" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Value_of_all_gifts_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Value of all gifts:"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Value_of_all_gifts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="5dp"
+                android:text="retrieving" />
+        </LinearLayout>
 
+        <ImageView
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"
+            android:scaleType="fitEnd"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:rotation="180"
+            android:src="@drawable/ic_snow_flakes" />
 
+        <TextView
+            android:id="@+id/fragment_stats_TextView_count_of_gifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="@string/count_of_gifts"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/fragment_stats_PieChart_countOfGifts"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Count_of_bought_gifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Count_of_bought_gifts_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Count of bought gifts:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Count_of_bought_gifts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="5dp"
+                android:text="retrieving" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Count_of_unbought_gifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Count_of_unbought_gifts_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Count of unbought gifts:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Count_of_unbought_gifts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="5dp"
+                android:text="retrieving" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Count_of_all_gifts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Count_of_all_gifts_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Count of all gifts:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Count_of_all_gifts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="5dp"
+                android:text="retrieving" />
+        </LinearLayout>
+
+        <ImageView
+            android:paddingTop="80dp"
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:scaleType="fitStart"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/ic_snow_flakes" />
+
+        <TextView
+            android:id="@+id/fragment_stats_TextView_budgetsInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="@string/budgetsInfo"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/fragment_stats_PieChart_budgetsInfo"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Sum_of_all_persons_budgets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Sum_of_all_persons_budgets_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Sum of all persons budgets:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Sum_of_all_persons_budgets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="5dp"
+                android:text="retrieving" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_stats_LinearLayout_Number_of_persons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Number_of_persons_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Number of persons:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_stats_TextView_Number_of_persons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="5dp"
+                android:text="retrieving" />
         </LinearLayout>
 
 
-    </RelativeLayout>
+    </LinearLayout>
+
+
 </ScrollView>

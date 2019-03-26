@@ -43,7 +43,7 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     private FirebaseFirestore mDb;
     private View mView;
     private TextView mTextViewValueOfBoughtGifts,mTextViewValueOfUnoughtGifts,mTextViewValueOfAllGifts,mTextViewCountOfBoughtGifts,mTextViewCountOfUnoughtGifts,mTextViewCountOfAllGifts,mTextViewSumOfAllPersonsBudgets,mTextViewNumberOfPersons;
-
+    private StatsManagerSingleton stats = StatsManagerSingleton.getInstance();
     PieChart mPieChartValueOfGifts;
 
     private TextView txtTimerDay, txtTimerHour, txtTimerMinute, txtTimerSecond;
@@ -103,10 +103,16 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         pieDataSet.setSelectionShift(5f);
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
+        pieDataSet.setValueTextColor(getResources().getColor(R.color.white80transparent));
+        pieDataSet.setValueTextSize(20);
 
         PieData data = new PieData(pieDataSet);
         mPieChartValueOfGifts.setData(data);
         mPieChartValueOfGifts.animateY(1000, Easing.EaseInOutCubic);
+        mPieChartValueOfGifts.getDescription().setEnabled(false);
+        mPieChartValueOfGifts.getLegend().setEnabled(false);
+        mPieChartValueOfGifts.setCenterText(getString(R.string.value_of_all_gifts_pie_chart_label)+"\n"+stats.getValueOfAllGifts());
+
 
         mPieChartValueOfGifts.invalidate(); // refresh
     }
@@ -162,16 +168,16 @@ public class Fragment_Stats extends Logic_DrawerFragment {
 
 
     private void setTextViews() {
-        mTextViewValueOfBoughtGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getValueOfBoughtGifts()));
-        mTextViewValueOfUnoughtGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getValueOfUnboughtGifts()));
-        mTextViewValueOfAllGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getValueOfAllGifts()));
+        mTextViewValueOfBoughtGifts.setText(String.valueOf(stats.getValueOfBoughtGifts()));
+        mTextViewValueOfUnoughtGifts.setText(String.valueOf(stats.getValueOfUnboughtGifts()));
+        mTextViewValueOfAllGifts.setText(String.valueOf(stats.getValueOfAllGifts()));
 
-        mTextViewCountOfBoughtGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getCountOfBoughtGifts()));
-        mTextViewCountOfUnoughtGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getCountOfUnBoughtGifts()));
-        mTextViewCountOfAllGifts.setText(String.valueOf(StatsManagerSingleton.getInstance().getCountOfAllGifts()));
+        mTextViewCountOfBoughtGifts.setText(String.valueOf(stats.getCountOfBoughtGifts()));
+        mTextViewCountOfUnoughtGifts.setText(String.valueOf(stats.getCountOfUnBoughtGifts()));
+        mTextViewCountOfAllGifts.setText(String.valueOf(stats.getCountOfAllGifts()));
 
-        mTextViewSumOfAllPersonsBudgets.setText(String.valueOf(StatsManagerSingleton.getInstance().getSumOfAllPersonsBudgets()));
-        mTextViewNumberOfPersons.setText(String.valueOf(StatsManagerSingleton.getInstance().getNumberOfPersons()));
+        mTextViewSumOfAllPersonsBudgets.setText(String.valueOf(stats.getSumOfAllPersonsBudgets()));
+        mTextViewNumberOfPersons.setText(String.valueOf(stats.getNumberOfPersons()));
 
 
 
