@@ -223,7 +223,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Value of bought gifts:"
+                android:text="@string/stats_value_of_bought_gifts"
+                android:textColor="@color/joyfulPink"
                 android:textStyle="bold" />
 
             <TextView
@@ -232,7 +233,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="5dp"
-                android:text="retrieving" />
+                android:text="retrieving"
+                android:textColor="@color/joyfulPink"/>
         </LinearLayout>
 
         <LinearLayout
@@ -248,7 +250,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Value of unbought gifts:"
+                android:text="@string/stats_value_of_unbought_gifts"
+                android:textColor="@color/joyfulOrange"
                 android:textStyle="bold" />
 
             <TextView
@@ -257,7 +260,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="5dp"
-                android:text="retrieving" />
+                android:text="retrieving"
+                android:textColor="@color/joyfulOrange"/>
         </LinearLayout>
 
         <LinearLayout
@@ -273,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Value of all gifts:"
+                android:text="@string/stats_value_of_all_gifts"
                 android:textStyle="bold" />
 
             <TextView
@@ -329,7 +333,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Count of bought gifts:"
+                android:text="@string/stats_count_of_bought_gifts"
+                android:textColor="@color/joyfulPink"
                 android:textStyle="bold" />
 
             <TextView
@@ -338,7 +343,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="5dp"
-                android:text="retrieving" />
+                android:text="retrieving"
+                android:textColor="@color/joyfulPink"/>
         </LinearLayout>
 
         <LinearLayout
@@ -354,7 +360,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Count of unbought gifts:"
+                android:text="@string/stats_count_of_unbought_gifts"
+                android:textColor="@color/joyfulOrange"
                 android:textStyle="bold" />
 
             <TextView
@@ -363,7 +370,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="5dp"
-                android:text="retrieving" />
+                android:text="retrieving"
+                android:textColor="@color/joyfulOrange"/>
         </LinearLayout>
 
         <LinearLayout
@@ -379,7 +387,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Count of all gifts:"
+                android:text="@string/stats_count_of_all_gifts"
                 android:textStyle="bold" />
 
             <TextView
@@ -392,7 +400,7 @@
         </LinearLayout>
 
         <ImageView
-            android:paddingTop="80dp"
+            android:paddingTop="50dp"
             android:layout_width="600dp"
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
@@ -433,7 +441,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Value of bought gifts:"
+                android:text="@string/stats_value_of_bought_gifts"
+                android:textColor="@color/joyfulPink"
                 android:textStyle="bold" />
 
             <TextView
@@ -442,7 +451,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="5dp"
-                android:text="retrieving" />
+                android:text="retrieving"
+                android:textColor="@color/joyfulPink"/>
         </LinearLayout>
 
         <LinearLayout
@@ -458,7 +468,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Sum of all persons budgets:"
+                android:text="@string/stats_sum_of_all_persons_budgets"
+                android:textColor="@color/joyfulOrange"
                 android:textStyle="bold" />
 
             <TextView
@@ -467,7 +478,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="5dp"
-                android:text="retrieving" />
+                android:text="retrieving"
+                android:textColor="@color/joyfulOrange"/>
         </LinearLayout>
 
         <LinearLayout
@@ -483,7 +495,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Number of persons:"
+                android:text="@string/stats_number_of_persons"
                 android:textStyle="bold" />
 
             <TextView

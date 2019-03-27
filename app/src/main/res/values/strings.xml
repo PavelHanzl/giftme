@@ -81,8 +81,14 @@
     <string name="count_of_all_gifts_pie_chart_label">Count of all gifts:</string>
 
     <string name="budgetsInfo">Aren\'t you spending too much?</string>
-
-
+    <string name="stats_number_of_persons">Number of persons:</string>
+    <string name="stats_sum_of_all_persons_budgets">Sum of all persons budgets:</string>
+    <string name="stats_value_of_bought_gifts">Value of bought gifts:</string>
+    <string name="stats_count_of_all_gifts">Count of all gifts:</string>
+    <string name="stats_count_of_unbought_gifts">Count of unbought gifts:</string>
+    <string name="stats_count_of_bought_gifts">Count of bought gifts:</string>
+    <string name="stats_value_of_all_gifts">Value of all gifts:</string>
+    <string name="stats_value_of_unbought_gifts">Value of unbought gifts:</string>
 
 
 </resources>

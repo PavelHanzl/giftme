@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -97,51 +99,48 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     }
 
     private void setHorizontalBarChartBudgetsInfo() {
+        Toast.makeText(getContext(), "setting bar chart", Toast.LENGTH_SHORT).show();
         // arraylist pro hodnoty sloupců
         ArrayList<BarEntry> yValues = new ArrayList<>();
 
         float barWidth = 9f;
         float spaceForBar = 10f;
-
         //přidá hodnoty do sloupců
-        yValues.add(new BarEntry(2*spaceForBar, stats.getValueOfBoughtGifts()));
-        yValues.add(new BarEntry(1*spaceForBar, stats.getSumOfAllPersonsBudgets()));
+        yValues.add(new BarEntry(2f, stats.getValueOfBoughtGifts()));
+        yValues.add(new BarEntry(1f,  stats.getSumOfAllPersonsBudgets()));
+        Log.d("horizontal", "1:" + stats.getValueOfBoughtGifts());
+        Log.d("horizontal", "2:" + yValues.get(0));
 
-        BarDataSet barDataSet = new BarDataSet(yValues,"Budgets info dataset");
+        BarDataSet barDataSet = new BarDataSet(yValues," ");
         BarData barData = new BarData(barDataSet);
-        barData.setBarWidth(barWidth);
-
-        ArrayList<String> xValues = new ArrayList<>();
-        xValues.add("Yours overall budget");
-        xValues.add("Money already spent");
 
 
-
-        // Display labels for bars
-        mHorizontalBarChartBudgetsInfo.setData(barData);
-
-        mHorizontalBarChartBudgetsInfo.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xValues));
-        mHorizontalBarChartBudgetsInfo.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
-        mHorizontalBarChartBudgetsInfo.getXAxis().setXOffset(100);
-
-
-        // Display scores inside the bars
+        //vykresluje hodnoty do barů
         mHorizontalBarChartBudgetsInfo.setDrawValueAboveBar(false);
 
-        // Hide grid lines
+        // skyje Y gridlines
         mHorizontalBarChartBudgetsInfo.getAxisLeft().setEnabled(false);
-        mHorizontalBarChartBudgetsInfo.getAxisRight().setEnabled(false);
-        // Hide graph description
+        // skyje X osu
+        mHorizontalBarChartBudgetsInfo.getXAxis().setEnabled(false);
+
+       // skryje popis
         mHorizontalBarChartBudgetsInfo.getDescription().setEnabled(false);
-        // Hide graph legend
-        mHorizontalBarChartBudgetsInfo.getLegend().setEnabled(false);
 
-        // Design
-        barDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-        barData.setValueTextSize(13f);
-        barData.setValueTextColor(getResources().getColor(R.color.white80transparent));
+       // skryje legendu
+       mHorizontalBarChartBudgetsInfo.getLegend().setEnabled(false);
 
-        mHorizontalBarChartBudgetsInfo.invalidate();
+       //nastaví minimální hodnotu na 0 - zábrání autozoomu
+        mHorizontalBarChartBudgetsInfo.getAxisLeft().setAxisMinimum(0f);
+
+       // Design
+       barDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+       barDataSet.setDrawValues(true);
+       barData.setValueTextSize(10f);
+       barData.setValueTextColor(getResources().getColor(R.color.white80transparent));
+
+       mHorizontalBarChartBudgetsInfo.setData(barData);
+       mHorizontalBarChartBudgetsInfo.setFitBars(true);
+       mHorizontalBarChartBudgetsInfo.invalidate();
 
     }
 

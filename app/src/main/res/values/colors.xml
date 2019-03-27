@@ -18,6 +18,7 @@
     <color name="swipeToArchive">#03a9f4</color>
     <color name="swipeToUnArchive">#1de9b6</color>
 
-
+    <color name="joyfulPink">#D9508A</color>
+    <color name="joyfulOrange">#FE9507</color>
 
 </resources>
