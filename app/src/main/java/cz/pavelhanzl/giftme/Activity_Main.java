@@ -1,25 +1,31 @@
 package cz.pavelhanzl.giftme;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.LoginFilter;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.api.LogDescriptor;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Activity_Main extends AppCompatActivity {
     //Deklarace členských proměnných
@@ -28,13 +34,14 @@ public class Activity_Main extends AppCompatActivity {
     private TextView mTextViewUserEmail;
     public NavigationView mNavigationView;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore mDb;
     private Intent mIntentLogin;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__main);
+        setContentView(R.layout.activity_main);
 
         //nastaví toolbar (defaultně je vyplý ve styles.xml)
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -47,10 +54,12 @@ public class Activity_Main extends AppCompatActivity {
         //nastaví Intents
         mIntentLogin = new Intent(this, Activity_Login.class);
 
-        //Získá instanci FirebaseAuth
+        //Získá instanci FirebaseAuth a fi
         mAuth = FirebaseAuth.getInstance();
+        mDb = FirebaseFirestore.getInstance();
 
 
+        createUserAccountInDatabaseIfDoesNotExists();
 
         setLoggedInUserInDrawerMenu();
 
@@ -72,6 +81,33 @@ public class Activity_Main extends AppCompatActivity {
 
     }
 
+    private void createUserAccountInDatabaseIfDoesNotExists() {
+        //kontrola, zda-li je zadaný uživatel registrovaný
+        DocumentReference userReference = FirebaseFirestore.getInstance().collection("Users").document(mAuth.getCurrentUser().getEmail());
+        userReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        //pokud zadaný email nalezen tak nic nedělá
+                        Log.d("Activity main", "User already exists, do not creating a profile.");
+                        return;
+                    } else {
+                        DocumentReference userReference = FirebaseFirestore.getInstance().collection("Users").document(mAuth.getCurrentUser().getEmail());
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("exists", true);
+                        userReference.set(user);
+                        Log.d("Activity main", "User profile created.");
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error: "+task.getException(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
     private void setActionsForDrawerMenuItems() {
         //řídí navigaci
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -82,7 +118,7 @@ public class Activity_Main extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Giftlist()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_groups:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Groups()).addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Social()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_stats:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Stats()).addToBackStack(null).commit();

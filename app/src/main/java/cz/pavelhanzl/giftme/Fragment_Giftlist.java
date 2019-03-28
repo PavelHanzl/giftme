@@ -44,6 +44,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setActiveMenuIcon(0);
         mView = inflater.inflate(R.layout.fragment_giftlist, container, false);
 
         mDb = FirebaseFirestore.getInstance();
@@ -53,11 +54,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         //získá kolekci jmen pro přihlášeného uživatele
         mNameReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names");
 
-
-
-
         setUpFloatingButton();
-        setActiveMenuIcon(0);
         setUpRecyclerView();
 
         return mView;

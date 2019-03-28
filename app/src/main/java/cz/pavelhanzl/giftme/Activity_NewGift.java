@@ -20,7 +20,7 @@ public class Activity_NewGift extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__new_gift);
+        setContentView(R.layout.activity_new_gift);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
 

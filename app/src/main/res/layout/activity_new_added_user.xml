@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".Activity_NewName">
+
+
+    <EditText
+        android:drawableLeft="@drawable/ic_email"
+        android:drawableTint="@color/colorPrimary"
+        android:drawablePadding="10dp"
+        android:id="@+id/activity_NewAddedUser_EditText_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/Activity_newAddedUser_email"
+        android:inputType="textEmailAddress"
+        />
+
+
+    <EditText
+        android:drawableLeft="@drawable/ic_user_color_primary_dark"
+        android:drawablePadding="10dp"
+        android:id="@+id/activity_NewAddedUser_EditText_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/Activity_newAddedUser_nickname"
+        android:inputType="text"
+        />
+
+
+
+</LinearLayout>

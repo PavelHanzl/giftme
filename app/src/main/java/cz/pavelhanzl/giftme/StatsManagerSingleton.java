@@ -84,6 +84,7 @@ public class StatsManagerSingleton {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    //prochází všechna jména v uživatelově giftlistu
                     for (DocumentSnapshot name : task.getResult()) {
 
                         Log.v("User", name.get("name").toString());
@@ -94,6 +95,7 @@ public class StatsManagerSingleton {
                         personsGiftlist.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                //prochází všechny dárky u jednotlivých jmen v giftlistu
                                 for (DocumentSnapshot gift : task.getResult()) {
                                     //Pokud je dárek koupen
                                     if((boolean)gift.get("bought")==true){

@@ -89,6 +89,12 @@
     <string name="stats_count_of_bought_gifts">Count of bought gifts:</string>
     <string name="stats_value_of_all_gifts">Value of all gifts:</string>
     <string name="stats_value_of_unbought_gifts">Value of unbought gifts:</string>
+    <string name="social_my_wish_list">My wish list</string>
+    <string name="social_name">Name</string>
+    <string name="card_social_added_user_email">E-mail:</string>
+    <string name="Activity_newAddedUser_nickname">Set nickname for him/her</string>
+    <string name="Activity_newAddedUser_email">E-mail of your friend or relative</string>
+    <string name="activity_newaddeduser_your_email_error">You can not enter your own e-mail.</string>
 
 
 </resources>
