@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.giftlist.persons_giftlist;
 
 public class Gift {
     private String name;

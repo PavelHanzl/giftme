@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.social;
 
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -16,85 +16,84 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import cz.pavelhanzl.giftme.PersonsGiftlist.Activity_Persons_Gitflist;
+import cz.pavelhanzl.giftme.Logic_DrawerFragment;
+import cz.pavelhanzl.giftme.social.my_wish_list.Activity_My_Wish_List;
+import cz.pavelhanzl.giftme.R;
 
-public class Fragment_Giftlist extends Logic_DrawerFragment {
+public class Fragment_Social extends Logic_DrawerFragment {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
-    private CollectionReference mNameReference;
-    private Adapter_Name mAdapter_name;
+    private CollectionReference mAddedUsersReference;
+    private Adapter_Added_User mAdapter_added_user;
     private View mView;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setActiveMenuIcon(0);
-        mView = inflater.inflate(R.layout.fragment_giftlist, container, false);
+        setActiveMenuIcon(1);
+        mView = inflater.inflate(R.layout.fragment_social,container,false);
 
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-
         //získá kolekci jmen pro přihlášeného uživatele
-        mNameReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names");
+        mAddedUsersReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("AddedUsers");
 
         setUpFloatingButton();
+        setUpMyWishListButton();
         setUpRecyclerView();
 
         return mView;
     }
 
-    private void getDataForStatistics() {
-        //získá data potřebná pro fragment se statistikami (realizováno singletonem)
-        StatsManagerSingleton.getInstance().getStatsData();
+    private void setUpMyWishListButton() {
+        Button buttonMyWishList = mView.findViewById(R.id.frag_social_button_my_wish_list);
+        buttonMyWishList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), Activity_My_Wish_List.class));
+            }
+        });
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAdapter_name.startListening();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mAdapter_name.stopListening();
-    }
-
-
-    @Override
-    public void onResume() {
-
-        super.onResume();
-        setActiveMenuIcon(0);
-        getDataForStatistics();
+    /**
+     * Nastaví floating button pro přidání uživatele.
+     */
+    private void setUpFloatingButton() {
+        FloatingActionButton buttonAddName = mView.findViewById(R.id.frag_social_floatingButton_add_name);
+        buttonAddName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), Activity_NewAddedUser.class));
+            }
+        });
     }
 
     /**
      * Nastavuje recyclerView. Řadí podle jména.
      */
     private void setUpRecyclerView() {
-        Query query = mNameReference.orderBy("name", Query.Direction.ASCENDING);
-        FirestoreRecyclerOptions<Name> options = new FirestoreRecyclerOptions.Builder<Name>().setQuery(query, Name.class).build();
-        mAdapter_name = new Adapter_Name(options);
+        Query query = mAddedUsersReference.orderBy("name", Query.Direction.ASCENDING);
+        FirestoreRecyclerOptions<AddedUser> options = new FirestoreRecyclerOptions.Builder<AddedUser>().setQuery(query, AddedUser.class).build();
+        mAdapter_added_user = new Adapter_Added_User(options);
 
-        RecyclerView recyclerView = mView.findViewById(R.id.frag_giftlist_recycler_view);
+        RecyclerView recyclerView = mView.findViewById(R.id.frag_social_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(mAdapter_name);
+        recyclerView.setAdapter( mAdapter_added_user);
 
         deleteItemFromRecyclerView(recyclerView);
-        setCardsOnClickAction();
+        //setCardsOnClickAction();
     }
 
 
@@ -114,7 +113,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                mAdapter_name.deleteItem(viewHolder.getAdapterPosition());
+                mAdapter_added_user.deleteItem(viewHolder.getAdapterPosition());
                 Toast.makeText( getContext(),  getString(R.string.swipe_deleted), Toast.LENGTH_SHORT ).show();
             }
 
@@ -160,32 +159,25 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         }).attachToRecyclerView(recyclerView);
     }
 
-    /**
-     * Nastaví floating button pro přidání uživatele.
-     */
-    private void setUpFloatingButton() {
-        FloatingActionButton buttonAddName = mView.findViewById(R.id.frag_giftlist_floatingButton_add_name);
-        buttonAddName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Activity_NewName.class));
-            }
-        });
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdapter_added_user.startListening();
     }
 
-    /**
-     * Nastavuje co se stane po kliknutí na kartu s uživatelem.
-     */
-    private void setCardsOnClickAction() {
-        mAdapter_name.setOnItemClickListener(new Adapter_Name.OnItemClickListener() {
-            @Override
-            public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
-
-                String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
-                //Toast.makeText(getContext(), "Position: " +position+" ID:"+ id, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path", path));
-            }
-        });
+    @Override
+    public void onStop() {
+        super.onStop();
+        mAdapter_added_user.stopListening();
     }
+
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        setActiveMenuIcon(1);
+    }
+
 
 }

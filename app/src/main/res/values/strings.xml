@@ -97,6 +97,8 @@
     <string name="activity_newaddeduser_your_email_error">You can not enter your own e-mail.</string>
     <string name="my_wish_list_gifttip_heading">Gift tips for me</string>
     <string name="my_wish_list_title">My wish list</string>
+    <string name="activity_newowngifttip_add_new_gifttip">Add new gift tip</string>
+    <string name="activity_new_own_gifttip_name_added">Gift tip added.</string>
 
 
 </resources>

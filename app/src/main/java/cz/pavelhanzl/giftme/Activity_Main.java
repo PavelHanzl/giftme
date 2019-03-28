@@ -17,15 +17,18 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.api.LogDescriptor;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import cz.pavelhanzl.giftme.giftlist.Fragment_Giftlist;
+import cz.pavelhanzl.giftme.login_and_signup.Activity_Login;
+import cz.pavelhanzl.giftme.social.Fragment_Social;
+import cz.pavelhanzl.giftme.stats.Fragment_Stats;
 
 public class Activity_Main extends AppCompatActivity {
     //Deklarace členských proměnných

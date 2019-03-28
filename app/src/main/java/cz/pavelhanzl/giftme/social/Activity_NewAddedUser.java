@@ -1,10 +1,8 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.social;
 
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +16,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import cz.pavelhanzl.giftme.R;
 
 public class Activity_NewAddedUser extends AppCompatActivity {
     private EditText mEditTextName;

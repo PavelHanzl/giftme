@@ -1,12 +1,10 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive;
 
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,11 +24,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class Activity_My_Wish_List extends AppCompatActivity {
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
+import cz.pavelhanzl.giftme.giftlist.Name;
+import cz.pavelhanzl.giftme.R;
+
+public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
-    private CollectionReference mMyGiftTipsReference;
-    private Adapter_My_Wish_List mAdapter_my_wish_list;
+    private CollectionReference mGiftReference;
+    private Adapter_Gift_Archive mAdapter_gift_archive;
 
     private DocumentSnapshot mDocumentSnapshotName;
     private Name mSelectedNameObject;
@@ -40,34 +42,70 @@ public class Activity_My_Wish_List extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("Activity_my_wish_list","Processing oncreate");
-        setContentView(R.layout.activity_my_wish_list);
-
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white); //nastaví ikonku bílé šipky v actionbaru (nahradí defaultní černou šipku)
-        setTitle(getString(R.string.my_wish_list_title));
+        Log.d("Giftlist Archive","Processing oncreate");
+        setContentView(R.layout.activity_persons_gitflist_archive);
+        setTitle(getString(R.string.archive_title));
 
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        setUpFloatingButtons();
-        setUpRecyclerView();
-
+        getDocumentSnapshotForSelectedName();
 
     }
+
+
+    /**
+     * Získá objekt ze zvolené položky v předchozí aktivitě.
+     * Získávání dat z databáze firestore probíhá asynchronně, a kód této třídy závisí na získaném objektu, proto se zbytek kodu nachází až v onComplete isSuccessful metodě.
+     */
+    private void getDocumentSnapshotForSelectedName() {
+        if(getIntent().getStringExtra("path") != null){
+            Log.d("Giftlist Archive","Getting intent, setting DocumentReference");
+            mDocumentReferenceName = mDb.document(getIntent().getStringExtra("path"));
+        }
+
+        mDocumentReferenceName.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    mDocumentSnapshotName = task.getResult();
+                    if (mDocumentSnapshotName.exists()) {
+                        // Focus: Logika po načtení objektu zvoleného jména
+
+                        mSelectedNameObject = mDocumentSnapshotName.toObject(Name.class);
+                        setTitle(getString(R.string.archive_title) + " - " + mSelectedNameObject.getName());
+                        Log.d("Activity_archive", " mSelectedNameObject " + mSelectedNameObject.getName());
+
+                        mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("GiftlistArchive");
+                        Log.d("Activity persons Giftli", mGiftReference.getPath());
+
+                        setUpRecyclerView();
+                        mAdapter_gift_archive.startListening();
+
+
+                    } else {
+                        Log.d("Activity_Persons_Giftli", "No such document");
+                    }
+                } else {
+                    Log.d("Activity_Persons_Giftli", "get snapshot failed with ", task.getException());
+                }
+            }
+        });
+    }
+
 
     /**
      * Nastavuje recyclerView. Řadí podle jména.
      */
     private void setUpRecyclerView() {
-        mMyGiftTipsReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("OwnGiftTips");
-        Query query = mMyGiftTipsReference.orderBy("name", Query.Direction.ASCENDING);
-        FirestoreRecyclerOptions<GiftTip> options = new FirestoreRecyclerOptions.Builder<GiftTip>().setQuery(query, GiftTip.class).build();
-        mAdapter_my_wish_list = new Adapter_My_Wish_List(options);
+        Query query = mGiftReference.orderBy("bought", Query.Direction.ASCENDING);
+        FirestoreRecyclerOptions<Gift> options = new FirestoreRecyclerOptions.Builder<Gift>().setQuery(query, Gift.class).build();
+        mAdapter_gift_archive = new Adapter_Gift_Archive(options);
 
-        RecyclerView recyclerView = findViewById(R.id.activity_my_wish_list_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.activity_personsGiftlistArchive_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(mAdapter_my_wish_list);
+        recyclerView.setAdapter(mAdapter_gift_archive);
 
         deleteItemFromRecyclerView(recyclerView);
         setCardsOnClickAction();
@@ -90,8 +128,11 @@ public class Activity_My_Wish_List extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
-                if (i == ItemTouchHelper.LEFT) {
-                    mAdapter_my_wish_list.deleteItem(viewHolder.getAdapterPosition());
+                if (i == ItemTouchHelper.RIGHT) {
+                    mAdapter_gift_archive.unarchiveItem(viewHolder.getAdapterPosition());
+                    Toast.makeText( getApplicationContext(), getString(R.string.swipe_unarchived), Toast.LENGTH_SHORT ).show();
+                } else if (i == ItemTouchHelper.LEFT) {
+                    mAdapter_gift_archive.deleteItem(viewHolder.getAdapterPosition());
                     Toast.makeText( getApplicationContext(), getString(R.string.swipe_deleted), Toast.LENGTH_SHORT ).show();
                 }
 
@@ -114,8 +155,8 @@ public class Activity_My_Wish_List extends AppCompatActivity {
                     Log.d("Swiping:","Right");
 
                     //nastaví background a ikonku
-                    background = new ColorDrawable(getResources().getColor(R.color.swipeToArchive));
-                    icon = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_archive);
+                    background = new ColorDrawable(getResources().getColor(R.color.swipeToUnArchive));
+                    icon = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_unarchive_white);
 
                     //vypočítá pozici pro background
                     background.setBounds(itemView.getLeft(), itemView.getTop(),
@@ -168,36 +209,38 @@ public class Activity_My_Wish_List extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        mAdapter_my_wish_list.startListening();
+        getDocumentSnapshotForSelectedName();
     }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        mAdapter_my_wish_list.stopListening();
+        mAdapter_gift_archive.stopListening();
     }
 
-    /**
-     * Nastaví floating button pro přidání dárku na giftlist. A v extra odešle ID otevřené osoby, pro kterou je určen otevřený giftlist.
-     */
-    private void setUpFloatingButtons() {
-        FloatingActionButton buttonAddGift = findViewById(R.id.activity_my_wish_list_floatingButton_add_gift);
-        buttonAddGift.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Activity_NewGift.class).putExtra("personsID",mDocumentReferenceName.getId()));
-            }
-        });
-    }
+
 
     /**
-     * Nastavuje co se stane po kliknutí na na checkbox u itemu.
+     * Nastavuje co se stane po kliknutí na checkbox u itemu.
      */
+    //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
     private void setCardsOnClickAction() {
-        mAdapter_my_wish_list.setOnItemClickListener(new Adapter_My_Wish_List.OnItemClickListener() {
+        mAdapter_gift_archive.setOnItemClickListener(new Adapter_Gift_Archive.OnItemClickListener() {
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Gift gift = documentSnapshot.toObject(Gift.class);
+
+                //pokud není checkbox "bought" zaškrtlý, tak ho zaškrtne a naopak...
+                if(!gift.isBought()){
+                    gift.setBought(true);
+                    Toast.makeText(getApplicationContext(),getString(R.string.checkbox_isBought_true_toast), Toast.LENGTH_SHORT).show();
+                }else {
+                    gift.setBought(false);
+                    Toast.makeText(getApplicationContext(),getString(R.string.checkbox_isBought_false_toast), Toast.LENGTH_SHORT).show();
+                }
+
+                documentSnapshot.getReference().set(gift);
 
             }
         });

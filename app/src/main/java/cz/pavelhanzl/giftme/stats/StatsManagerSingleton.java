@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.stats;
 
 import android.support.annotation.NonNull;
 import android.util.Log;

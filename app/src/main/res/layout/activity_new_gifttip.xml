@@ -11,21 +11,13 @@
     <EditText
         android:drawableLeft="@drawable/ic_gift_color_primary"
         android:drawablePadding="10dp"
-        android:id="@+id/activity_NewGift_EditText_Name"
+        android:id="@+id/activity_NewGiftTip_EditText_Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/activity_newgift_name"
         android:inputType="text"
         />
 
-    <EditText
-        android:drawableLeft="@drawable/ic_money_color_primary_dark"
-        android:drawablePadding="10dp"
-        android:id="@+id/activity_NewGift_EditText_Price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/activity_newgift_budget"
-        android:inputType="number"
-        />
+
 
 </LinearLayout>

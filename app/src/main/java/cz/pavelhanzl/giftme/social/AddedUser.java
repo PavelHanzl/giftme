@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.social;
 
 public class AddedUser {
     private String name;

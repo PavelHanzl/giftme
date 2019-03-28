@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme.PersonsGiftlist;
+package cz.pavelhanzl.giftme.giftlist.persons_giftlist;
 
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -26,10 +26,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import cz.pavelhanzl.giftme.Activity_NewGift;
-import cz.pavelhanzl.giftme.PersonsGiftlistArchive.Activity_Persons_Gitflist_Archive;
-import cz.pavelhanzl.giftme.Gift;
-import cz.pavelhanzl.giftme.Name;
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive.Activity_Persons_Gitflist_Archive;
+import cz.pavelhanzl.giftme.giftlist.Name;
 import cz.pavelhanzl.giftme.R;
 
 public class Activity_Persons_Gitflist extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.stats;
 
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 

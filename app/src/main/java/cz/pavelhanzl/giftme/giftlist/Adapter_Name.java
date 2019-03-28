@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.giftlist;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +11,15 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import cz.pavelhanzl.giftme.R;
+import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
+
 /**
  * Adaptér dostává data ze zdroje dat do recycleviev. Extendujeme FirestoreRecyclerAdapter,
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adapter_My_Wish_List.GiftTipHolder> {
+public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.NameHolder> {
     private OnItemClickListener mOnItemClickListener;
 
     /**
@@ -25,38 +28,41 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
      *
      * @param options
      */
-    public Adapter_My_Wish_List(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
+    public Adapter_Name(@NonNull FirestoreRecyclerOptions<Name> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull GiftTipHolder holder, int position, @NonNull GiftTip model) { //co chceme umístit do jakého view v našem cardview layoutu
+    protected void onBindViewHolder(@NonNull NameHolder holder, int position, @NonNull Name model) { //co chceme umístit do jakého view v našem cardview layoutu
         holder.textViewName.setText(model.getName());
+        holder.textViewBudget.setText(String.valueOf(model.getBudget()));
     }
 
     @NonNull
     @Override
-    public GiftTipHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) { //jaký layout se má použít
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_my_gift_tip, viewGroup, false);
-        return new GiftTipHolder(v);
+    public NameHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) { //jaký layout se má použít
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_name, viewGroup, false);
+        return new NameHolder(v);
     }
 
     public void deleteItem(int position){
         getSnapshots().getSnapshot(position).getReference().delete();
+        StatsManagerSingleton.getInstance().getStatsData();
+
     }
 
 
 
 
-    class GiftTipHolder extends RecyclerView.ViewHolder{
+    class NameHolder extends RecyclerView.ViewHolder{
         TextView textViewName;
+        TextView textViewBudget;
 
 
-
-        public GiftTipHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
+        public NameHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
             super(itemView);
-            textViewName = itemView.findViewById(R.id.card_my_gift_tip_name);
-
+            textViewName = itemView.findViewById(R.id.card_name_name);
+            textViewBudget = itemView.findViewById(R.id.card_name_budget);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

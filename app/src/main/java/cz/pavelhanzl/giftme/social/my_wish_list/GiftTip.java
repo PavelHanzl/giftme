@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.social.my_wish_list;
 
 public class GiftTip {
     private String name;

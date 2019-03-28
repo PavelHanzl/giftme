@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme.PersonsGiftlist;
+package cz.pavelhanzl.giftme.giftlist.persons_giftlist;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +14,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import cz.pavelhanzl.giftme.Gift;
 import cz.pavelhanzl.giftme.R;
 
 /**
