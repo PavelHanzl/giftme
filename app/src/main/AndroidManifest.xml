@@ -13,12 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity_Persons_Gitflist"
+        <activity android:name=".PersonsGiftlist.Activity_Persons_Gitflist"
             android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar"/>
-        <activity android:name=".Activity_Persons_Gitflist_Archive"
+        <activity android:name=".PersonsGiftlistArchive.Activity_Persons_Gitflist_Archive"
             android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
@@ -29,6 +29,14 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
+
+        <activity
+            android:name=".Activity_My_Wish_List"
+            android:parentActivityName=".Activity_Main"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.darkActionBar" />
+
         <activity
             android:name=".Activity_NewAddedUser"
             android:parentActivityName=".Activity_Main"
@@ -38,7 +46,7 @@
 
         <activity
             android:name=".Activity_NewGift"
-            android:parentActivityName=".Activity_Persons_Gitflist"
+            android:parentActivityName=".PersonsGiftlist.Activity_Persons_Gitflist"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />

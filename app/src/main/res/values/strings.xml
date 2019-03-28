@@ -95,6 +95,8 @@
     <string name="Activity_newAddedUser_nickname">Set nickname for him/her</string>
     <string name="Activity_newAddedUser_email">E-mail of your friend or relative</string>
     <string name="activity_newaddeduser_your_email_error">You can not enter your own e-mail.</string>
+    <string name="my_wish_list_gifttip_heading">Gift tips for me</string>
+    <string name="my_wish_list_title">My wish list</string>
 
 
 </resources>

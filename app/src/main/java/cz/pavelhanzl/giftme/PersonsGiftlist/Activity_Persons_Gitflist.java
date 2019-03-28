@@ -1,14 +1,14 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.PersonsGiftlist;
 
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -26,11 +26,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
+import cz.pavelhanzl.giftme.Activity_NewGift;
+import cz.pavelhanzl.giftme.PersonsGiftlistArchive.Activity_Persons_Gitflist_Archive;
+import cz.pavelhanzl.giftme.Gift;
+import cz.pavelhanzl.giftme.Name;
+import cz.pavelhanzl.giftme.R;
+
+public class Activity_Persons_Gitflist extends AppCompatActivity {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mGiftReference;
-    private Adapter_Gift_Archive mAdapter_gift_archive;
+    private Adapter_Gift_Default mAdapter_gift_default;
 
     private DocumentSnapshot mDocumentSnapshotName;
     private Name mSelectedNameObject;
@@ -40,9 +46,9 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("Giftlist Archive","Processing oncreate");
-        setContentView(R.layout.activity_persons_gitflist_archive);
-        setTitle(getString(R.string.archive_title));
+        Log.d("Persons_Giftlist","Processing oncreate");
+        setContentView(R.layout.activity_persons_gitflist);
+        setTitle(getString(R.string.giftlist_title));
 
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -58,7 +64,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
      */
     private void getDocumentSnapshotForSelectedName() {
         if(getIntent().getStringExtra("path") != null){
-            Log.d("Giftlist Archive","Getting intent, setting DocumentReference");
+            Log.d("Persons_Giftlist","Getting intent, setting DocumentReference");
             mDocumentReferenceName = mDb.document(getIntent().getStringExtra("path"));
         }
 
@@ -71,14 +77,15 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
                         // Focus: Logika po načtení objektu zvoleného jména
 
                         mSelectedNameObject = mDocumentSnapshotName.toObject(Name.class);
-                        setTitle(getString(R.string.archive_title) + " - " + mSelectedNameObject.getName());
-                        Log.d("Activity_archive", " mSelectedNameObject " + mSelectedNameObject.getName());
+                        setTitle(getString(R.string.giftlist_title) + " - " + mSelectedNameObject.getName());
+                        Log.d("Activity_Persons_Giftli", " mSelectedNameObject " + mSelectedNameObject.getName());
 
-                        mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("GiftlistArchive");
+                        mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("Giftlist");
                         Log.d("Activity persons Giftli", mGiftReference.getPath());
 
+                        setUpFloatingButtons();
                         setUpRecyclerView();
-                        mAdapter_gift_archive.startListening();
+                        mAdapter_gift_default.startListening();
 
 
                     } else {
@@ -98,12 +105,12 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     private void setUpRecyclerView() {
         Query query = mGiftReference.orderBy("bought", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Gift> options = new FirestoreRecyclerOptions.Builder<Gift>().setQuery(query, Gift.class).build();
-        mAdapter_gift_archive = new Adapter_Gift_Archive(options);
+        mAdapter_gift_default = new Adapter_Gift_Default(options);
 
-        RecyclerView recyclerView = findViewById(R.id.activity_personsGiftlistArchive_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.activity_personsGiftlist_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(mAdapter_gift_archive);
+        recyclerView.setAdapter(mAdapter_gift_default);
 
         deleteItemFromRecyclerView(recyclerView);
         setCardsOnClickAction();
@@ -127,10 +134,10 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
                 if (i == ItemTouchHelper.RIGHT) {
-                    mAdapter_gift_archive.unarchiveItem(viewHolder.getAdapterPosition());
-                    Toast.makeText( getApplicationContext(), getString(R.string.swipe_unarchived), Toast.LENGTH_SHORT ).show();
+                    mAdapter_gift_default.archiveItem(viewHolder.getAdapterPosition());
+                    Toast.makeText( getApplicationContext(), getString(R.string.swipe_archived), Toast.LENGTH_SHORT ).show();
                 } else if (i == ItemTouchHelper.LEFT) {
-                    mAdapter_gift_archive.deleteItem(viewHolder.getAdapterPosition());
+                    mAdapter_gift_default.deleteItem(viewHolder.getAdapterPosition());
                     Toast.makeText( getApplicationContext(), getString(R.string.swipe_deleted), Toast.LENGTH_SHORT ).show();
                 }
 
@@ -153,8 +160,8 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
                     Log.d("Swiping:","Right");
 
                     //nastaví background a ikonku
-                    background = new ColorDrawable(getResources().getColor(R.color.swipeToUnArchive));
-                    icon = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_unarchive_white);
+                    background = new ColorDrawable(getResources().getColor(R.color.swipeToArchive));
+                    icon = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_archive);
 
                     //vypočítá pozici pro background
                     background.setBounds(itemView.getLeft(), itemView.getTop(),
@@ -214,17 +221,36 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        mAdapter_gift_archive.stopListening();
+        mAdapter_gift_default.stopListening();
     }
 
+    /**
+     * Nastaví floating button pro přidání dárku na giftlist. A v extra odešle ID otevřené osoby, pro kterou je určen otevřený giftlist.
+     */
+    private void setUpFloatingButtons() {
+        FloatingActionButton buttonAddGift = findViewById(R.id.activity_personsGiftlist_floatingButton_add_gift);
+        buttonAddGift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Activity_NewGift.class).putExtra("personsID",mDocumentReferenceName.getId()));
+            }
+        });
 
+        FloatingActionButton buttonShowArchive = findViewById(R.id.activity_personsGiftlist_floatingButton_show_archive);
+        buttonShowArchive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Activity_Persons_Gitflist_Archive.class).putExtra("path",mDocumentReferenceName.getPath()));
+            }
+        });
+    }
 
     /**
-     * Nastavuje co se stane po kliknutí na checkbox u itemu.
+     * Nastavuje co se stane po kliknutí na na checkbox u itemu.
      */
     //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
     private void setCardsOnClickAction() {
-        mAdapter_gift_archive.setOnItemClickListener(new Adapter_Gift_Archive.OnItemClickListener() {
+        mAdapter_gift_default.setOnItemClickListener(new Adapter_Gift_Default.OnItemClickListener() {
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Gift gift = documentSnapshot.toObject(Gift.class);

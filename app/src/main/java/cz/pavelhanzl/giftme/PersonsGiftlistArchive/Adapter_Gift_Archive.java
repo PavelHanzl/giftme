@@ -1,15 +1,12 @@
-package cz.pavelhanzl.giftme;
+package cz.pavelhanzl.giftme.PersonsGiftlistArchive;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -17,12 +14,15 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import cz.pavelhanzl.giftme.Gift;
+import cz.pavelhanzl.giftme.R;
+
 /**
  * Adaptér dostává data ze zdroje dat do recycleviev. Extendujeme FirestoreRecyclerAdapter,
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter_Gift_Default.GiftHolder> {
+public class Adapter_Gift_Archive extends FirestoreRecyclerAdapter<Gift, Adapter_Gift_Archive.GiftHolder> {
     private OnItemClickListener mOnItemClickListener;
 
     /**
@@ -31,7 +31,7 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
      *
      * @param options
      */
-    public Adapter_Gift_Default(@NonNull FirestoreRecyclerOptions<Gift> options) {
+    public Adapter_Gift_Archive(@NonNull FirestoreRecyclerOptions<Gift> options) {
         super(options);
     }
 
@@ -46,7 +46,7 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
     @NonNull
     @Override
     public GiftHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) { //onCreateViewHolder řeší jaký layout se má použít ; viewGroup je v našem případě recycleview
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_gift_default, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_gift_archive, viewGroup, false);
         return new GiftHolder(v);
     }
 
@@ -56,15 +56,15 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
 
     }
 
-    public void archiveItem(int position){
+    public void unarchiveItem(int position){
         //získá objekt dárku ze snapshotu na dané pozici
         Gift gift =getSnapshots().getSnapshot(position).toObject(Gift.class);
 
         //získá cestu k snapshotu na dané pozici a z něj vytvoří cestu do kolekce Archive
-        CollectionReference giftlistArchive = FirebaseFirestore.getInstance().collection(getSnapshots().getSnapshot(position).getReference().getParent().getParent().collection("GiftlistArchive").getPath());
+        CollectionReference giftlist = FirebaseFirestore.getInstance().collection(getSnapshots().getSnapshot(position).getReference().getParent().getParent().collection("Giftlist").getPath());
 
         //přidá objekt do předem definované kolekce v db
-        giftlistArchive.add(gift);
+        giftlist.add(gift);
 
         //smaže objekt z původního umístění;
         getSnapshots().getSnapshot(position).getReference().delete();
@@ -75,19 +75,18 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
 
 
 
+
     class GiftHolder extends RecyclerView.ViewHolder{
         TextView textViewName;
         TextView textViewPrice;
         CheckBox checkBoxBought;
 
 
-
         public GiftHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
             super(itemView);
-            textViewName = itemView.findViewById(R.id.card_giftDefault_name);
-            textViewPrice = itemView.findViewById(R.id.card_giftDefault_price);
-            checkBoxBought = itemView.findViewById(R.id.card_giftDefault_checkbox_bought);
-
+            textViewName = itemView.findViewById(R.id.card_giftArchive_name);
+            textViewPrice = itemView.findViewById(R.id.card_giftArchive_price);
+            checkBoxBought = itemView.findViewById(R.id.card_giftArchive_checkbox_bought);
 
 
             checkBoxBought.setOnClickListener(new View.OnClickListener() {

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Persons_Gitflist"
+    tools:context=".PersonsGiftlist.Activity_Persons_Gitflist"
     android:background="#222222">
     <TextView
         android:id="@+id/activity_personsGiftlistArchive_TextView_giftTitle"

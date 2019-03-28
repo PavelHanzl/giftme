@@ -16,7 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_Added_User extends FirestoreRecyclerAdapter<AddedUser, Adapter_Added_User.AddedUserHolder> {
+public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adapter_My_Wish_List.GiftTipHolder> {
     private OnItemClickListener mOnItemClickListener;
 
     /**
@@ -25,21 +25,20 @@ public class Adapter_Added_User extends FirestoreRecyclerAdapter<AddedUser, Adap
      *
      * @param options
      */
-    public Adapter_Added_User(@NonNull FirestoreRecyclerOptions<AddedUser> options) {
+    public Adapter_My_Wish_List(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull AddedUserHolder holder, int position, @NonNull AddedUser model) { //co chceme umístit do jakého view v našem cardview layoutu
+    protected void onBindViewHolder(@NonNull GiftTipHolder holder, int position, @NonNull GiftTip model) { //co chceme umístit do jakého view v našem cardview layoutu
         holder.textViewName.setText(model.getName());
-        holder.textViewEmail.setText(model.getEmail());
     }
 
     @NonNull
     @Override
-    public AddedUserHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) { //jaký layout se má použít
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_social_added_user, viewGroup, false);
-        return new AddedUserHolder(v);
+    public GiftTipHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) { //jaký layout se má použít
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_my_gift_tip, viewGroup, false);
+        return new GiftTipHolder(v);
     }
 
     public void deleteItem(int position){
@@ -49,15 +48,15 @@ public class Adapter_Added_User extends FirestoreRecyclerAdapter<AddedUser, Adap
 
 
 
-    class AddedUserHolder extends RecyclerView.ViewHolder{
+    class GiftTipHolder extends RecyclerView.ViewHolder{
         TextView textViewName;
-        TextView textViewEmail;
 
 
-        public AddedUserHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
+
+        public GiftTipHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
             super(itemView);
-            textViewName = itemView.findViewById(R.id.card_social_added_user_name);
-            textViewEmail = itemView.findViewById(R.id.card_social_added_user_email);
+            textViewName = itemView.findViewById(R.id.card_my_gift_tip_name);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
