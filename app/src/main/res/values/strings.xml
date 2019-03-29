@@ -100,5 +100,11 @@
     <string name="activity_newowngifttip_add_new_gifttip">Add new gift tip</string>
     <string name="activity_new_own_gifttip_name_added">Gift tip added.</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gifttips_title">Gift tips</string>
+    <string name="gifttips_gifttip_heading">Gift tips</string>
+    <string name="gifttips_booked_by_you_heading">Booked by you</string>
+
 
 </resources>

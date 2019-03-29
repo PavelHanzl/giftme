@@ -25,4 +25,11 @@ public class GiftTip {
     public String getBookedBy() {
         return bookedBy;
     }
+
+    public boolean isBooked() {
+        if(bookedBy != null){
+            return true;
+        }
+        return false;
+    }
 }

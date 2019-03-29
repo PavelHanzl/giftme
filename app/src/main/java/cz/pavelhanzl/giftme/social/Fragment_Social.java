@@ -1,5 +1,6 @@
 package cz.pavelhanzl.giftme.social;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
@@ -22,10 +23,14 @@ import android.widget.Toast;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import cz.pavelhanzl.giftme.Logic_DrawerFragment;
+import cz.pavelhanzl.giftme.giftlist.Adapter_Name;
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Activity_Persons_Gitflist;
+import cz.pavelhanzl.giftme.social.gift_tips.Activity_GiftTips;
 import cz.pavelhanzl.giftme.social.my_wish_list.Activity_My_Wish_List;
 import cz.pavelhanzl.giftme.R;
 
@@ -52,6 +57,7 @@ public class Fragment_Social extends Logic_DrawerFragment {
         setUpFloatingButton();
         setUpMyWishListButton();
         setUpRecyclerView();
+        setCardsOnClickAction();
 
         return mView;
     }
@@ -177,6 +183,21 @@ public class Fragment_Social extends Logic_DrawerFragment {
 
         super.onResume();
         setActiveMenuIcon(1);
+    }
+
+    /**
+     * Nastavuje co se stane po kliknutí na kartu s uživatelem.
+     */
+    private void setCardsOnClickAction() {
+        mAdapter_added_user.setOnItemClickListener(new Adapter_Added_User.OnItemClickListener() {
+            @Override
+            public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
+                //Toast.makeText(getContext(), "Position: " +position+" ID:"+ path, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), Activity_GiftTips.class).putExtra("path", path));
+            }
+        });
     }
 
 
