@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme.social.my_wish_list;
+package cz.pavelhanzl.giftme.wishlist;
 
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -6,55 +6,63 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Activity_NewGift;
-import cz.pavelhanzl.giftme.giftlist.Name;
+import cz.pavelhanzl.giftme.Logic_DrawerFragment;
 import cz.pavelhanzl.giftme.R;
+import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 
-public class Activity_My_Wish_List extends AppCompatActivity {
+public class Fragment_Wishlist extends Logic_DrawerFragment {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mMyGiftTipsReference;
     private Adapter_My_Wish_List mAdapter_my_wish_list;
+    private View mView;
 
-    private DocumentSnapshot mDocumentSnapshotName;
-    private Name mSelectedNameObject;
-    private DocumentReference mDocumentReferenceName;
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Log.d("Activity_my_wish_list","Processing oncreate");
-        setContentView(R.layout.activity_my_wish_list);
-
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white); //nastaví ikonku bílé šipky v actionbaru (nahradí defaultní černou šipku)
-        setTitle(getString(R.string.my_wish_list_title));
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setActiveMenuIcon(1);
+        mView = inflater.inflate(R.layout.fragment_wishlist, container, false);
 
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        setUpFloatingButtons();
+
+        setUpFloatingButton();
         setUpRecyclerView();
 
+        return mView;
+    }
 
+    private void getDataForStatistics() {
+        //získá data potřebná pro fragment se statistikami (realizováno singletonem)
+        StatsManagerSingleton.getInstance().getStatsData();
+    }
+
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        setActiveMenuIcon(1);
     }
 
     /**
@@ -66,9 +74,9 @@ public class Activity_My_Wish_List extends AppCompatActivity {
         FirestoreRecyclerOptions<GiftTip> options = new FirestoreRecyclerOptions.Builder<GiftTip>().setQuery(query, GiftTip.class).build();
         mAdapter_my_wish_list = new Adapter_My_Wish_List(options);
 
-        RecyclerView recyclerView = findViewById(R.id.activity_my_wish_list_recycler_view);
+        RecyclerView recyclerView = mView.findViewById(R.id.activity_my_wish_list_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter_my_wish_list);
 
         deleteItemFromRecyclerView(recyclerView);
@@ -94,7 +102,7 @@ public class Activity_My_Wish_List extends AppCompatActivity {
 
                 if (i == ItemTouchHelper.LEFT) {
                     mAdapter_my_wish_list.deleteItem(viewHolder.getAdapterPosition());
-                    Toast.makeText( getApplicationContext(), getString(R.string.swipe_deleted), Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(getContext(), getString(R.string.swipe_deleted), Toast.LENGTH_SHORT ).show();
                 }
 
 
@@ -106,7 +114,7 @@ public class Activity_My_Wish_List extends AppCompatActivity {
                 View itemView = viewHolder.itemView;
                 int backgroundCornerOffset = 20;
                 ColorDrawable background;
-                Drawable icon = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_archive);
+                Drawable icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_archive);
 
                 int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
                 int iconTop = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
@@ -117,7 +125,7 @@ public class Activity_My_Wish_List extends AppCompatActivity {
 
                     //nastaví background a ikonku
                     background = new ColorDrawable(getResources().getColor(R.color.swipeToDelete));
-                    icon = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_delete_sweep_white);
+                    icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_sweep_white);
 
                     //vypočítá pozici pro background
                     background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
@@ -142,7 +150,6 @@ public class Activity_My_Wish_List extends AppCompatActivity {
 
         }).attachToRecyclerView(recyclerView);
     }
-
     /**
      * Znovu inicializuje obrazovku při statu této aktivity. Důléžité při přechodu zpět z vytvoření nové item, aby se znovu spustilo poslochání na Adaptéru.
      */
@@ -162,12 +169,12 @@ public class Activity_My_Wish_List extends AppCompatActivity {
     /**
      * Nastaví floating button pro přidání dárku na giftlist. A v extra odešle ID otevřené osoby, pro kterou je určen otevřený giftlist.
      */
-    private void setUpFloatingButtons() {
-        FloatingActionButton buttonAddGift = findViewById(R.id.activity_my_wish_list_floatingButton_add_gift);
+    private void setUpFloatingButton() {
+        FloatingActionButton buttonAddGift = mView.findViewById(R.id.activity_my_wish_list_floatingButton_add_gift);
         buttonAddGift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Activity_NewOwnGiftTip.class));
+                startActivity(new Intent(getContext(), Activity_NewOwnGiftTip.class));
             }
         });
     }

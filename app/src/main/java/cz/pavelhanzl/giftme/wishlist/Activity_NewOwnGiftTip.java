@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme.social.my_wish_list;
+package cz.pavelhanzl.giftme.wishlist;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

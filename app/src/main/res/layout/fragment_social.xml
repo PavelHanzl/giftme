@@ -7,32 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/frag_social_button_my_wish_list"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/colorPrimaryLight"
-        android:text="@string/social_my_wish_list"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:drawableLeft="@drawable/ic_card_gift_light_grey"
-        android:drawableRight="@drawable/ic_card_gift_light_grey"
-        android:drawableTint="@color/white"
-        android:padding="30dp"        />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_marginTop="94dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/frag_social_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="108dp"
         />
 
     <android.support.design.widget.FloatingActionButton

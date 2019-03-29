@@ -16,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
-import cz.pavelhanzl.giftme.social.my_wish_list.GiftTip;
+import cz.pavelhanzl.giftme.wishlist.GiftTip;
 
 /**
  * Adaptér dostává data ze zdroje dat do recycleviev. Extendujeme FirestoreRecyclerAdapter,

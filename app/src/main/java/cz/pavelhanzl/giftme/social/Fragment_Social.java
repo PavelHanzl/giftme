@@ -31,7 +31,6 @@ import cz.pavelhanzl.giftme.Logic_DrawerFragment;
 import cz.pavelhanzl.giftme.giftlist.Adapter_Name;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Activity_Persons_Gitflist;
 import cz.pavelhanzl.giftme.social.gift_tips.Activity_GiftTips;
-import cz.pavelhanzl.giftme.social.my_wish_list.Activity_My_Wish_List;
 import cz.pavelhanzl.giftme.R;
 
 public class Fragment_Social extends Logic_DrawerFragment {
@@ -45,7 +44,7 @@ public class Fragment_Social extends Logic_DrawerFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setActiveMenuIcon(1);
+        setActiveMenuIcon(2);
         mView = inflater.inflate(R.layout.fragment_social,container,false);
 
         mDb = FirebaseFirestore.getInstance();
@@ -55,22 +54,13 @@ public class Fragment_Social extends Logic_DrawerFragment {
         mAddedUsersReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("AddedUsers");
 
         setUpFloatingButton();
-        setUpMyWishListButton();
         setUpRecyclerView();
         setCardsOnClickAction();
 
         return mView;
     }
 
-    private void setUpMyWishListButton() {
-        Button buttonMyWishList = mView.findViewById(R.id.frag_social_button_my_wish_list);
-        buttonMyWishList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Activity_My_Wish_List.class));
-            }
-        });
-    }
+
 
     /**
      * Nastaví floating button pro přidání uživatele.
@@ -182,7 +172,7 @@ public class Fragment_Social extends Logic_DrawerFragment {
     public void onResume() {
 
         super.onResume();
-        setActiveMenuIcon(1);
+        setActiveMenuIcon(2);
     }
 
     /**

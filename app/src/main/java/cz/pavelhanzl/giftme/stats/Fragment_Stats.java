@@ -53,7 +53,7 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setActiveMenuIcon(2);
+        setActiveMenuIcon(3);
         mView = inflater.inflate(R.layout.fragment_stats, container, false);
 
         mDb = FirebaseFirestore.getInstance();
@@ -267,7 +267,7 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     public void onResume() {
 
         super.onResume();
-        setActiveMenuIcon(2);
+        setActiveMenuIcon(3);
     }
 
 }

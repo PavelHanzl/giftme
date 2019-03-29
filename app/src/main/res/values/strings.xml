@@ -105,6 +105,10 @@
     <string name="gifttips_title">Gift tips</string>
     <string name="gifttips_gifttip_heading">Gift tips</string>
     <string name="gifttips_booked_by_you_heading">Booked by you</string>
+    <string name="friends">Your friends</string>
+    <string name="wishlist">Your wishlist</string>
+    <string name="tab_layout_has_on_wishlist">Has on wishlist</string>
+    <string name="others_suggest">Others suggesting</string>
 
 
 </resources>

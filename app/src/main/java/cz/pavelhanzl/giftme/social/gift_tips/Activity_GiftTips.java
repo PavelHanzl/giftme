@@ -99,8 +99,8 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
 
     private void setTabLayout() {
         mTabLayout = findViewById(R.id.activity_gifttips_tablayout);
-        mTabLayout.addTab(mTabLayout.newTab().setText("By user"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("By others"));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_layout_has_on_wishlist));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.others_suggest));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 

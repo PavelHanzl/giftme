@@ -29,6 +29,7 @@ import cz.pavelhanzl.giftme.giftlist.Fragment_Giftlist;
 import cz.pavelhanzl.giftme.login_and_signup.Activity_Login;
 import cz.pavelhanzl.giftme.social.Fragment_Social;
 import cz.pavelhanzl.giftme.stats.Fragment_Stats;
+import cz.pavelhanzl.giftme.wishlist.Fragment_Wishlist;
 
 public class Activity_Main extends AppCompatActivity {
     //Deklarace členských proměnných
@@ -120,7 +121,10 @@ public class Activity_Main extends AppCompatActivity {
                     case R.id.nav_giftlist:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Giftlist()).addToBackStack(null).commit();
                         break;
-                    case R.id.nav_groups:
+                    case R.id.nav_wishlist:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Wishlist()).addToBackStack(null).commit();
+                        break;
+                    case R.id.nav_friends:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Social()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_stats:

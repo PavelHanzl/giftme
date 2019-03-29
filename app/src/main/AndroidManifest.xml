@@ -31,8 +31,8 @@
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
-            android:name=".social.my_wish_list.Activity_NewOwnGiftTip"
-            android:parentActivityName=".social.my_wish_list.Activity_My_Wish_List"
+            android:name=".wishlist.Activity_NewOwnGiftTip"
+            android:parentActivityName=".Activity_Main"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
@@ -45,12 +45,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
-        <activity
-            android:name=".social.my_wish_list.Activity_My_Wish_List"
-            android:parentActivityName=".Activity_Main"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
             android:name=".social.Activity_NewAddedUser"
