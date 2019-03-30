@@ -32,6 +32,36 @@
             android:layout_centerVertical="true"
             />
 
+        <LinearLayout
+            android:id="@+id/card_my_gift_tip_public_booked_by_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/card_my_gift_tip_public_name"
+            android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/card_my_gift_tip_public_booked_by_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card_my_gift_tip_tip_public_bookedBy"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:maxLines="1"
+            />
+
+        <TextView
+            android:id="@+id/card_my_gift_tip_public_textview_booked_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test@test.cz"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:maxLines="1"
+            android:paddingLeft="6dp"
+            />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

@@ -112,6 +112,7 @@
     <string name="checkbox_isBookedByYou_true_toast">Booked</string>
     <string name="checkbox_isBookedByYou_false_toast">Unbooked.</string>
     <string name="card_others_gift_tip_public_tipBy">Tip by:</string>
+    <string name="card_my_gift_tip_tip_public_bookedBy">Booked by:</string>
 
 
 </resources>

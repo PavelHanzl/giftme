@@ -49,13 +49,23 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
         //pokud model.getBookedBy() a aktivní přihlášený uživatel nejsou null, tak se ptá zda-li se hodnota bookedBy v gifttipu rovná přihlášenému
         //uživateli - pokud se nerovná, tak skryje kartu (nastaví její velikost na 0), pokud se rovná, tak nastaví velikost karty na původní hodnoty a zobrazí ji
         if (model.getBookedBy()==null ? FirebaseAuth.getInstance().getCurrentUser().getEmail()==null : !model.getBookedBy().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
-            //holder.rootView.setLayoutParams(holder.zeroParams);
-            holder.checkBoxBookedByYou.setVisibility(View.GONE);
+            //holder.rootView.setLayoutParams(holder.zeroParams); //skryje celou položku - splňuje zadání BP
+            holder.checkBoxBookedByYou.setVisibility(View.GONE); //skryje check box pro bookování
+            holder.linearLayoutBookedBy.setVisibility(View.VISIBLE); //zobrazí informace o tom,  jaký email si rezervoval dárek
+            holder.textViewBookedBy.setText(model.getBookedBy()); //nastaví email, kdo si rezervoval dárek
+
+            holder.itemView.setBackgroundColor(Color.argb(100,255,255,255)); //nastaví šedý background
+
             holder.textViewName.setText(model.getName());
-            holder.itemView.setBackgroundColor(Color.argb(100,255,255,255));
+
 
         }else {
-            holder.rootView.setLayoutParams(holder.defaultParams);
+            //holder.rootView.setLayoutParams(holder.defaultParams);
+
+            holder.checkBoxBookedByYou.setVisibility(View.VISIBLE); //zobrazí check box pro bookování
+            holder.linearLayoutBookedBy.setVisibility(View.GONE); //skryje informace o tom,  jaký email si rezervoval dárek
+
+            holder.itemView.setBackgroundColor(Color.argb(255,255,255,255)); //nastaví bílý background
 
             holder.textViewName.setText(model.getName());
             holder.checkBoxBookedByYou.setChecked(model.isBooked());
@@ -97,7 +107,9 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
 
     class OwnTipsHolder extends RecyclerView.ViewHolder{
         TextView textViewName;
+        TextView textViewBookedBy;
         CheckBox checkBoxBookedByYou;
+        LinearLayout linearLayoutBookedBy;
 
         public LinearLayout.LayoutParams zeroParams;
         public ViewGroup.LayoutParams defaultParams;
@@ -114,8 +126,8 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
 
             textViewName = itemView.findViewById(R.id.card_my_gift_tip_public_name);
             checkBoxBookedByYou = itemView.findViewById(R.id.card_my_gift_tip_public_checkbox_booked_by_you);
-
-
+            linearLayoutBookedBy = itemView.findViewById(R.id.card_my_gift_tip_public_booked_by_linear_layout);
+            textViewBookedBy = itemView.findViewById(R.id.card_my_gift_tip_public_textview_booked_by);
 
             checkBoxBookedByYou.setOnClickListener(new View.OnClickListener() {
                 @Override

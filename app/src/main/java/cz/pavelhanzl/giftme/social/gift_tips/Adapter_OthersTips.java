@@ -1,5 +1,6 @@
 package cz.pavelhanzl.giftme.social.gift_tips;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -48,9 +49,22 @@ public class Adapter_OthersTips extends FirestoreRecyclerAdapter<GiftTip, Adapte
         //pokud model.getBookedBy() a aktivní přihlášený uživatel nejsou null, tak se ptá zda-li se hodnota bookedBy v gifttipu rovná přihlášenému
         //uživateli - pokud se nerovná, tak skryje kartu (nastaví její velikost na 0), pokud se rovná, tak nastaví velikost karty na původní hodnoty a zobrazí ji
         if (model.getBookedBy()==null ? FirebaseAuth.getInstance().getCurrentUser().getEmail()==null : !model.getBookedBy().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
-            holder.rootView.setLayoutParams(holder.zeroParams);
+            //holder.rootView.setLayoutParams(holder.zeroParams);  //skryje celou položku - splňuje zadání BP
+            holder.checkBoxBookedByYou.setVisibility(View.GONE); //skryje check box pro bookování
+            holder.linearLayoutBookedBy.setVisibility(View.VISIBLE); //zobrazí informace o tom,  jaký email si rezervoval dárek
+            holder.textViewBookedBy.setText(model.getBookedBy()); //nastaví email, kdo si rezervoval dárek
+
+            holder.itemView.setBackgroundColor(Color.argb(100,255,255,255)); //nastaví šedý background
+
+            holder.textViewName.setText(model.getName());
+            holder.textViewTipBy.setText(model.getTipBy());
         }else {
-            holder.rootView.setLayoutParams(holder.defaultParams);
+            //holder.rootView.setLayoutParams(holder.defaultParams);
+
+            holder.checkBoxBookedByYou.setVisibility(View.VISIBLE); //zobrazí check box pro bookování
+            holder.linearLayoutBookedBy.setVisibility(View.GONE); //skryje informace o tom,  jaký email si rezervoval dárek
+
+            holder.itemView.setBackgroundColor(Color.argb(255,255,255,255)); //nastaví bílý background
 
             holder.textViewName.setText(model.getName());
             holder.textViewTipBy.setText(model.getTipBy());
@@ -95,7 +109,9 @@ public class Adapter_OthersTips extends FirestoreRecyclerAdapter<GiftTip, Adapte
     class OthersTipsHolder extends RecyclerView.ViewHolder{
         TextView textViewName;
         TextView textViewTipBy;
+        TextView textViewBookedBy;
         CheckBox checkBoxBookedByYou;
+        LinearLayout linearLayoutBookedBy;
 
         public LinearLayout.LayoutParams zeroParams;
         public ViewGroup.LayoutParams defaultParams;
@@ -113,6 +129,8 @@ public class Adapter_OthersTips extends FirestoreRecyclerAdapter<GiftTip, Adapte
             textViewName = itemView.findViewById(R.id.card_others_gift_tip_public_name);
             textViewTipBy = itemView.findViewById(R.id.card_others_gift_tip_public_textview_tip_by);
             checkBoxBookedByYou = itemView.findViewById(R.id.card_others_gift_tip_public_checkbox_booked_by_you);
+            linearLayoutBookedBy = itemView.findViewById(R.id.card_others_gift_tip_public_booked_by_linear_layout);
+            textViewBookedBy = itemView.findViewById(R.id.card_others_gift_tip_public_textview_booked_by);
 
 
 
