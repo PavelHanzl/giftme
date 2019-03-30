@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_others_gift_tip_public_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+     <TextView
+         android:id="@+id/card_others_gift_tip_public_name"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Name"
+         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+         android:maxLines="1"
+         android:drawableLeft="@drawable/ic_card_gift_light_grey"
+         android:drawablePadding="5dp"
+         />
+
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/card_others_gift_tip_public_checkbox_booked_by_you"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/card_others_gift_tip_public_tip_by_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card_others_gift_tip_public_tipBy"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:maxLines="1"
+            android:layout_below="@+id/card_others_gift_tip_public_name"
+            />
+
+        <TextView
+            android:id="@+id/card_others_gift_tip_public_textview_tip_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test@test.cz"
+            android:paddingLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:maxLines="1"
+            android:layout_toRightOf="@+id/card_others_gift_tip_public_tip_by_title"
+            android:layout_toEndOf="@+id/card_others_gift_tip_public_tip_by_title"
+            android:layout_below="@+id/card_others_gift_tip_public_name"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
