@@ -10,13 +10,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import cz.pavelhanzl.giftme.R;
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Adapter_Gift_Default;
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
 import cz.pavelhanzl.giftme.wishlist.GiftTip;
 
 /**
@@ -30,6 +35,7 @@ import cz.pavelhanzl.giftme.wishlist.GiftTip;
 public class Fragment_OwnTips extends Fragment {
     private String mSelectedUserEmail;
     private FirebaseFirestore mDb = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private CollectionReference mOwnGiftTipsPublicCollection;
     private Adapter_OwnTips mAdapter_ownTips;
     private View mView;
@@ -87,6 +93,8 @@ public class Fragment_OwnTips extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter_ownTips);
+
+        setCardsOnClickAction();
     }
 
 
@@ -120,6 +128,33 @@ public class Fragment_OwnTips extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    /**
+     * Nastavuje co se stane po kliknutí na na checkbox u itemu.
+     */
+    //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
+    private void setCardsOnClickAction() {
+        mAdapter_ownTips.setOnItemClickListener(new Adapter_OwnTips.OnItemClickListener() {
+
+
+            @Override
+            public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
+                GiftTip giftTip = documentSnapshot.toObject(GiftTip.class);
+
+                //pokud není checkbox "bookedBy" zaškrtlý, tak ho zaškrtne a naopak...
+                if(giftTip.getBookedBy()==null){
+                    giftTip.setBookedBy(mAuth.getCurrentUser().getEmail());
+                    Toast.makeText(getContext(),getString(R.string.checkbox_isBookedByYou_true_toast), Toast.LENGTH_SHORT).show();
+                }else {
+                    giftTip.setBookedBy(null);
+                    Toast.makeText(getContext(),getString(R.string.checkbox_isBookedByYou_false_toast), Toast.LENGTH_SHORT).show();
+                }
+
+                documentSnapshot.getReference().set(giftTip);
+
+            }
+        });
     }
 
     /**

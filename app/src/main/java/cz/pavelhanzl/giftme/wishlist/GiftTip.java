@@ -26,6 +26,18 @@ public class GiftTip {
         return bookedBy;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTipBy(String tipBy) {
+        this.tipBy = tipBy;
+    }
+
+    public void setBookedBy(String bookedBy) {
+        this.bookedBy = bookedBy;
+    }
+
     public boolean isBooked() {
         if(bookedBy != null){
             return true;

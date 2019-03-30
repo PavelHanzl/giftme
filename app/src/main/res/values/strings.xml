@@ -109,6 +109,8 @@
     <string name="wishlist">Your wishlist</string>
     <string name="tab_layout_has_on_wishlist">Has on wishlist</string>
     <string name="others_suggest">Others suggesting</string>
+    <string name="checkbox_isBookedByYou_true_toast">Booked</string>
+    <string name="checkbox_isBookedByYou_false_toast">Unbooked.</string>
 
 
 </resources>
