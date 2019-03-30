@@ -1,15 +1,20 @@
 package cz.pavelhanzl.giftme.social.gift_tips;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,9 +43,19 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
 
     @Override
     protected void onBindViewHolder(@NonNull OwnTipsHolder holder, int position, @NonNull GiftTip model) { //co chceme umístit do jakého view v našem cardview layoutu
-        holder.textViewName.setText(model.getName());
-        holder.checkBoxBookedByYou.setChecked(model.isBooked());
+        String email=model.getBookedBy();
+        Log.d("adapter owntips", "onBindViewHolder:před ifem " +email);
 
+        //pokud model.getBookedBy() a aktivní přihlášený uživatel nejsou null, tak se ptá zda-li se hodnota bookedBy v gifttipu rovná přihlášenému
+        //uživateli - pokud se nerovná, tak skryje kartu (nastaví její velikost na 0), pokud se rovná, tak nastaví velikost karty na původní hodnoty a zobrazí ji
+        if (model.getBookedBy()==null ? FirebaseAuth.getInstance().getCurrentUser().getEmail()==null : !model.getBookedBy().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
+            holder.rootView.setLayoutParams(holder.zeroParams);
+        }else {
+            holder.rootView.setLayoutParams(holder.defaultParams);
+            holder.textViewName.setText(model.getName());
+            holder.checkBoxBookedByYou.setChecked(model.isBooked());
+        }
+        
     }
 
     @NonNull
@@ -79,10 +94,19 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
         TextView textViewName;
         CheckBox checkBoxBookedByYou;
 
+        public LinearLayout.LayoutParams zeroParams;
+        public ViewGroup.LayoutParams defaultParams;
+        public CardView rootView;
+
 
 
         public OwnTipsHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
             super(itemView);
+
+            zeroParams = new LinearLayout.LayoutParams(0, 0); //nastaví nulovou velikost pro tento itemview - používá se v metodě OnBindViewHolder
+            rootView = itemView.findViewById(R.id.card_my_gift_tip_public_root_view); //nejvíce vnější view z cardlayoutu - používá se v metodě OnBindViewHolder
+            defaultParams = rootView.getLayoutParams(); //původní velikost view před zmenšením na 0 - používá se v metodě OnBindViewHolder
+
             textViewName = itemView.findViewById(R.id.card_my_gift_tip_public_name);
             checkBoxBookedByYou = itemView.findViewById(R.id.card_my_gift_tip_public_checkbox_booked_by_you);
 
