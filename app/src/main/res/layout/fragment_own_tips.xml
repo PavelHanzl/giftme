@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/activity_own_tips_TextView_giftTitle"
+        android:id="@+id/frag_own_tips_TextView_giftTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gifttips_gifttip_heading"
@@ -19,7 +19,7 @@
         android:drawablePadding="5dp"
         android:drawableStart="@drawable/ic_gift_color_primary" />
     <TextView
-        android:id="@+id/activity_own_tips_TextView_bought"
+        android:id="@+id/frag_own_tips_TextView_bought"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gifttips_booked_by_you_heading"

@@ -44,7 +44,6 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("Persons_Giftlist","Processing oncreate");
         setContentView(R.layout.activity_persons_gitflist);
         setTitle(getString(R.string.giftlist_title));
 
@@ -62,8 +61,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
      */
     private void getDocumentSnapshotForSelectedName() {
         if(getIntent().getStringExtra("path") != null){
-            Log.d("Persons_Giftlist","Getting intent, setting DocumentReference");
-            mDocumentReferenceName = mDb.document(getIntent().getStringExtra("path"));
+            mDocumentReferenceName = mDb.document(getIntent().getStringExtra("path")); //Getting intent, setting DocumentReference
         }
 
         mDocumentReferenceName.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

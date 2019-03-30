@@ -1,10 +1,9 @@
-package cz.pavelhanzl.giftme.social.gift_tips;
+package cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ import cz.pavelhanzl.giftme.wishlist.GiftTip;
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_OwnTips.OwnTipsHolder> {
+public class Adapter_OthersTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_OthersTips.OthersTipsHolder> {
     private OnItemClickListener mOnItemClickListener;
 
     /**
@@ -37,19 +36,18 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
      *
      * @param options
      */
-    public Adapter_OwnTips(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
+    public Adapter_OthersTips(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull OwnTipsHolder holder, int position, @NonNull GiftTip model) { //co chceme umístit do jakého view v našem cardview layoutu
+    protected void onBindViewHolder(@NonNull OthersTipsHolder holder, int position, @NonNull GiftTip model) { //co chceme umístit do jakého view v našem cardview layoutu
         String email=model.getBookedBy();
-        Log.d("adapter owntips", "onBindViewHolder:před ifem " +email);
 
         //pokud model.getBookedBy() a aktivní přihlášený uživatel nejsou null, tak se ptá zda-li se hodnota bookedBy v gifttipu rovná přihlášenému
         //uživateli - pokud se nerovná, tak skryje kartu (nastaví její velikost na 0), pokud se rovná, tak nastaví velikost karty na původní hodnoty a zobrazí ji
         if (model.getBookedBy()==null ? FirebaseAuth.getInstance().getCurrentUser().getEmail()==null : !model.getBookedBy().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
-            //holder.rootView.setLayoutParams(holder.zeroParams); //skryje celou položku - splňuje zadání BP
+            //holder.rootView.setLayoutParams(holder.zeroParams);  //skryje celou položku - splňuje zadání BP
             holder.checkBoxBookedByYou.setVisibility(View.GONE); //skryje check box pro bookování
             holder.linearLayoutBookedBy.setVisibility(View.VISIBLE); //zobrazí informace o tom,  jaký email si rezervoval dárek
             holder.textViewBookedBy.setText(model.getBookedBy()); //nastaví email, kdo si rezervoval dárek
@@ -57,8 +55,7 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
             holder.itemView.setBackgroundColor(Color.argb(100,255,255,255)); //nastaví šedý background
 
             holder.textViewName.setText(model.getName());
-
-
+            holder.textViewTipBy.setText(model.getTipBy());
         }else {
             //holder.rootView.setLayoutParams(holder.defaultParams);
 
@@ -68,16 +65,18 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
             holder.itemView.setBackgroundColor(Color.argb(255,255,255,255)); //nastaví bílý background
 
             holder.textViewName.setText(model.getName());
+            holder.textViewTipBy.setText(model.getTipBy());
             holder.checkBoxBookedByYou.setChecked(model.isBooked());
+
         }
 
     }
 
     @NonNull
     @Override
-    public OwnTipsHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) { //onCreateViewHolder řeší jaký layout se má použít ; viewGroup je v našem případě recycleview
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_my_gift_tip_public, viewGroup, false);
-        return new OwnTipsHolder(v);
+    public OthersTipsHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) { //onCreateViewHolder řeší jaký layout se má použít ; viewGroup je v našem případě recycleview
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_others_gift_tip_public, viewGroup, false);
+        return new OthersTipsHolder(v);
     }
 
     public void deleteItem(int position){
@@ -105,8 +104,9 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
 
 
 
-    class OwnTipsHolder extends RecyclerView.ViewHolder{
+    class OthersTipsHolder extends RecyclerView.ViewHolder{
         TextView textViewName;
+        TextView textViewTipBy;
         TextView textViewBookedBy;
         CheckBox checkBoxBookedByYou;
         LinearLayout linearLayoutBookedBy;
@@ -117,17 +117,20 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
 
 
 
-        public OwnTipsHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
+        public OthersTipsHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
             super(itemView);
 
             zeroParams = new LinearLayout.LayoutParams(0, 0); //nastaví nulovou velikost pro tento itemview - používá se v metodě OnBindViewHolder
-            rootView = itemView.findViewById(R.id.card_my_gift_tip_public_root_view); //nejvíce vnější view z cardlayoutu - používá se v metodě OnBindViewHolder
+            rootView = itemView.findViewById(R.id.card_others_gift_tip_public_root_view); //nejvíce vnější view z cardlayoutu - používá se v metodě OnBindViewHolder
             defaultParams = rootView.getLayoutParams(); //původní velikost view před zmenšením na 0 - používá se v metodě OnBindViewHolder
 
-            textViewName = itemView.findViewById(R.id.card_my_gift_tip_public_name);
-            checkBoxBookedByYou = itemView.findViewById(R.id.card_my_gift_tip_public_checkbox_booked_by_you);
-            linearLayoutBookedBy = itemView.findViewById(R.id.card_my_gift_tip_public_booked_by_linear_layout);
-            textViewBookedBy = itemView.findViewById(R.id.card_my_gift_tip_public_textview_booked_by);
+            textViewName = itemView.findViewById(R.id.card_others_gift_tip_public_name);
+            textViewTipBy = itemView.findViewById(R.id.card_others_gift_tip_public_textview_tip_by);
+            checkBoxBookedByYou = itemView.findViewById(R.id.card_others_gift_tip_public_checkbox_booked_by_you);
+            linearLayoutBookedBy = itemView.findViewById(R.id.card_others_gift_tip_public_booked_by_linear_layout);
+            textViewBookedBy = itemView.findViewById(R.id.card_others_gift_tip_public_textview_booked_by);
+
+
 
             checkBoxBookedByYou.setOnClickListener(new View.OnClickListener() {
                 @Override

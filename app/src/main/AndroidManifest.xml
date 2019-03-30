@@ -38,6 +38,13 @@
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
+            android:name=".social.gift_tips.others_gift_tips.Activity_NewOthersGiftTip"
+            android:parentActivityName=".social.gift_tips.Activity_GiftTips"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.darkActionBar" />
+
+        <activity
             android:name=".social.gift_tips.Activity_GiftTips"
             android:parentActivityName=".Activity_Main"
             android:launchMode="singleTop"

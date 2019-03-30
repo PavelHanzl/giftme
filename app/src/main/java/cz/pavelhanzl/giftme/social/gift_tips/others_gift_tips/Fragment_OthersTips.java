@@ -1,12 +1,13 @@
-package cz.pavelhanzl.giftme.social.gift_tips;
+package cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import cz.pavelhanzl.giftme.R;
+import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.Fragment_OwnTips;
 import cz.pavelhanzl.giftme.wishlist.GiftTip;
 
 /**
@@ -72,9 +74,8 @@ public class Fragment_OthersTips extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       Log.d("Others tip","on create view, selected user email: " + mSelectedUserEmail);
         mView = inflater.inflate(R.layout.fragment_others_tips, container, false);
-
+        setUpFloatingButton();
         setUpRecyclerView();
         return mView;
 
@@ -92,6 +93,19 @@ public class Fragment_OthersTips extends Fragment {
         recyclerView.setAdapter(mAdapter_othersTips);
 
         setCardsOnClickAction();
+    }
+
+    /**
+     * Nastaví floating button pro přidání gifttipu.
+     */
+    private void setUpFloatingButton() {
+        FloatingActionButton buttonAddGiftTip = mView.findViewById(R.id.frag_others_tips_floatingButton_add_gifttip);
+        buttonAddGiftTip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), Activity_NewOthersGiftTip.class).putExtra("selectedUserEmail", mSelectedUserEmail));
+            }
+        });
     }
 
 
@@ -126,6 +140,11 @@ public class Fragment_OthersTips extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     /**

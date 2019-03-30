@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme.social.gift_tips;
+package cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips;
 
 import android.content.Context;
 import android.net.Uri;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Adapter_Gift_Default;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
 import cz.pavelhanzl.giftme.wishlist.GiftTip;
 
 /**
@@ -75,8 +72,6 @@ public class Fragment_OwnTips extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_own_tips, container, false);
-        Log.d("own tips","on create view, selected user email:" + mSelectedUserEmail);
-
 
         setUpRecyclerView();
 

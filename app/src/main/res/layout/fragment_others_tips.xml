@@ -6,12 +6,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/frag_others_tips_TextView_giftTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gifttips_gifttip_heading"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="16dp"
+        android:drawableLeft="@drawable/ic_gift_color_primary"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_gift_color_primary" />
+    <TextView
+        android:id="@+id/frag_others_tips_TextView_bought"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gifttips_booked_by_you_heading"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="16dp"
+        android:layout_gravity="end"
+        android:drawableRight="@drawable/ic_done_color_primary"
+        android:drawablePadding="5dp"
+        android:drawableEnd="@drawable/ic_done_color_primary" />
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/frag_others_tips_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp"/>
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/frag_others_tips_floatingButton_add_name"
+        android:id="@+id/frag_others_tips_floatingButton_add_gifttip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

@@ -1,25 +1,13 @@
 package cz.pavelhanzl.giftme.social.gift_tips;
 
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,17 +15,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.giftlist.Name;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Activity_NewGift;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Adapter_Gift_Default;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive.Activity_Persons_Gitflist_Archive;
 import cz.pavelhanzl.giftme.social.AddedUser;
+import cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips.Fragment_OthersTips;
+import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.Fragment_OwnTips;
 
-public class Activity_GiftTips extends AppCompatActivity implements Fragment_OwnTips.OnFragmentInteractionListener,Fragment_OthersTips.OnFragmentInteractionListener {
+public class Activity_GiftTips extends AppCompatActivity implements Fragment_OwnTips.OnFragmentInteractionListener, Fragment_OthersTips.OnFragmentInteractionListener {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mGiftReference;
@@ -47,7 +32,7 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
     private AddedUser mSelectedNameObject;
     private DocumentReference mDocumentReferenceName;
 
-    private TabLayout mTabLayout;
+    public TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,14 +117,6 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
 
 
 
-//                        mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("Giftlist");
-//                        Log.d("Activity persons Giftli", mGiftReference.getPath());
-//
-//                        setUpFloatingButtons();
-//                        setUpRecyclerView();
-//                        mAdapter_gift_default.startListening();
-
-
                     } else {
                         Log.d("Activity_Persons_Giftli", "No such document");
                     }
@@ -159,14 +136,19 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
     @Override
     public void onStart() {
         super.onStart();
-        getDocumentSnapshotForSelectedName();
+
     }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        //mAdapter_gift_default.stopListening();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

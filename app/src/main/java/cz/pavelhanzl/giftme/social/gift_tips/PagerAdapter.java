@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips.Fragment_OthersTips;
+import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.Fragment_OwnTips;
+
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumberOfTabs;
     private final Bundle mFragmentBundle;
