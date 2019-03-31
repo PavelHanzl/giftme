@@ -1,6 +1,7 @@
 package cz.pavelhanzl.giftme.giftlist;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,12 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import cz.pavelhanzl.giftme.Activity_Main;
 import cz.pavelhanzl.giftme.R;
 import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 
@@ -21,6 +26,7 @@ import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
  */
 public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.NameHolder> {
     private OnItemClickListener mOnItemClickListener;
+    private DocumentSnapshot mDeletedDocument;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -46,10 +52,17 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
     }
 
     public void deleteItem(int position){
+        mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
+
         StatsManagerSingleton.getInstance().getStatsData();
 
     }
+    public void restoreItem(){
+        //přidá smazanou položku zpět do databáze se stejným ID
+        mDeletedDocument.getReference().set(mDeletedDocument.getData());
+    }
+
 
 
 

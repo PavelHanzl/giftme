@@ -2,12 +2,14 @@ package cz.pavelhanzl.giftme.wishlist;
 
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -102,10 +104,24 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
 
                 if (i == ItemTouchHelper.LEFT) {
                     mAdapter_my_wish_list.deleteItem(viewHolder.getAdapterPosition());
-                    Toast.makeText(getContext(), getString(R.string.swipe_deleted), Toast.LENGTH_SHORT ).show();
+                    snackbarUndoDelete();
                 }
 
+            }
 
+            private void snackbarUndoDelete() {
+                Snackbar snackbar = Snackbar
+                        .make(getView().findViewById(R.id.coordinatorLayout_my_wish_list), getString(R.string.swipe_deleted), 6000);
+                snackbar.setAction(getString(R.string.swipe_deleted_undo), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText( getContext(),  getString(R.string.snackbar_restored), Toast.LENGTH_LONG ).show();
+                        mAdapter_my_wish_list.restoreItem();
+
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
             }
 
             @Override

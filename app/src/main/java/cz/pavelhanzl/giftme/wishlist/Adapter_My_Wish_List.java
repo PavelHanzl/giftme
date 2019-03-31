@@ -12,6 +12,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import cz.pavelhanzl.giftme.R;
+import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 
 /**
  * Adaptér dostává data ze zdroje dat do recycleviev. Extendujeme FirestoreRecyclerAdapter,
@@ -20,6 +21,7 @@ import cz.pavelhanzl.giftme.R;
  */
 public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adapter_My_Wish_List.GiftTipHolder> {
     private OnItemClickListener mOnItemClickListener;
+    private DocumentSnapshot mDeletedDocument;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -44,10 +46,15 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
     }
 
     public void deleteItem(int position){
+        mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
+
+
     }
-
-
+    public void restoreItem(){
+        //přidá smazanou položku zpět do databáze se stejným ID
+        mDeletedDocument.getReference().set(mDeletedDocument.getData());
+    }
 
 
     class GiftTipHolder extends RecyclerView.ViewHolder{

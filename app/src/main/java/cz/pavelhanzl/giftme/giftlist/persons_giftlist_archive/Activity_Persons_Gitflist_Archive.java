@@ -1,10 +1,12 @@
 package cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -133,10 +135,25 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
                     Toast.makeText( getApplicationContext(), getString(R.string.swipe_unarchived), Toast.LENGTH_SHORT ).show();
                 } else if (i == ItemTouchHelper.LEFT) {
                     mAdapter_gift_archive.deleteItem(viewHolder.getAdapterPosition());
-                    Toast.makeText( getApplicationContext(), getString(R.string.swipe_deleted), Toast.LENGTH_SHORT ).show();
+                    snackbarUndoDelete();
                 }
 
 
+            }
+
+            private void snackbarUndoDelete() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.coordinatorLayoutPersonsGiftlistArchive), getString(R.string.swipe_deleted), 6000);
+                snackbar.setAction(getString(R.string.swipe_deleted_undo), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText( getApplicationContext(),  getString(R.string.snackbar_restored), Toast.LENGTH_LONG ).show();
+                        mAdapter_gift_archive.restoreItem();
+
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
             }
 
             @Override

@@ -24,6 +24,7 @@ import cz.pavelhanzl.giftme.R;
  */
 public class Adapter_Gift_Archive extends FirestoreRecyclerAdapter<Gift, Adapter_Gift_Archive.GiftHolder> {
     private OnItemClickListener mOnItemClickListener;
+    private DocumentSnapshot mDeletedDocument;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -51,9 +52,14 @@ public class Adapter_Gift_Archive extends FirestoreRecyclerAdapter<Gift, Adapter
     }
 
     public void deleteItem(int position){
+        mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
 
 
+    }
+    public void restoreItem(){
+        //přidá smazanou položku zpět do databáze se stejným ID
+        mDeletedDocument.getReference().set(mDeletedDocument.getData());
     }
 
     public void unarchiveItem(int position){

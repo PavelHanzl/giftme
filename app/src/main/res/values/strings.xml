@@ -100,8 +100,6 @@
     <string name="activity_newowngifttip_add_new_gifttip">Add new gift tip</string>
     <string name="activity_new_own_gifttip_name_added">Gift tip added.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gifttips_title">Gift tips</string>
     <string name="gifttips_gifttip_heading">Gift tips</string>
     <string name="gifttips_booked_by_you_heading">Booked by you</string>
@@ -113,6 +111,15 @@
     <string name="checkbox_isBookedByYou_false_toast">Unbooked.</string>
     <string name="card_others_gift_tip_public_tipBy">Tip by:</string>
     <string name="card_my_gift_tip_tip_public_bookedBy">Booked by:</string>
+    <string name="swipe_deleted_undo">UNDO</string>
+    <string name="snackbar_restored">Restored.</string>
+    <string name="swipe_deleted_for_all">Deleted for all other users.</string>
+    <string name="frag_others_gifttips_alert_title">Delete for all users?</string>
+    <string name="frag_others_gifttips_alert_message">This action will delete this gifttip not only for you, but for all other users of Giftme app. Do still want to delete it?</string>
+    <string name="frag_others_gifttips_alert_button_no">NO</string>
+    <string name="frag_others_gifttips_alert_button_yes">YES</string>
+    <string name="activity_main_logout_title">Logout</string>
+    <string name="activity_main_logout_message">Do you wish to logout?</string>
 
 
 </resources>

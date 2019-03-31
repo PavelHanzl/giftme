@@ -1,6 +1,9 @@
 package cz.pavelhanzl.giftme;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -46,6 +49,7 @@ public class Activity_Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //nastaví toolbar (defaultně je vyplý ve styles.xml)
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -105,7 +109,7 @@ public class Activity_Main extends AppCompatActivity {
                         Log.d("Activity main", "User profile created.");
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error: "+task.getException(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -155,11 +159,32 @@ public class Activity_Main extends AppCompatActivity {
      * Odhlásí uživatele z aplikace a zobrazí login
      */
     private void LogOut() {
-        //TODO: dodělat "opravdu odhlásit?"
-        mAuth.signOut();
-        startActivity(mIntentLogin);
-        finish();
+    
+        AlertDialog.Builder builder = new AlertDialog.Builder(
+                this);
+        builder.setTitle(getString(R.string.activity_main_logout_title));
+        builder.setMessage(getString(R.string.activity_main_logout_message));
+        builder.setNegativeButton(getString(R.string.frag_others_gifttips_alert_button_no),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        //nic nedělej
+                    }
+                });
+        builder.setPositiveButton(getString(R.string.frag_others_gifttips_alert_button_yes),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        mAuth.signOut();
+                        startActivity(mIntentLogin);
+                        finish();
+                    }
+                });
+        builder.show();
+
+
     }
+
 
     /**
      * Přepisuje funkci tlačítka back.

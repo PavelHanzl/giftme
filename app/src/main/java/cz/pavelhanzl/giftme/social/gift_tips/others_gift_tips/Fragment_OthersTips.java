@@ -1,13 +1,24 @@
 package cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,8 +103,125 @@ public class Fragment_OthersTips extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter_othersTips);
 
+        deleteItemFromRecyclerView(recyclerView);
         setCardsOnClickAction();
     }
+
+
+    /**
+     * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
+     *
+     * @param recyclerView
+     */
+    private void deleteItemFromRecyclerView(RecyclerView recyclerView) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+
+            }
+
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        getContext());
+                builder.setTitle(getString(R.string.frag_others_gifttips_alert_title));
+                builder.setMessage(getString(R.string.frag_others_gifttips_alert_message));
+                builder.setIcon(R.drawable.ic_warning);
+                builder.setNegativeButton(getString(R.string.frag_others_gifttips_alert_button_no),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+
+                                Toast.makeText(getContext(),"No is clicked",Toast.LENGTH_LONG).show();
+                                mAdapter_othersTips.notifyDataSetChanged(); // refreshne recycleview
+                            }
+                        });
+                builder.setPositiveButton(getString(R.string.frag_others_gifttips_alert_button_yes),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                mAdapter_othersTips.deleteItem(viewHolder.getAdapterPosition());
+                                snackbarUndoDelete();
+                            }
+                        });
+                builder.show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+            private void snackbarUndoDelete() {
+                Snackbar snackbar = Snackbar
+                        .make(getView().findViewById(R.id.coordinatorLayout_others_tips), getString(R.string.swipe_deleted_for_all), 6000);
+                snackbar.setAction(getString(R.string.swipe_deleted_undo), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText( getContext(),  getString(R.string.snackbar_restored), Toast.LENGTH_LONG ).show();
+                        mAdapter_othersTips.restoreItem();
+
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                View itemView = viewHolder.itemView;
+                int backgroundCornerOffset = 20;
+                ColorDrawable background;
+                Drawable icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_archive);
+
+                int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+                int iconTop = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+                int iconBottom = iconTop + icon.getIntrinsicHeight();
+
+                if (dX < 0) { // Swiping to the left
+                    Log.d("Swiping:","Left");
+
+                    //nastaví background a ikonku
+                    background = new ColorDrawable(getResources().getColor(R.color.swipeToDelete));
+                    icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_sweep_white);
+
+                    //vypočítá pozici pro background
+                    background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
+                            itemView.getTop(), itemView.getRight(), itemView.getBottom());
+
+                    //vypočítá pozici pro ikonku
+                    int iconLeft = itemView.getRight() - iconMargin - icon.getIntrinsicWidth();
+                    int iconRight = itemView.getRight() - iconMargin;
+                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+
+                    background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
+                            itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                } else { // view is unSwiped
+                    background = new ColorDrawable(getResources().getColor(R.color.transparent));
+                    background.setBounds(0, 0, 0, 0);
+                }
+                background.draw(c);
+                icon.draw(c);
+
+            }
+
+        }).attachToRecyclerView(recyclerView);
+    }
+
 
     /**
      * Nastaví floating button pro přidání gifttipu.

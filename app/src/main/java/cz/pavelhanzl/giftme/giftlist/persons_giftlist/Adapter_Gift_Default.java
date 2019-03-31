@@ -10,11 +10,14 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
+import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 
 /**
  * Adaptér dostává data ze zdroje dat do recycleviev. Extendujeme FirestoreRecyclerAdapter,
@@ -23,6 +26,8 @@ import cz.pavelhanzl.giftme.R;
  */
 public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter_Gift_Default.GiftHolder> {
     private OnItemClickListener mOnItemClickListener;
+    private DocumentSnapshot mDeletedDocument;
+
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -50,9 +55,14 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
     }
 
     public void deleteItem(int position){
+        mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
 
 
+    }
+    public void restoreItem(){
+        //přidá smazanou položku zpět do databáze se stejným ID
+        mDeletedDocument.getReference().set(mDeletedDocument.getData());
     }
 
     public void archiveItem(int position){
