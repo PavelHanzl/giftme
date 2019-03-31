@@ -159,7 +159,7 @@ public class Activity_Main extends AppCompatActivity {
      * Odhlásí uživatele z aplikace a zobrazí login
      */
     private void LogOut() {
-    
+
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 this);
         builder.setTitle(getString(R.string.activity_main_logout_title));

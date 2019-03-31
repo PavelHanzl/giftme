@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -87,11 +88,23 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
                 }
             });
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    mOnItemClickListener.OnItemLongClick(getSnapshots().getSnapshot(position),position);
+                    return false;
+                }
+            });
+
+
         }
     }
 
     public interface OnItemClickListener{
         void OnItemClick(DocumentSnapshot documentSnapshot, int position);
+        void OnItemLongClick(DocumentSnapshot documentSnapshot, int position);
+
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

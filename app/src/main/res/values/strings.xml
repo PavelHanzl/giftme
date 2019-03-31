@@ -120,6 +120,8 @@
     <string name="frag_others_gifttips_alert_button_yes">YES</string>
     <string name="activity_main_logout_title">Logout</string>
     <string name="activity_main_logout_message">Do you wish to logout?</string>
+    <string name="activity_newname_edit_name">Edit name</string>
+    <string name="activity_newname_name_edited">Name edited.</string>
 
 
 </resources>

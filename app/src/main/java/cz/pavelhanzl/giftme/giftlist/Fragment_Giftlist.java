@@ -28,8 +28,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import cz.pavelhanzl.giftme.Logic_DrawerFragment;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Activity_Persons_Gitflist;
 import cz.pavelhanzl.giftme.R;
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Activity_Persons_Gitflist;
 import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 
 public class Fragment_Giftlist extends Logic_DrawerFragment {
@@ -206,7 +206,14 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
                 //Toast.makeText(getContext(), "Position: " +position+" ID:"+ id, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path", path));
             }
+
+            @Override
+            public void OnItemLongClick(DocumentSnapshot documentSnapshot, int position) {
+                String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
+                startActivity(new Intent(getContext(),Activity_NewName.class).putExtra("path", path).putExtra("edit",true));
+            }
         });
+
     }
 
 }
