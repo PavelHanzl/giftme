@@ -30,6 +30,7 @@ import java.util.Map;
 
 import cz.pavelhanzl.giftme.giftlist.Fragment_Giftlist;
 import cz.pavelhanzl.giftme.login_and_signup.Activity_Login;
+import cz.pavelhanzl.giftme.settings.Activity_Settings;
 import cz.pavelhanzl.giftme.social.Fragment_Social;
 import cz.pavelhanzl.giftme.stats.Fragment_Stats;
 import cz.pavelhanzl.giftme.wishlist.Fragment_Wishlist;
@@ -136,7 +137,7 @@ public class Activity_Main extends AppCompatActivity {
                         break;
                     case R.id.nav_settings:
                         //TODO: dodělat settings
-                        Toast.makeText(Activity_Main.this, "settings pressed", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), Activity_Settings.class));
                         break;
                     case R.id.nav_logout:
                         LogOut();

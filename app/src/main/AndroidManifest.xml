@@ -52,6 +52,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
+        <activity
+            android:name=".settings.Activity_Settings"
+            android:parentActivityName=".Activity_Main"
+            android:launchMode="singleTop"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.darkActionBar" />
+
 
         <activity
             android:name=".social.Activity_NewAddedUser"

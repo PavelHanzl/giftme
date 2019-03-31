@@ -122,6 +122,9 @@
     <string name="activity_main_logout_message">Do you wish to logout?</string>
     <string name="activity_newname_edit_name">Edit name</string>
     <string name="activity_newname_name_edited">Name edited.</string>
+    <string name="activity_settings_title">Settings</string>
+    <string name="settings_stats_ideal_overall_budget">Ideal overall budget:</string>
+    <string name="settings_stats_ideal_overall_budget_edittext">Enter ideal value</string>
 
 
 </resources>
