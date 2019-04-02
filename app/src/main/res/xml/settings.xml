@@ -7,13 +7,12 @@
             app:summary="Click to change your account password"/>
     </PreferenceCategory>
 
-    <SwitchPreferenceCompat
-        app:key="notifications"
-        app:title="Enable message notifications"/>
 
+    <PreferenceCategory app:title="Other">
     <Preference
-        app:key="feedback"
+        app:key="settings_preferences_send_feedback"
         app:title="Send feedback"
         app:summary="Report technical issues or suggest new features"/>
+    </PreferenceCategory>
 </androidx.preference.PreferenceScreen>
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Giftme</string>
 
+    <string name="admin_email">hanzlpavel77@gmail.com</string>
 
     <!--Login screen-->
     <string name="login_title">Login</string>
@@ -125,6 +126,9 @@
     <string name="activity_settings_title">Settings</string>
     <string name="settings_stats_ideal_overall_budget">Ideal overall budget:</string>
     <string name="settings_stats_ideal_overall_budget_edittext">Enter ideal value</string>
+    <string name="settings_send_feedback_title">Send Feedback:</string>
+    <string name="settings_feedback">feedback</string>
+    <string name="settings_feedback_email_message">Giftme, I would like to tell you my feedback about...</string>
 
 
 </resources>

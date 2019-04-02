@@ -31,6 +31,13 @@
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
+            android:name=".settings.Activity_ChangePassword"
+            android:parentActivityName=".settings.Activity_Settings"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.darkActionBar" />
+
+        <activity
             android:name=".wishlist.Activity_NewOwnGiftTip"
             android:parentActivityName=".Activity_Main"
             android:configChanges="orientation"
