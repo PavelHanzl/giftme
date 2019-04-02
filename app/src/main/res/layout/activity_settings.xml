@@ -5,48 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".giftlist.Activity_NewName">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_stats"
-        android:drawablePadding="10dp"
-        android:drawableTint="@color/colorPrimaryLight"
-        android:text="Stats settings"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryLight"
-        />
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/framelayout_settings_for_fragment"/>
 
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        android:backgroundTint="@color/colorPrimaryLight"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_stats_ideal_overall_budget"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        />
-
-    <EditText
-        android:drawableLeft="@drawable/ic_money_color_primary_dark"
-        android:drawablePadding="10dp"
-        android:id="@+id/activity_settings_EditText_Ideal_Budget"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/settings_stats_ideal_overall_budget_edittext"
-        android:inputType="number"
-        />
 
 </LinearLayout>

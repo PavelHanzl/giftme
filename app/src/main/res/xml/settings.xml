@@ -1,0 +1,19 @@
+<androidx.preference.PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Account settings">
+        <Preference app:title="Change password"
+            app:key="settings_preferences_change_password_button"
+            app:summary="Click to change your account password"/>
+    </PreferenceCategory>
+
+    <SwitchPreferenceCompat
+        app:key="notifications"
+        app:title="Enable message notifications"/>
+
+    <Preference
+        app:key="feedback"
+        app:title="Send feedback"
+        app:summary="Report technical issues or suggest new features"/>
+</androidx.preference.PreferenceScreen>
+

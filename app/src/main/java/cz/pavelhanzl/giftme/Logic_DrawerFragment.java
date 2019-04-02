@@ -1,9 +1,7 @@
 package cz.pavelhanzl.giftme;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
+import com.google.android.material.navigation.NavigationView;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 
 public class Logic_DrawerFragment extends Fragment {
