@@ -1,18 +1,19 @@
-<androidx.preference.PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="Account settings">
-        <Preference app:title="Change password"
-            app:key="settings_preferences_change_password_button"
-            app:summary="Click to change your account password"/>
-    </PreferenceCategory>
+        <PreferenceCategory android:title="@string/settings_category_title_account_settings">
+            <Preference android:title="@string/settings_change_password"
+                android:key="settings_preferences_change_password_button"
+                android:summary="@string/settings_change_password_summary"
+                />
+        </PreferenceCategory>
 
 
-    <PreferenceCategory app:title="Other">
-    <Preference
-        app:key="settings_preferences_send_feedback"
-        app:title="Send feedback"
-        app:summary="Report technical issues or suggest new features"/>
-    </PreferenceCategory>
-</androidx.preference.PreferenceScreen>
+        <PreferenceCategory android:title="@string/settings_category_tittle_other">
+            <Preference
+                android:key="settings_preferences_send_feedback"
+                android:title="@string/settings_send_feedback"
+                android:summary="@string/settings_send_feedback_summary" />
+        </PreferenceCategory>
 
+</PreferenceScreen>

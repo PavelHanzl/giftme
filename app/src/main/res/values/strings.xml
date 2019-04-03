@@ -129,6 +129,12 @@
     <string name="settings_send_feedback_title">Send Feedback:</string>
     <string name="settings_feedback">feedback</string>
     <string name="settings_feedback_email_message">Giftme, I would like to tell you my feedback about...</string>
+    <string name="settings_category_title_account_settings">Account settings</string>
+    <string name="settings_change_password">Change password</string>
+    <string name="settings_change_password_summary">Click to change your account password</string>
+    <string name="settings_category_tittle_other">Other</string>
+    <string name="settings_send_feedback">Send feedback</string>
+    <string name="settings_send_feedback_summary">Report technical issues or suggest new features</string>
 
 
 </resources>

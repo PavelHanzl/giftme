@@ -1,6 +1,8 @@
 package cz.pavelhanzl.giftme.giftlist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,6 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
@@ -38,6 +43,8 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     private CollectionReference mNameReference;
     private Adapter_Name mAdapter_name;
     private View mView;
+    private SharedPreferences prefs;
+    public static final String preferences = "prefs";
 
     @Nullable
     @Override
@@ -48,12 +55,18 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
+        prefs = getContext().getSharedPreferences(preferences, Context.MODE_PRIVATE);
+
+
 
         //získá kolekci jmen pro přihlášeného uživatele
         mNameReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names");
 
         setUpFloatingButton();
         setUpRecyclerView();
+
+        showAtFirstRunOnly();
+
 
         return mView;
     }
@@ -213,6 +226,19 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
                 startActivity(new Intent(getContext(),Activity_NewName.class).putExtra("path", path).putExtra("edit",true));
             }
         });
+
+    }
+
+
+    private void showAtFirstRunOnly(){
+        boolean firstStart = prefs.getBoolean("firstStartFragmentGiftlist",true);
+        if(true){
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(mView.findViewById(R.id.frag_giftlist_floatingButton_add_name), "Here are your gift lists", "You can add your friend or relative by clicking on button in the bottom right corner. It's simple like that! ")
+                    .tintTarget(false));
+
+            prefs.edit().putBoolean("firstStartFragmentGiftlist",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
+        }
 
     }
 
