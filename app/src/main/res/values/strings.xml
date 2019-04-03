@@ -104,8 +104,8 @@
     <string name="gifttips_title">Gift tips</string>
     <string name="gifttips_gifttip_heading">Gift tips</string>
     <string name="gifttips_booked_by_you_heading">Booked by you</string>
-    <string name="friends">Your friends</string>
-    <string name="wishlist">Your wishlist</string>
+    <string name="friends">Friends</string>
+    <string name="wishlist">My wishlist</string>
     <string name="tab_layout_has_on_wishlist">Has on wishlist</string>
     <string name="others_suggest">Others suggesting</string>
     <string name="checkbox_isBookedByYou_true_toast">Booked</string>
@@ -136,5 +136,29 @@
     <string name="settings_send_feedback">Send feedback</string>
     <string name="settings_send_feedback_summary">Report technical issues or suggest new features</string>
 
+
+    <string name="taptarget_giftlist_archive_title">Welcome to archive</string>
+    <string name="taptarget_giftlist_archive_desription">Here you can find gifts, that you didn\'t want to see in your regular giftlist anymore.  \n\n It\'s perfect place for gifts, that you already bought in past, want to remember them, but don\'t want to mix them with gifts that you are planning to buy.  \n\nTip: \n &#128073; Swipe item right to unarchive \n &#128072; or swipe left to delete.</string>
+
+    <string name="taptarget_persons_giftlist_addbutton_title">Giftlist of</string>
+    <string name="taptarget_persons_giftlist_addbutton_desription">Congratulations! You created your first giftlist. \n\n You can add gifts to this giftlist using highlighted button. \n\n Tip: After you create an item, you can either \n &#128073; Swipe right to archive item \n &#128072; or swipe left to delete item.</string>
+
+    <string name="taptarget_persons_giftlist_archivebutton_title">Stay organized</string>
+    <string name="taptarget_persons_giftlist_archivebutton_desription">
+        When you don\'t want to have a mess in this giftlist, you can always move old - bought gifts from current year to person\'s archive,
+        so in future you know what you gave to this person in past, but also keep order in what you are planing to give him or her in future.\n\n
+        To put it simply, archive is a place for gifts that was already given. &#128522; </string>
+
+    <string name="taptarget_giftlist_title">Welcome to Giftme &#128587;</string>
+    <string name="taptarget_giftlist_description">There\'s nothing here yet. Change it. \n\nThis is screen where your giftlists are located. You can add your friend or relative by clicking on button in the bottom right corner. \nIt\'s simple like that!</string>
+
+    <string name="taptarget_wishlist_title">Place of your wishes </string>
+    <string name="taptarget_wishlist_description">This is place, where you can store your wishes. As a bonus other users, who add you as a friend, will see your wishlist, so maybe your dreams will come true.\n\nTo make it fair, you will see theirs wishlists, if you add them as a friends. \n\nTip: \n &#128072; Swipe item left to delete it. Not just for you, but for all users of Giftme app.</string>
+
+    <string name="taptarget_social_title">Get some gift tips! &#127873;</string>
+    <string name="taptarget_social_description">Add friends and see what they have on their wish lists. Gift tips right from those, whom you want to give a present. Isn\'t it perfect? You can book that gift tip and let other users of giftme app know, that you are going to buy that gift, so they don\'t need to buy it too.\n\nYou can also give a tip to other users, if you know about something, what your friend would like to get. And don\'t worry, he or she will not see it, it will stay as a public secret.</string>
+
+    <string name="taptarget_gifttips_title">Great, your first friend. </string>
+    <string name="taptarget_gifttips_description">Let\'s see, what is on his or her wish list. If it is empty, you can always try to switch tabs a see if there are some gift tips by other users. \n\nOn second tab you can also add your own gift tips for this particular friend to help others.</string>
 
 </resources>

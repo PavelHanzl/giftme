@@ -32,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import cz.pavelhanzl.giftme.Activity_Main;
 import cz.pavelhanzl.giftme.Logic_DrawerFragment;
 import cz.pavelhanzl.giftme.R;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Activity_Persons_Gitflist;
@@ -43,8 +44,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     private CollectionReference mNameReference;
     private Adapter_Name mAdapter_name;
     private View mView;
-    private SharedPreferences prefs;
-    public static final String preferences = "prefs";
+
 
     @Nullable
     @Override
@@ -55,7 +55,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         mDb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        prefs = getContext().getSharedPreferences(preferences, Context.MODE_PRIVATE);
+
 
 
 
@@ -229,16 +229,27 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
 
     }
 
-
+    /**
+     * Při prvním spuštění aplikace spustí "tutorial", který uživateli popíše základní funkčnost aplikace na této obrazovce.
+     * Využívá knihovny taptargetview.
+     */
     private void showAtFirstRunOnly(){
+        SharedPreferences prefs = getContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStartFragmentGiftlist",true);
-        if(true){
+        if(firstStart){
             TapTargetView.showFor(getActivity(),
-                    TapTarget.forView(mView.findViewById(R.id.frag_giftlist_floatingButton_add_name), "Here are your gift lists", "You can add your friend or relative by clicking on button in the bottom right corner. It's simple like that! ")
-                    .tintTarget(false));
+                    TapTarget.forView(mView.findViewById(R.id.frag_giftlist_floatingButton_add_name), getString(R.string.taptarget_giftlist_title), getString(R.string.taptarget_giftlist_description))
+                    .tintTarget(false).cancelable(false),
+                    new TapTargetView.Listener() {          // listener, který spustí defaultní akci view na který je taptarget připojen
+                        @Override
+                        public void onTargetClick(TapTargetView view) {
+                            super.onTargetClick(view);
+                            startActivity(new Intent(getContext(), Activity_NewName.class));
+                        }});
 
             prefs.edit().putBoolean("firstStartFragmentGiftlist",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
         }
+
 
     }
 

@@ -1,9 +1,16 @@
 package cz.pavelhanzl.giftme.social.gift_tips;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +23,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import cz.pavelhanzl.giftme.Activity_Main;
 import cz.pavelhanzl.giftme.R;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Adapter_Gift_Default;
 import cz.pavelhanzl.giftme.social.AddedUser;
@@ -68,6 +76,7 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
@@ -84,8 +93,8 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
 
     private void setTabLayout() {
         mTabLayout = findViewById(R.id.activity_gifttips_tablayout);
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_layout_has_on_wishlist));
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.others_suggest));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_layout_has_on_wishlist).setTag("Tab1"));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.others_suggest).setTag("Tab2"));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
@@ -114,7 +123,7 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
 
 
                         setViewPager();
-
+                        showAtFirstRunOnly();
 
 
                     } else {
@@ -128,31 +137,29 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
     }
 
 
-
-
-    /**
-     * Znovu inicializuje obrazovku při statu této aktivity. Důléžité při přechodu zpět z vytvoření nové item, aby se znovu spustilo poslochání na Adaptéru.
-     */
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
+    /**
+     * Při prvním spuštění aplikace spustí "tutorial", který uživateli popíše základní funkčnost aplikace na této obrazovce.
+     * Využívá knihovny taptargetview.
+     */
+    private void showAtFirstRunOnly(){
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStartActivityGiftTips",true);
+        if(firstStart){
+            TapTargetView.showFor(this,
+                    TapTarget.forView(findViewById(R.id.frag_own_tips_recycler_view), getString(R.string.taptarget_gifttips_title), getString(R.string.taptarget_gifttips_description))
+                            .icon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_done_color_primary))
+            );
+
+            prefs.edit().putBoolean("firstStartActivityGiftTips",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
+        }
+
+
+    }
+
 }

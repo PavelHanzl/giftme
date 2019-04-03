@@ -1,11 +1,17 @@
 package cz.pavelhanzl.giftme.giftlist.persons_giftlist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
@@ -28,6 +34,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import cz.pavelhanzl.giftme.Activity_Main;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive.Activity_Persons_Gitflist_Archive;
 import cz.pavelhanzl.giftme.giftlist.Name;
 import cz.pavelhanzl.giftme.R;
@@ -77,6 +84,8 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
                         mSelectedNameObject = mDocumentSnapshotName.toObject(Name.class);
                         setTitle(getString(R.string.giftlist_title) + " - " + mSelectedNameObject.getName());
                         Log.d("Activity_Persons_Giftli", " mSelectedNameObject " + mSelectedNameObject.getName());
+
+                        showAtFirstRunOnly();
 
                         mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("Giftlist");
                         Log.d("Activity persons Giftli", mGiftReference.getPath());
@@ -281,6 +290,29 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
 
             }
         });
+    }
+
+
+
+    /**
+     * Při prvním spuštění aplikace spustí "tutorial", který uživateli popíše základní funkčnost aplikace na této obrazovce.
+     * Využívá knihovny taptargetview.
+     */
+    private void showAtFirstRunOnly(){
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStartActivityPersonsGitflist",true);
+        if(firstStart){
+            new TapTargetSequence(this)
+                    .targets(
+                            TapTarget.forView(findViewById(R.id.activity_personsGiftlist_floatingButton_add_gift), getString(R.string.taptarget_persons_giftlist_addbutton_title) + " " + mSelectedNameObject.getName(), getString(R.string.taptarget_persons_giftlist_addbutton_desription)).tintTarget(false).cancelable(false),
+                            TapTarget.forView(findViewById(R.id.activity_personsGiftlist_floatingButton_show_archive), getString(R.string.taptarget_persons_giftlist_archivebutton_title), getString(R.string.taptarget_persons_giftlist_archivebutton_desription)).tintTarget(false))
+                            .start();
+
+
+            prefs.edit().putBoolean("firstStartActivityPersonsGitflist",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
+        }
+
+
     }
 
 }

@@ -1,11 +1,17 @@
 package cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +21,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +33,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import cz.pavelhanzl.giftme.Activity_Main;
+import cz.pavelhanzl.giftme.giftlist.Activity_NewName;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
 import cz.pavelhanzl.giftme.giftlist.Name;
 import cz.pavelhanzl.giftme.R;
@@ -52,6 +61,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         getDocumentSnapshotForSelectedName();
+        showAtFirstRunOnly();
 
     }
 
@@ -261,6 +271,28 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * Při prvním spuštění aplikace spustí "tutorial", který uživateli popíše základní funkčnost aplikace na této obrazovce.
+     * Využívá knihovny taptargetview.
+     */
+    private void showAtFirstRunOnly(){
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStartActivityPersonsGitflistArchive",true);
+        if(firstStart){
+            //Drawable icon = getResources().getDrawable(R.drawable.ic_archive);
+            TapTargetView.showFor(this,
+                    TapTarget.forView(findViewById(R.id.action_bar), getString(R.string.taptarget_giftlist_archive_title), getString(R.string.taptarget_giftlist_archive_desription))
+                            .tintTarget(false)
+                            .targetCircleColor(R.color.colorPrimaryDark)
+                            .icon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_archive))
+                    );
+
+            prefs.edit().putBoolean("firstStartActivityPersonsGitflistArchive",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
+        }
+
+
     }
 
 }

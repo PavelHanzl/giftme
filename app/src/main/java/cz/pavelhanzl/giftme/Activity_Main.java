@@ -44,6 +44,7 @@ public class Activity_Main extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
     private Intent mIntentLogin;
+    public static final String preferences = "prefs";
 
 
     @Override

@@ -1,6 +1,8 @@
 package cz.pavelhanzl.giftme.wishlist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,6 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
@@ -27,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import cz.pavelhanzl.giftme.Activity_Main;
 import cz.pavelhanzl.giftme.Logic_DrawerFragment;
 import cz.pavelhanzl.giftme.R;
 import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
@@ -50,6 +56,7 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
 
         setUpFloatingButton();
         setUpRecyclerView();
+        showAtFirstRunOnly();
 
         return mView;
     }
@@ -206,5 +213,27 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
             }
         });
     }
+
+
+    /**
+     * Při prvním spuštění aplikace spustí "tutorial", který uživateli popíše základní funkčnost aplikace na této obrazovce.
+     * Využívá knihovny taptargetview.
+     */
+    private void showAtFirstRunOnly(){
+        SharedPreferences prefs = getContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStartFragmentWishlist",true);
+        if(firstStart){
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(mView.findViewById(R.id.activity_my_wish_list_floatingButton_add_gift), getString(R.string.taptarget_wishlist_title), getString(R.string.taptarget_wishlist_description))
+                            .tintTarget(false)
+            );
+
+            prefs.edit().putBoolean("firstStartFragmentWishlist",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
+        }
+
+
+    }
+
+
 
 }
