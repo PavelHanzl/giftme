@@ -136,6 +136,9 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
 
             }
 
+            /**
+             * Zobrazí snackbar s možností vrátit smazání položky.
+             */
             private void snackbarUndoDelete() {
                 Snackbar snackbar = Snackbar
                         .make(getView().findViewById(R.id.coordinatorLayout), getString(R.string.swipe_deleted), 6000);

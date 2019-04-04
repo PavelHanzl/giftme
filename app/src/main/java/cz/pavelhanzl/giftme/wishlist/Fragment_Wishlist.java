@@ -47,16 +47,16 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setActiveMenuIcon(1);
-        mView = inflater.inflate(R.layout.fragment_wishlist, container, false);
+        setActiveMenuIcon(1);//nastaví aktivní ikonu v menu
+        mView = inflater.inflate(R.layout.fragment_wishlist, container, false); //nastaví layout
 
-        mDb = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        mDb = FirebaseFirestore.getInstance();//získá instanci databáze
+        mAuth = FirebaseAuth.getInstance();//získá instanci přihlášení
 
 
-        setUpFloatingButton();
-        setUpRecyclerView();
-        showAtFirstRunOnly();
+        setUpFloatingButton();//nastaví floating buton pro přidání nového vlastního gifttipu
+        setUpRecyclerView(); //provede nastavení recycleview
+        showAtFirstRunOnly(); //spustí tutorial pomocí tap target view při prvním spuštění této aktivity
 
         return mView;
     }
@@ -115,7 +115,9 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
                 }
 
             }
-
+            /**
+             * Zobrazí snackbar s možností vrátit smazání položky.
+             */
             private void snackbarUndoDelete() {
                 Snackbar snackbar = Snackbar
                         .make(getView().findViewById(R.id.coordinatorLayout_my_wish_list), getString(R.string.swipe_deleted), 6000);

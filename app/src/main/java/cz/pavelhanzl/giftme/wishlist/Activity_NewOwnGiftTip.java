@@ -13,7 +13,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
-
+/**
+ * Tato třída přidá nový vlastní gifttip (objekt tipu Gifttip) do seznamu v Menu->MyWishlist.
+ */
 public class Activity_NewOwnGiftTip extends AppCompatActivity {
     private EditText mEditTextName;
     private FirebaseAuth mAuth;
@@ -52,6 +54,11 @@ public class Activity_NewOwnGiftTip extends AppCompatActivity {
         }
     }
 
+    /**
+     * Tato metoda získá uživatelem zadaná data, provede ověření zadaných údajů na validitu a poté
+     * je uloží do firestore databáze (případně upraví stávající data). Po uložení do databáze
+     * se vrací na předešlou aktivitu.
+     */
     private void saveGiftTip(){
         String name = mEditTextName.getText().toString();
         String bookedBy = null;

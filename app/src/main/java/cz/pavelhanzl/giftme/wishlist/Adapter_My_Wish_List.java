@@ -44,12 +44,18 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
         return new GiftTipHolder(v);
     }
 
+    /**
+     * Odstaní položku na předané pozici v recycleview z databáze.
+     * @param position
+     */
     public void deleteItem(int position){
         mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
-
-
     }
+
+    /**
+     * Obnoví nedávno smazanou položku z databáze.
+     */
     public void restoreItem(){
         //přidá smazanou položku zpět do databáze se stejným ID
         mDeletedDocument.getReference().set(mDeletedDocument.getData());
