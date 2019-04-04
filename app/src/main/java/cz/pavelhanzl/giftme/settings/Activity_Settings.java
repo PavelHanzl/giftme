@@ -24,12 +24,12 @@ public class Activity_Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
-        setTitle(R.string.activity_settings_title);
+        setTitle(R.string.activity_settings_title); //nastaví titulek
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.framelayout_settings_for_fragment, new SettingsFragment())
-                .commit();
+                .commit(); //zavede fragment do layoutu
 
 
     }

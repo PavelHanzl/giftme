@@ -59,14 +59,18 @@ public class Activity_ChangePassword extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_name_save:
-                saveGift();
+                savePassword();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void saveGift() {
+    /**
+     * Načte uživatelem zadaná data, provede na nich jednoduchou validaci, reautentifikuje uživatele
+     * a pokusí se uložit změněné heslo do firebase databáze.
+     */
+    private void savePassword() {
         String oldPass = mEditTextOldPass.getText().toString();
         final String newPass = mEditTextNewPass.getText().toString();
         String confirmNewPass = mEditTextNewPassConfirm.getText().toString();
