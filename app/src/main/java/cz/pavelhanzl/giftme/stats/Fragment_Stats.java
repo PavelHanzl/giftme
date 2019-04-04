@@ -35,6 +35,10 @@ import java.util.Locale;
 import cz.pavelhanzl.giftme.Logic_DrawerFragment;
 import cz.pavelhanzl.giftme.R;
 
+/**
+ * Tato třída se stará o zavedení a korektní zobrazení grafů v sekci statistik. Využívá knihovny
+ * MPAndroidChart, data získává se singletonu StatsManagerSingleton.
+ */
 public class Fragment_Stats extends Logic_DrawerFragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
@@ -91,12 +95,18 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         return mView;
     }
 
+    /**
+     * Nastaví grafy ve statistikách.
+     */
     private void setGraphs() {
         setPieChartValueOfGifts();
         setPieChartCountOfGifts();
         setHorizontalBarChartBudgetsInfo();
     }
 
+    /**
+     * Nastaví horizontální graf, který zobrazuje kolik ze zadaného budgetu jste již vyčerpali.
+     */
     private void setHorizontalBarChartBudgetsInfo() {
         Toast.makeText(getContext(), "setting bar chart", Toast.LENGTH_SHORT).show();
         // arraylist pro hodnoty sloupců
@@ -143,6 +153,10 @@ public class Fragment_Stats extends Logic_DrawerFragment {
 
     }
 
+    /**
+     * Nastaví koláčový graf, který zobrazuje hodnodu dárků, které jste již koupili,
+     * které jste ještě nekoupili a také jejich součet.
+     */
     private void setPieChartValueOfGifts() {
         List<PieEntry> entries = new ArrayList<>();
 
@@ -168,7 +182,10 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         mPieChartValueOfGifts.invalidate(); // refresh
     }
 
-
+    /**
+     * Nastaví koláčový graf, který zobrazuje počet dárků, které jste již koupili,
+     * které jste ještě nekoupili a také jejich součet.
+     */
     private void setPieChartCountOfGifts() {
         List<PieEntry> entries = new ArrayList<>();
 
@@ -198,7 +215,10 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         mPieChartCountOfGifts.invalidate(); // refresh
     }
 
-
+    /**
+     * Nastaví odpočet dní zbývajících do Vánoc, pokud je aplikace spuštěna v období 25.12.-31.12.
+     * zobrazí se hláška o aktivním eventu a nové odpočítávání se spustí zase s příchodem nového roku.
+     */
     public void countDownStart() {
         handler = new Handler();
         runnable = new Runnable() {
@@ -239,6 +259,10 @@ public class Fragment_Stats extends Logic_DrawerFragment {
         };
         handler.postDelayed(runnable, 0);
     }
+
+    /**
+     * Skryje odpočítávání v období 25.12.-31.12..
+     */
     public void textViewsCountdownGone() {
         mView.findViewById(R.id.LinearLayout10).setVisibility(View.GONE);
         mView.findViewById(R.id.LinearLayout11).setVisibility(View.GONE);
@@ -247,7 +271,9 @@ public class Fragment_Stats extends Logic_DrawerFragment {
 
     }
 
-
+    /**
+     * Nastaví texty ve statistikách.
+     */
     private void setTextViews() {
         mTextViewValueOfBoughtGifts.setText(String.valueOf(stats.getValueOfBoughtGifts()));
         mTextViewValueOfBoughtGifts2.setText(String.valueOf(stats.getValueOfBoughtGifts()));
@@ -265,7 +291,6 @@ public class Fragment_Stats extends Logic_DrawerFragment {
 
     @Override
     public void onResume() {
-
         super.onResume();
         setActiveMenuIcon(3);
     }
