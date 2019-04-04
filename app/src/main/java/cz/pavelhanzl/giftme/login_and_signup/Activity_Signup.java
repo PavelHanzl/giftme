@@ -57,7 +57,10 @@ public class Activity_Signup extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Pokusí se registrovat uživatele se zadanými hodnotami, získanými z edittextviews. Před registrací
+     * probíhá krátká kontrola zadaných údajů na validitu.
+     */
     private void attemptRegistration() {
 
         // resetuje errory zobrazené ve formu
@@ -99,18 +102,25 @@ public class Activity_Signup extends AppCompatActivity {
         }
     }
 
+    /**
+     * Kontrola zda-li email obsahuje zavináč.
+     * @param email
+     * @return
+     */
     private boolean isEmailValid(String email) {
         return email.contains("@");
     }
 
+    /**
+     * Kontrola zda-li se hesla shodují a zda-li je dlouhé aspoň 6 znaků.
+     * @param password
+     * @return
+     */
     private boolean isPasswordValid(String password) {
         //TODO: Add own logic to check for a valid password (minimum 6 characters)
         String confirmPassword = mEditTextConfirmPassword.getText().toString();
         return confirmPassword.equals(password) && password.length() > 6;
     }
-
-
-
 
     /**
      * Vytvoří užiatele ve  Firebase databázi, pokud stejný ještě neexistuje.
@@ -138,7 +148,6 @@ public class Activity_Signup extends AppCompatActivity {
                 //updateUI(null);
             }
 
-            // ...
         }
     });
     }

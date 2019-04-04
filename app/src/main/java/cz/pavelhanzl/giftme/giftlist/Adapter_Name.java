@@ -65,7 +65,7 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
         //přidá smazanou položku zpět do databáze se stejným ID
         mDeletedDocument.getReference().set(mDeletedDocument.getData());
     }
-    
+
 
     class NameHolder extends RecyclerView.ViewHolder{
         TextView textViewName;

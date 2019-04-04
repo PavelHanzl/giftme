@@ -124,7 +124,11 @@ public class Activity_Login extends AppCompatActivity {
         //avi.smoothToHide();
     }
 
-
+    /**
+     * Přihláší uživatele, pokud zadá správné uživatelské jméno a heslo.
+     * @param email
+     * @param password
+     */
     void signIn(String email, String password){
     // validuje email a heslo na prázdné hodnoty
     email = makeNotEmpty(email);
@@ -154,6 +158,12 @@ public class Activity_Login extends AppCompatActivity {
         }
     });
     }
+
+    /**
+     * Zajišťuje, že zadané hodnoty nejsou prázdné.
+     * @param validatedText
+     * @return
+     */
     private String makeNotEmpty(String validatedText){
         if(validatedText.isEmpty()){
             return validatedText+" ";
