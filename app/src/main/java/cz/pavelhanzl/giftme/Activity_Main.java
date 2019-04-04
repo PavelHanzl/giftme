@@ -43,7 +43,6 @@ public class Activity_Main extends AppCompatActivity {
     public NavigationView mNavigationView;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
-    private Intent mIntentLogin;
     public static final String preferences = "prefs";
 
 
@@ -61,10 +60,7 @@ public class Activity_Main extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mNavigationView = findViewById(R.id.nav_view);
 
-        //nastaví Intents
-        mIntentLogin = new Intent(this, Activity_Login.class);
-
-        //Získá instanci FirebaseAuth a fi
+        //Získá instanci FirebaseAuth a FirebaseFirestore
         mAuth = FirebaseAuth.getInstance();
         mDb = FirebaseFirestore.getInstance();
 
@@ -91,6 +87,10 @@ public class Activity_Main extends AppCompatActivity {
 
     }
 
+    /**
+     * Vytvoří v databázi dokument s přihlášeným uživatelem (v podstatě mu založí účet), pokud ještě
+     * svůj účet nemá - tzn. pokud používá aplikaci úplně prvně.
+     */
     private void createUserAccountInDatabaseIfDoesNotExists() {
         //kontrola, zda-li je zadaný uživatel registrovaný
         DocumentReference userReference = FirebaseFirestore.getInstance().collection("Users").document(mAuth.getCurrentUser().getEmail());
@@ -118,6 +118,9 @@ public class Activity_Main extends AppCompatActivity {
 
     }
 
+    /**
+     * Nastaví, co se má stát při kliknutí na položky ve vysouvacím menu.
+     */
     private void setActionsForDrawerMenuItems() {
         //řídí navigaci
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -137,7 +140,6 @@ public class Activity_Main extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Fragment_Stats()).addToBackStack(null).commit();
                         break;
                     case R.id.nav_settings:
-                        //TODO: dodělat settings
                         startActivity(new Intent(getApplicationContext(), Activity_Settings.class));
                         break;
                     case R.id.nav_logout:
@@ -151,6 +153,9 @@ public class Activity_Main extends AppCompatActivity {
         });
     }
 
+    /**
+     * Nastaví aktuálně přihlášeného uživatele v headeru vysouvacího navigačního menu,
+     */
     private void setLoggedInUserInDrawerMenu() {
         View headerView = mNavigationView.getHeaderView(0);
         mTextViewUserEmail = headerView.findViewById(R.id.nav_textview_user_email);
@@ -158,7 +163,8 @@ public class Activity_Main extends AppCompatActivity {
     }
 
     /**
-     * Odhlásí uživatele z aplikace a zobrazí login
+     * Zobrazí alertbox, zda-li se chce uživatel odhlásit.
+     * Pokud ano, tak odhlásí uživatele z aplikace a zobrazí login.
      */
     private void LogOut() {
 
@@ -178,7 +184,7 @@ public class Activity_Main extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         mAuth.signOut();
-                        startActivity(mIntentLogin);
+                        startActivity(new Intent(getApplicationContext(), Activity_Login.class));
                         finish();
                     }
                 });
@@ -186,8 +192,6 @@ public class Activity_Main extends AppCompatActivity {
 
 
     }
-
-
 
     /**
      * Přepisuje funkci tlačítka back.

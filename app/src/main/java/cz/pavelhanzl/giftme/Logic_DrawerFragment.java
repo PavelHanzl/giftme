@@ -4,6 +4,10 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 
+/**
+ * Touto třídou se extendují fragmenty použité v Activity_Main. Obsahuje metodu pro nastavení
+ * aktivní položky menu.
+ */
 public class Logic_DrawerFragment extends Fragment {
 
     /**
