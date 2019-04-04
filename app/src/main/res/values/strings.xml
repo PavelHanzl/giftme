@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Giftme</string>
+    <string name="app_name" translatable="false">Giftme</string>
 
-    <string name="admin_email">hanzlpavel77@gmail.com</string>
+    <string name="admin_email" translatable="false">hanzlpavel77@gmail.com</string>
 
     <!--Login screen-->
     <string name="login_title">Login</string>
@@ -23,7 +23,7 @@
     <string name="registration_failed">Registration failed.</string>
     <string name="account_created">Account created.</string>
 
-    <string name="error_invalid_password">Passwords do not match or password is not min. 6 characters long!</string>
+    <string name="error_invalid_password">Passwords do not match or password is not min. 6 characters long or doesn\'t contain uppercase and lowercase letter!</string>
     <string name="error_field_required">This field is required.</string>
     <string name="error_invalid_email">Invalid e-mail!</string>
 
@@ -144,24 +144,25 @@
     <string name="taptarget_persons_giftlist_addbutton_desription">Congratulations! You created your first giftlist. \n\n You can add gifts to this giftlist using highlighted button. \n\n Tip: After you create an item, you can either \n &#128073; Swipe right to archive item \n &#128072; or swipe left to delete item.</string>
 
     <string name="taptarget_persons_giftlist_archivebutton_title">Stay organized</string>
-    <string name="taptarget_persons_giftlist_archivebutton_desription">
-        When you don\'t want to have a mess in this giftlist, you can always move old - bought gifts from current year to person\'s archive,
-        so in future you know what you gave to this person in past, but also keep order in what you are planing to give him or her in future.\n\n
-        To put it simply, archive is a place for gifts that was already given. &#128522; </string>
+    <string name="taptarget_persons_giftlist_archivebutton_desription">"When you don't want to have a mess in this giftlist, you can always move old - bought gifts from current giftlist to person's archive, so in future you know what you gave to this person in past, but also keep order in what you are planing to give him or her in future. \n\n To put it simply, archive is a place for gifts that was already given. &#128522; "</string>
 
     <string name="taptarget_giftlist_title">Welcome to Giftme &#128587;</string>
-    <string name="taptarget_giftlist_description">There\'s nothing here yet. Change it. \n\nThis is screen where your giftlists are located. You can add your friend or relative by clicking on button in the bottom right corner. \nIt\'s simple like that!</string>
+    <string name="taptarget_giftlist_description">There\'s nothing here yet. Change it. \n\nThis is screen where your giftlists are located. You can add your friend or relative by clicking on button in the bottom right corner. \nTry it.</string>
 
     <string name="taptarget_wishlist_title">Place of your wishes </string>
-    <string name="taptarget_wishlist_description">This is place, where you can store your wishes. As a bonus other users, who add you as a friend, will see your wishlist, so maybe your dreams will come true.\n\nTo make it fair, you will see theirs wishlists, if you add them as a friends. \n\nTip: \n &#128072; Swipe item left to delete it. Not just for you, but for all users of Giftme app.</string>
+    <string name="taptarget_wishlist_description">This is place, where you can store your wishes. As a bonus other users, who add you as a friend, will see your wishlist, so maybe your dreams will come true.\nTo make it fair, you will see theirs wishlists, if you add them as a friends.  \n\nTip:\n&#128072; Swipe item left to delete it. Not just for you, but for all users of Giftme app.</string>
 
     <string name="taptarget_social_title">Get some gift tips! &#127873;</string>
-    <string name="taptarget_social_description">Add friends and see what they have on their wish lists. Gift tips right from those, whom you want to give a present. Isn\'t it perfect? You can book that gift tip and let other users of giftme app know, that you are going to buy that gift, so they don\'t need to buy it too.\n\nYou can also give a tip to other users, if you know about something, what your friend would like to get. And don\'t worry, he or she will not see it, it will stay as a public secret.</string>
+    <string name="taptarget_social_description">Add friends and see what they have on their wish lists. Gift tips right from those, whom you want to give a present. Isn\'t it perfect? You can book that gift tip and let other users of Giftme app know, that you are going to buy that gift, so they don\'t need to buy it too.\n\nYou can also give a tip to other users, if you know about something, what your friend would like to get. And don\'t worry, he or she will not see it, it will stay as a public secret.</string>
 
     <string name="taptarget_gifttips_title">Great, your first friend. </string>
     <string name="taptarget_gifttips_description">Let\'s see, what is on his or her wish list. If it is empty, you can always try to switch tabs a see if there are some gift tips by other users. \n\nOn second tab you can also add your own gift tips for this particular friend to help others.</string>
+
     <string name="activity_newaddeduser_user_found">User found and added to your friends.</string>
     <string name="activity_newaddeduser_user_does_not_exists">User does not exists!</string>
     <string name="activity_newaddeduser_error">Error:</string>
+    <string name="stats_bought">Bought</string>
+    <string name="stats_unbought">Unbought</string>
+
 
 </resources>

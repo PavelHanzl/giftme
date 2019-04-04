@@ -160,8 +160,8 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     private void setPieChartValueOfGifts() {
         List<PieEntry> entries = new ArrayList<>();
 
-        entries.add(new PieEntry(stats.getValueOfBoughtGifts(), "Bought"));
-        entries.add(new PieEntry(stats.getValueOfUnboughtGifts(), "Unbought"));
+        entries.add(new PieEntry(stats.getValueOfBoughtGifts(), getString(R.string.stats_bought)));
+        entries.add(new PieEntry(stats.getValueOfUnboughtGifts(), getString(R.string.stats_unbought)));
 
 
         PieDataSet pieDataSet = new PieDataSet(entries, "Un/bought stats");
@@ -189,8 +189,8 @@ public class Fragment_Stats extends Logic_DrawerFragment {
     private void setPieChartCountOfGifts() {
         List<PieEntry> entries = new ArrayList<>();
 
-        entries.add(new PieEntry(stats.getCountOfBoughtGifts(), "Bought"));
-        entries.add(new PieEntry(stats.getCountOfUnBoughtGifts(), "Unbought"));
+        entries.add(new PieEntry(stats.getCountOfBoughtGifts(), getString(R.string.stats_bought)));
+        entries.add(new PieEntry(stats.getCountOfUnBoughtGifts(), getString(R.string.stats_unbought)));
 
 
         PieDataSet pieDataSet = new PieDataSet(entries, "Un/bought stats");

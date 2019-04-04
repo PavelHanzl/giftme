@@ -125,9 +125,7 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
                         // Focus: Logika po načtení objektu zvoleného jména
 
                         mSelectedNameObject = mDocumentSnapshotName.toObject(AddedUser.class);
-                        setTitle(getString(R.string.gifttips_title) + " for " + mSelectedNameObject.getName());
-                        Log.d("Activity_Gifttips", " mSelectedNameObject " + mSelectedNameObject.getEmail());
-
+                        setTitle(getString(R.string.gifttips_title) + " - " + mSelectedNameObject.getName());
 
                         setViewPager();
                         showAtFirstRunOnly();

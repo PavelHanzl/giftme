@@ -59,7 +59,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persons_gitflist); //nastaví layout aplikace
-
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white); //nastaví ikonku bílé šipky v actionbaru (nahradí defaultní černou šipku)
         setTitle(getString(R.string.giftlist_title));//nastaví titulek v actionbaru
 
         mDb = FirebaseFirestore.getInstance(); //získá instantci databáze

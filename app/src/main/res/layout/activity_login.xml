@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/btn_with_stroke_background"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="70dp"
@@ -124,24 +124,26 @@
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout_login_fields" />
 
+        <Button
+            android:id="@+id/button_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btn_transparent_background"
+            android:text="@string/login_signup_btn"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/button_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/btn_transparent_background"
-        android:text="@string/login_signup_btn"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

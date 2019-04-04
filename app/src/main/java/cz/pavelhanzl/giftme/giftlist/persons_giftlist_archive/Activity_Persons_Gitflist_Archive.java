@@ -60,6 +60,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_persons_gitflist_archive);//nastaví layout
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white); //nastaví ikonku bílé šipky v actionbaru (nahradí defaultní černou šipku)
         setTitle(getString(R.string.archive_title)); // nastaví title v Actionbaru
 
         mDb = FirebaseFirestore.getInstance();//získá instantci databáze
@@ -296,7 +297,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
                     TapTarget.forView(findViewById(R.id.action_bar), getString(R.string.taptarget_giftlist_archive_title), getString(R.string.taptarget_giftlist_archive_desription))
                             .tintTarget(false)
                             .targetCircleColor(R.color.colorPrimaryDark)
-                            .icon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_archive))
+                            .icon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_archive_fix_for_tap_target_view))
                     );
 
             prefs.edit().putBoolean("firstStartActivityPersonsGitflistArchive",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
