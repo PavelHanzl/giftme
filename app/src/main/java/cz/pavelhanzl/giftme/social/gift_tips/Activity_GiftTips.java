@@ -61,8 +61,11 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
 
     }
 
+    /**
+     * Nastaví viewpager a přiřadí mu PagerAdapter. Zároveň do bundle uloží email uživatele,
+     * na kterého jsme kliknuli v Menu->Friends.
+     */
     private void setViewPager() {
-
         //vytvoří bundle který obsahuje email zvoleného uživatele v social části a následně předá jeho email do fragmentů "Fragment_OwnTips" nebo "Fragment_OthersTips"
         Bundle bundle = new Bundle();
         bundle.putString("selectedEmail", mSelectedNameObject.getEmail());
@@ -91,17 +94,21 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
         });
     }
 
+    /**
+     * Přidá taby a nastaví jim text.
+     */
     private void setTabLayout() {
         mTabLayout = findViewById(R.id.activity_gifttips_tablayout);
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_layout_has_on_wishlist).setTag("Tab1"));
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.others_suggest).setTag("Tab2"));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_layout_has_on_wishlist));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.others_suggest));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
 
     /**
      * Získá objekt ze zvolené položky v předchozí aktivitě.
-     * Získávání dat z databáze firestore probíhá asynchronně, a kód této třídy závisí na získaném objektu, proto se zbytek kodu nachází až v onComplete isSuccessful metodě.
+     * Získávání dat z databáze firestore probíhá asynchronně, a kód této třídy závisí na získaném
+     * objektu, proto se zbytek kodu nachází až v onComplete isSuccessful metodě.
      */
     private void getDocumentSnapshotForSelectedName() {
         if(getIntent().getStringExtra("path") != null){

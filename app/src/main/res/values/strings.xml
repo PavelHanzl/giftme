@@ -160,5 +160,8 @@
 
     <string name="taptarget_gifttips_title">Great, your first friend. </string>
     <string name="taptarget_gifttips_description">Let\'s see, what is on his or her wish list. If it is empty, you can always try to switch tabs a see if there are some gift tips by other users. \n\nOn second tab you can also add your own gift tips for this particular friend to help others.</string>
+    <string name="activity_newaddeduser_user_found">User found and added to your friends.</string>
+    <string name="activity_newaddeduser_user_does_not_exists">User does not exists!</string>
+    <string name="activity_newaddeduser_error">Error:</string>
 
 </resources>

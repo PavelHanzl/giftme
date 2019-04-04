@@ -61,6 +61,11 @@ public class Activity_NewAddedUser extends AppCompatActivity {
         }
     }
 
+    /**
+     * Tato metoda získá uživatelem zadaná data, provede ověření zadaných údajů na validitu a poté
+     * je uloží do firestore databáze (případně upraví stávající data). Po uložení do databáze
+     * se vrací na předešlou aktivitu.
+     */
     private void saveName(){
         name = mEditTextName.getText().toString();
         email = mEditTextEmail.getText().toString();
@@ -88,13 +93,13 @@ public class Activity_NewAddedUser extends AppCompatActivity {
                         //pokud zadaný email nalezen přidá hodnotu do databáze
                         CollectionReference addedUserReference = FirebaseFirestore.getInstance().collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("AddedUsers");
                         addedUserReference.add(new AddedUser(name,email));
-                        Toast.makeText(Activity_NewAddedUser.this, "User found and added to your socials.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_NewAddedUser.this, getString(R.string.activity_newaddeduser_user_found), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(Activity_NewAddedUser.this, "User does not exists!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_NewAddedUser.this, getString(R.string.activity_newaddeduser_user_does_not_exists), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(Activity_NewAddedUser.this, "Error: "+task.getException(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_NewAddedUser.this, getString(R.string.activity_newaddeduser_error)+" "+task.getException(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

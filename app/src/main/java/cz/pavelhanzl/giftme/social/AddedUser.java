@@ -1,5 +1,8 @@
 package cz.pavelhanzl.giftme.social;
 
+/**
+ * Model pro uživatele zobrazované v Menu->Friends, které si přidáte do přátel.
+ */
 public class AddedUser {
     private String name;
     private String email;

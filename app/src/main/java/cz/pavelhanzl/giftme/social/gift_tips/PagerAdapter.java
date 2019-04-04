@@ -12,6 +12,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumberOfTabs;
     private final Bundle mFragmentBundle;
 
+    /**
+     * Stará se o stránkování tabview. Předává jednotlivým tabům (fragmentům) argumenty, což je podobné jako když si mezi
+     * aktivitami předáváme extras přes intent.
+     * @param fm
+     * @param numberOfTabs
+     * @param data
+     */
     public PagerAdapter(FragmentManager fm, int numberOfTabs, Bundle data) {
         super(fm);
         this.mNumberOfTabs=numberOfTabs;

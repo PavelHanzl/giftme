@@ -57,10 +57,11 @@ public class Fragment_Social extends Logic_DrawerFragment {
         //získá kolekci jmen pro přihlášeného uživatele
         mAddedUsersReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("AddedUsers");
 
-        setUpFloatingButton();
-        setUpRecyclerView();
-        setCardsOnClickAction();
-        showAtFirstRunOnly();
+        setUpFloatingButton();//nastaví floating buton pro přidání nového přítele
+        setUpRecyclerView();//provede nastavení recycleview
+        setCardsOnClickAction();//nastaví co se stane po kliknutí na kartu s přítelem
+
+        showAtFirstRunOnly();//spustí tutorial pomocí tap target view při prvním spuštění této aktivity
 
         return mView;
     }
@@ -68,7 +69,7 @@ public class Fragment_Social extends Logic_DrawerFragment {
 
 
     /**
-     * Nastaví floating button pro přidání uživatele.
+     * Nastaví floating button pro přidání přítele.
      */
     private void setUpFloatingButton() {
         FloatingActionButton buttonAddName = mView.findViewById(R.id.frag_social_floatingButton_add_name);
@@ -94,7 +95,6 @@ public class Fragment_Social extends Logic_DrawerFragment {
         recyclerView.setAdapter( mAdapter_added_user);
 
         deleteItemFromRecyclerView(recyclerView);
-        //setCardsOnClickAction();
     }
 
 
@@ -118,6 +118,9 @@ public class Fragment_Social extends Logic_DrawerFragment {
                 snackbarUndoDelete();
             }
 
+            /**
+             * Zobrazí snackbar s možností vrátit smazání položky.
+             */
             private void snackbarUndoDelete() {
                 Snackbar snackbar = Snackbar
                         .make(getView().findViewById(R.id.coordinatorLayoutSocial), getString(R.string.swipe_deleted), 6000);
@@ -196,7 +199,7 @@ public class Fragment_Social extends Logic_DrawerFragment {
     }
 
     /**
-     * Nastavuje co se stane po kliknutí na kartu s uživatelem.
+     * Nastavuje co se stane po kliknutí na kartu s uživatelem/přítelem.
      */
     private void setCardsOnClickAction() {
         mAdapter_added_user.setOnItemClickListener(new Adapter_Added_User.OnItemClickListener() {
@@ -204,7 +207,6 @@ public class Fragment_Social extends Logic_DrawerFragment {
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
 
                 String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
-                //Toast.makeText(getContext(), "Position: " +position+" ID:"+ path, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext(), Activity_GiftTips.class).putExtra("path", path));
             }
         });
@@ -223,7 +225,6 @@ public class Fragment_Social extends Logic_DrawerFragment {
                     TapTarget.forView(mView.findViewById(R.id.frag_social_floatingButton_add_name), getString(R.string.taptarget_social_title), getString(R.string.taptarget_social_description))
                             .tintTarget(false)
             );
-
             prefs.edit().putBoolean("firstStartFragmentSocial",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
         }
 
