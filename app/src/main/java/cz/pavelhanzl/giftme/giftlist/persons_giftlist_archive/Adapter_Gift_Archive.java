@@ -51,17 +51,29 @@ public class Adapter_Gift_Archive extends FirestoreRecyclerAdapter<Gift, Adapter
         return new GiftHolder(v);
     }
 
+    /**
+     * Odstaní položku na předané pozici v recycleview z databáze.
+     * @param position
+     */
     public void deleteItem(int position){
         mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
 
 
     }
+
+    /**
+     * Obnoví nedávno smazanou položku z databáze.
+     */
     public void restoreItem(){
         //přidá smazanou položku zpět do databáze se stejným ID
         mDeletedDocument.getReference().set(mDeletedDocument.getData());
     }
 
+    /**
+     * Přesune položku na předané pozici z archivního giftlistu zpět do normálního giftlistu zvolené osoby.
+     * @param position
+     */
     public void unarchiveItem(int position){
         //získá objekt dárku ze snapshotu na dané pozici
         Gift gift =getSnapshots().getSnapshot(position).toObject(Gift.class);

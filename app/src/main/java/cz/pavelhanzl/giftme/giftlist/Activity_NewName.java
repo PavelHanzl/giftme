@@ -17,6 +17,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
 
+/**
+ * Tato třída přidá novou osobu (objekt tipu Name) do seznamu obsahující gifltlisty těchto osob (Menu->Giftlists).
+ */
 public class Activity_NewName extends AppCompatActivity {
     private EditText mEditTextName;
     private EditText mEditTextBudget;
@@ -39,9 +42,10 @@ public class Activity_NewName extends AppCompatActivity {
         mEditTextName = findViewById(R.id.activity_NewName_EditText_Name);
         mEditTextBudget = findViewById(R.id.activity_NewName_EditText_Budget);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();// získá instanci přihlášení
 
-        checkIfEditing();
+        checkIfEditing(); //spustí editaci položky místo vytvoření nové položky pokud z předchozí
+                          //aktivity získáme přes intent informaci o tom, že nechceme vytváet, nýbrž editovat
     }
 
     /**
@@ -84,6 +88,11 @@ public class Activity_NewName extends AppCompatActivity {
         }
     }
 
+    /**
+     * Tato metoda získá uživatelem zadaná data, provede ověření zadaných údajů na validitu a poté
+     * je uloží do firestore databáze (případně upraví stávající data). Po uložení do databáze
+     * se vrací na předešlou aktivitu.
+     */
     private void saveName(){
         String name = mEditTextName.getText().toString();
         String budgetString = mEditTextBudget.getText().toString();

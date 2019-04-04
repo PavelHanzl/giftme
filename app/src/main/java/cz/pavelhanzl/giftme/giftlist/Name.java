@@ -1,5 +1,8 @@
 package cz.pavelhanzl.giftme.giftlist;
 
+/**
+ * Model pro jednotlivé osoby přidané do Menu->Giftlists.
+ */
 public class Name {
     private String name;
     private int budget;

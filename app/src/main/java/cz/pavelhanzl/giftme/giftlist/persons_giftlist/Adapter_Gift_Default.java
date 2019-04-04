@@ -51,17 +51,28 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
         return new GiftHolder(v);
     }
 
+    /**
+     * Odstaní položku na předané pozici v recycleview z databáze.
+     * @param position
+     */
     public void deleteItem(int position){
         mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
-
-
     }
+
+    /**
+     * Obnoví nedávno smazanou položku z databáze.
+     */
     public void restoreItem(){
         //přidá smazanou položku zpět do databáze se stejným ID
         mDeletedDocument.getReference().set(mDeletedDocument.getData());
     }
 
+
+    /**
+     * Přesune položku na předané pozici z normálního giftlistu do archivního giftlistu zvolené osoby.
+     * @param position
+     */
     public void archiveItem(int position){
         //získá objekt dárku ze snapshotu na dané pozici
         Gift gift =getSnapshots().getSnapshot(position).toObject(Gift.class);
@@ -74,8 +85,6 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
 
         //smaže objekt z původního umístění;
         getSnapshots().getSnapshot(position).getReference().delete();
-
-
 
     }
 
@@ -93,8 +102,6 @@ public class Adapter_Gift_Default extends FirestoreRecyclerAdapter<Gift, Adapter
             textViewName = itemView.findViewById(R.id.card_giftDefault_name);
             textViewPrice = itemView.findViewById(R.id.card_giftDefault_price);
             checkBoxBought = itemView.findViewById(R.id.card_giftDefault_checkbox_bought);
-
-
 
             checkBoxBought.setOnClickListener(new View.OnClickListener() {
                 @Override

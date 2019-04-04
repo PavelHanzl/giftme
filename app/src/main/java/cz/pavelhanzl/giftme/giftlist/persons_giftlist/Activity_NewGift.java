@@ -14,6 +14,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
 
+
+/**
+ * Tato třída přidá nový dárek (objekt tipu Gift) do seznamu dárků vybrané osoby (Menu->Giftlists->Osoba).
+ */
 public class Activity_NewGift extends AppCompatActivity {
     private EditText mEditTextName;
     private EditText mEditTextPrice;
@@ -22,18 +26,18 @@ public class Activity_NewGift extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_gift);
+        setContentView(R.layout.activity_new_gift); //naství layout
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
 
-        setTitle(R.string.activity_newgift_add_new_name);
+        setTitle(R.string.activity_newgift_add_new_name); //nastaví titulek v ActionBaru
 
 
         //link xml a java kódu
         mEditTextName = findViewById(R.id.activity_NewGift_EditText_Name);
         mEditTextPrice = findViewById(R.id.activity_NewGift_EditText_Price);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();//získá instanci přihlášení
 
     }
 
@@ -55,6 +59,10 @@ public class Activity_NewGift extends AppCompatActivity {
         }
     }
 
+    /**
+     * Tato metoda získá uživatelem zadaná data, provede ověření zadaných údajů na validitu a poté
+     * je uloží do firestore databáze. Po uložení do databáze se vrací na předešlou aktivitu.
+     */
     private void saveGift(){
         String name = mEditTextName.getText().toString();
         String priceString = mEditTextPrice.getText().toString();

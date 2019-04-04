@@ -1,5 +1,8 @@
 package cz.pavelhanzl.giftme.giftlist.persons_giftlist;
 
+/**
+ * Model pro dárky zobrazované v Menu->Giftlists->Osoba a Menu->Giftlists->Osoba->archiv.
+ */
 public class Gift {
     private String name;
     private int price;

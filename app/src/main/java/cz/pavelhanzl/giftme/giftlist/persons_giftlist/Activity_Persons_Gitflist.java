@@ -39,6 +39,12 @@ import cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive.Activity_Persons_G
 import cz.pavelhanzl.giftme.giftlist.Name;
 import cz.pavelhanzl.giftme.R;
 
+/**
+ * Tato třída udává chování aplikace, pokud se uživatel nachází v seznamu dárků vybrané osoby
+ * (Menu->Giftlists->Osoba). Ze získaného extras v intentu vytvoří objekt typu Name, se kterým dále
+ * pracuje. V databázi najde kolekci Giftlist patřící tomuto uživateli a položky v ní zobrazí pomocí
+ * recycleview uživateli.
+ */
 public class Activity_Persons_Gitflist extends AppCompatActivity {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
@@ -52,12 +58,12 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_persons_gitflist); //nastaví layout aplikace
 
-        setContentView(R.layout.activity_persons_gitflist);
-        setTitle(getString(R.string.giftlist_title));
+        setTitle(getString(R.string.giftlist_title));//nastaví titulek v actionbaru
 
-        mDb = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        mDb = FirebaseFirestore.getInstance(); //získá instantci databáze
+        mAuth = FirebaseAuth.getInstance(); //získá instanci ověření
 
         getDocumentSnapshotForSelectedName();
 
@@ -65,14 +71,18 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
 
 
     /**
-     * Získá objekt ze zvolené položky v předchozí aktivitě.
-     * Získávání dat z databáze firestore probíhá asynchronně, a kód této třídy závisí na získaném objektu, proto se zbytek kodu nachází až v onComplete isSuccessful metodě.
+     * Získá objekt ze zvolené položky v předchozí aktivitě. Pomocí getString extra získá cestu ke
+     * zvolenému dokumentu (v tomto případě cestu ke zvolené osobě). Získávání dat z databáze
+     * firestore probíhá asynchronně, a kód této třídy závisí na získaném objektu, proto se
+     * zbytek kodu nachází až v onComplete isSuccessful metodě.
      */
     private void getDocumentSnapshotForSelectedName() {
+        //provede se pouze tehdy, pokud z předchozí aktivity dostaneme Intent se StringExtra obsahující cestu ke zvolené osobě
         if(getIntent().getStringExtra("path") != null){
             mDocumentReferenceName = mDb.document(getIntent().getStringExtra("path")); //Getting intent, setting DocumentReference
         }
 
+        //získá odkaz na dokument, který je umístěn na cestě získané z předchozí aktivity pomocí StringExtras.
         mDocumentReferenceName.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -81,24 +91,23 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
                     if (mDocumentSnapshotName.exists()) {
                         // Focus: Logika po načtení objektu zvoleného jména
 
-                        mSelectedNameObject = mDocumentSnapshotName.toObject(Name.class);
-                        setTitle(getString(R.string.giftlist_title) + " - " + mSelectedNameObject.getName());
-                        Log.d("Activity_Persons_Giftli", " mSelectedNameObject " + mSelectedNameObject.getName());
-
-                        showAtFirstRunOnly();
+                        mSelectedNameObject = mDocumentSnapshotName.toObject(Name.class); //ze zvoleného dokumentu získá objekt typu Name
+                        setTitle(getString(R.string.giftlist_title) + " - " + mSelectedNameObject.getName()); //nastaví title v ActionBaru a přidá za něj jméno aktuálně zvolené osoby
 
                         mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("Giftlist");
-                        Log.d("Activity persons Giftli", mGiftReference.getPath());
 
-                        setUpFloatingButtons();
-                        setUpRecyclerView();
+                        showAtFirstRunOnly(); //spustí tutorial pomocí tap target view při prvním spuštění této aktivity
+                        setUpFloatingButtons(); //nastaví floating buton pro přidání nového dárku a zobrazení archivu
+                        setUpRecyclerView(); //provede nastavení recycleview
+
                         mAdapter_gift_default.startListening();
 
-
                     } else {
+                        //dokument v zadané cestě neexistuje
                         Log.d("Activity_Persons_Giftli", "No such document");
                     }
                 } else {
+                    //načtení dokumentu na zadané cestě selhalo s uvedeným errorem
                     Log.d("Activity_Persons_Giftli", "get snapshot failed with ", task.getException());
                 }
             }
@@ -124,7 +133,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
     }
 
     /**
-     * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
+     * Odstraní položku z recyclerView při posunutí položky doprava (archivuje) nebo doleva (odstraní).
      *
      * @param recyclerView
      */
@@ -151,6 +160,9 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
 
             }
 
+            /**
+             * Zobrazí snackbar s možností vrátit smazání položky.
+             */
             private void snackbarUndoDelete() {
                 Snackbar snackbar = Snackbar
                         .make(findViewById(R.id.coordinatorLayoutPersonsGiftlist), getString(R.string.swipe_deleted), 6000);
@@ -217,7 +229,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
 
                     background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
                             itemView.getTop(), itemView.getRight(), itemView.getBottom());
-                } else { // view is unSwiped
+                } else { // s view se momentálně neposouvá
                     background = new ColorDrawable(getResources().getColor(R.color.transparent));
                     background.setBounds(0, 0, 0, 0);
                 }
@@ -247,7 +259,9 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
     }
 
     /**
-     * Nastaví floating button pro přidání dárku na giftlist. A v extra odešle ID otevřené osoby, pro kterou je určen otevřený giftlist.
+     * Nastaví floating button pro přidání dárku na giftlist. A v extra odešle ID otevřené osoby,
+     * pro kterou je určen otevřený giftlist. Zároveň nastaví floating button pro otevření archivu vybrané
+     * osoby.
      */
     private void setUpFloatingButtons() {
         FloatingActionButton buttonAddGift = findViewById(R.id.activity_personsGiftlist_floatingButton_add_gift);

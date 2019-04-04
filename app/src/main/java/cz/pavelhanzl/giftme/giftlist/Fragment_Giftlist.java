@@ -50,29 +50,29 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setActiveMenuIcon(0);
-        mView = inflater.inflate(R.layout.fragment_giftlist, container, false);
+        mView = inflater.inflate(R.layout.fragment_giftlist, container, false); //nastaví layout
 
-        mDb = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-
-
-
+        mDb = FirebaseFirestore.getInstance(); //získá instanci databáze
+        mAuth = FirebaseAuth.getInstance(); //získá instanci přihlášení
 
 
         //získá kolekci jmen pro přihlášeného uživatele
         mNameReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names");
 
-        setUpFloatingButton();
-        setUpRecyclerView();
+        setUpFloatingButton();//nastaví floating buton pro přidání nového giftlistu/osoby
+        setUpRecyclerView();//provede nastavení recycleview
 
-        showAtFirstRunOnly();
+        showAtFirstRunOnly();//spustí tutorial pomocí tap target view při prvním spuštění této aktivity
 
 
         return mView;
     }
 
+    /**
+     * Získá data z databáze potřebná pro fragment se statistikami (realizováno
+     * singletonem stats/StatsManagerSingleton)
+     */
     private void getDataForStatistics() {
-        //získá data potřebná pro fragment se statistikami (realizováno singletonem)
         StatsManagerSingleton.getInstance().getStatsData();
     }
 
@@ -92,7 +92,6 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
 
     @Override
     public void onResume() {
-
         super.onResume();
         setActiveMenuIcon(0);
         getDataForStatistics();
@@ -117,7 +116,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
 
 
     /**
-     * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
+     * Odstraní položku z recyclerView při posunutí položky doleva.
      *
      * @param recyclerView
      */
@@ -208,15 +207,15 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     }
 
     /**
-     * Nastavuje co se stane po kliknutí na kartu s uživatelem.
+     * Nastavuje co se stane po kliknutí na kartu s uživatelem. Při krátkém kliknutí se otevře
+     * giftlist zvolené osoby a při delším podržení se zobrazí editace dané osoby.
      */
     private void setCardsOnClickAction() {
         mAdapter_name.setOnItemClickListener(new Adapter_Name.OnItemClickListener() {
+
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
-
                 String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
-                //Toast.makeText(getContext(), "Position: " +position+" ID:"+ id, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path", path));
             }
 

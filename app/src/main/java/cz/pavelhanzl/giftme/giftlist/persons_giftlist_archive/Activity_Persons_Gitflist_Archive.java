@@ -39,6 +39,12 @@ import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
 import cz.pavelhanzl.giftme.giftlist.Name;
 import cz.pavelhanzl.giftme.R;
 
+/**
+ * Tato třída udává chování aplikace, pokud se uživatel nachází v archivu dárků vybrané osoby
+ * (Menu->Giftlists->Osoba->archiv). Ze získaného extras v intentu vytvoří objekt typu Name, se kterým dále
+ * pracuje. V databázi najde kolekci GiftlistArchive patřící tomuto uživateli a položky v ní zobrazí pomocí
+ * recycleview uživateli.
+ */
 public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
@@ -53,29 +59,31 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("Giftlist Archive","Processing oncreate");
-        setContentView(R.layout.activity_persons_gitflist_archive);
-        setTitle(getString(R.string.archive_title));
+        setContentView(R.layout.activity_persons_gitflist_archive);//nastaví layout
+        setTitle(getString(R.string.archive_title)); // nastaví title v Actionbaru
 
-        mDb = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        mDb = FirebaseFirestore.getInstance();//získá instantci databáze
+        mAuth = FirebaseAuth.getInstance();//získá instanci ověření
 
         getDocumentSnapshotForSelectedName();
-        showAtFirstRunOnly();
+        showAtFirstRunOnly();//spustí tutorial pomocí tap target view při prvním spuštění této aktivity
 
     }
 
 
     /**
-     * Získá objekt ze zvolené položky v předchozí aktivitě.
-     * Získávání dat z databáze firestore probíhá asynchronně, a kód této třídy závisí na získaném objektu, proto se zbytek kodu nachází až v onComplete isSuccessful metodě.
+     * Získá objekt ze zvolené položky v předchozí aktivitě.Pomocí getString extra získá cestu ke
+     * zvolenému dokumentu (v tomto případě cestu ke zvolené osobě).
+     * Získávání dat z databáze firestore probíhá asynchronně, a kód této třídy závisí na získaném
+     * objektu, proto se zbytek kodu nachází až v onComplete isSuccessful metodě.
      */
     private void getDocumentSnapshotForSelectedName() {
+        //provede se pouze tehdy, pokud z předchozí aktivity dostaneme Intent se StringExtra obsahující cestu ke zvolené osobě
         if(getIntent().getStringExtra("path") != null){
             Log.d("Giftlist Archive","Getting intent, setting DocumentReference");
             mDocumentReferenceName = mDb.document(getIntent().getStringExtra("path"));
         }
-
+        //získá odkaz na dokument, který je umístěn na cestě získané z předchozí aktivity pomocí StringExtras.
         mDocumentReferenceName.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -84,14 +92,14 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
                     if (mDocumentSnapshotName.exists()) {
                         // Focus: Logika po načtení objektu zvoleného jména
 
-                        mSelectedNameObject = mDocumentSnapshotName.toObject(Name.class);
-                        setTitle(getString(R.string.archive_title) + " - " + mSelectedNameObject.getName());
+                        mSelectedNameObject = mDocumentSnapshotName.toObject(Name.class);//ze zvoleného dokumentu získá objekt typu Name
+                        setTitle(getString(R.string.archive_title) + " - " + mSelectedNameObject.getName()); //nastaví title v ActionBaru a přidá za něj jméno aktuálně zvolené osoby
                         Log.d("Activity_archive", " mSelectedNameObject " + mSelectedNameObject.getName());
 
                         mGiftReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("Names").document(mDocumentReferenceName.getId()).collection("GiftlistArchive");
                         Log.d("Activity persons Giftli", mGiftReference.getPath());
 
-                        setUpRecyclerView();
+                        setUpRecyclerView();//provede nastavení recycleview
                         mAdapter_gift_archive.startListening();
 
 
@@ -124,7 +132,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     }
 
     /**
-     * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
+     * Odstraní položku z recyclerView při posunutí položky doprava (vrátí z archivu zpět do normálního giftlistu) nebo doleva (odstraní z archivu).
      *
      * @param recyclerView
      */
@@ -150,7 +158,9 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
 
 
             }
-
+            /**
+             * Zobrazí snackbar s možností vrátit smazání položky.
+             */
             private void snackbarUndoDelete() {
                 Snackbar snackbar = Snackbar
                         .make(findViewById(R.id.coordinatorLayoutPersonsGiftlistArchive), getString(R.string.swipe_deleted), 6000);
@@ -217,7 +227,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
 
                     background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
                             itemView.getTop(), itemView.getRight(), itemView.getBottom());
-                } else { // view is unSwiped
+                } else { // s view se momentálně neposouvá
                     background = new ColorDrawable(getResources().getColor(R.color.transparent));
                     background.setBounds(0, 0, 0, 0);
                 }

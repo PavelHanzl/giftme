@@ -46,21 +46,26 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
         return new NameHolder(v);
     }
 
+    /**
+     * Odstaní položku na předané pozici v recycleview z databáze. A znovu spustí získávání dat pro
+     * statistiky.
+     * @param position
+     */
     public void deleteItem(int position){
         mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
 
-        StatsManagerSingleton.getInstance().getStatsData();
-
+        StatsManagerSingleton.getInstance().getStatsData(); //získávání dat pro statistiky
     }
+
+    /**
+     * Obnoví nedávno smazanou položku z databáze.
+     */
     public void restoreItem(){
         //přidá smazanou položku zpět do databáze se stejným ID
         mDeletedDocument.getReference().set(mDeletedDocument.getData());
     }
-
-
-
-
+    
 
     class NameHolder extends RecyclerView.ViewHolder{
         TextView textViewName;
