@@ -32,11 +32,11 @@ public class Activity_NewName extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_name);
+        setContentView(R.layout.activity_new_name); //nastaví layout
 
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
-        setTitle(R.string.activity_newname_add_new_name);
+        setTitle(R.string.activity_newname_add_new_name); //nastaví title v actionbaru
 
         //link xml a java kódu
         mEditTextName = findViewById(R.id.activity_NewName_EditText_Name);

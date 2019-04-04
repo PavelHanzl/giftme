@@ -92,6 +92,9 @@ public class Fragment_OthersTips extends Fragment {
 
     }
 
+    /**
+     * Nastavuje recyclerView. Řadí podle jména.
+     */
     private void setUpRecyclerView() {
         mOthersGiftTipsPublicCollection = mDb.collection("Users").document(mSelectedUserEmail).collection("OthersGiftTips");
         Query query = mOthersGiftTipsPublicCollection.orderBy("name", Query.Direction.ASCENDING);
@@ -109,7 +112,7 @@ public class Fragment_OthersTips extends Fragment {
 
 
     /**
-     * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
+     * Odstraní položku z recyclerView při posunutí položky doleva.
      *
      * @param recyclerView
      */
@@ -125,7 +128,7 @@ public class Fragment_OthersTips extends Fragment {
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
 
-
+                //vytvoří dialog, pro potvrzení odstranění gifttipu pro všechny uživatele
                 AlertDialog.Builder builder = new AlertDialog.Builder(
                         getContext());
                 builder.setTitle(getString(R.string.frag_others_gifttips_alert_title));
@@ -135,8 +138,6 @@ public class Fragment_OthersTips extends Fragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int which) {
-
-                                Toast.makeText(getContext(),"No is clicked",Toast.LENGTH_LONG).show();
                                 mAdapter_othersTips.notifyDataSetChanged(); // refreshne recycleview
                             }
                         });
@@ -151,20 +152,11 @@ public class Fragment_OthersTips extends Fragment {
                 builder.show();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
             }
 
+            /**
+             * Zobrazí snackbar s možností vrátit smazání položky.
+             */
             private void snackbarUndoDelete() {
                 Snackbar snackbar = Snackbar
                         .make(getView().findViewById(R.id.coordinatorLayout_others_tips), getString(R.string.swipe_deleted_for_all), 6000);

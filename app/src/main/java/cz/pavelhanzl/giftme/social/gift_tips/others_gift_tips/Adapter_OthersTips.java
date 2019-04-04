@@ -78,13 +78,18 @@ public class Adapter_OthersTips extends FirestoreRecyclerAdapter<GiftTip, Adapte
         return new OthersTipsHolder(v);
     }
 
+    /**
+     * Odstaní položku na předané pozici v recycleview z databáze.
+     * @param position
+     */
     public void deleteItem(int position){
         mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
-
-        StatsManagerSingleton.getInstance().getStatsData();
-
     }
+
+    /**
+     * Obnoví nedávno smazanou položku z databáze.
+     */
     public void restoreItem(){
         //přidá smazanou položku zpět do databáze se stejným ID
         mDeletedDocument.getReference().set(mDeletedDocument.getData());

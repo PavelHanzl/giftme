@@ -51,7 +51,6 @@ public class Fragment_OwnTips extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Fragment_OwnTips.
      */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_OwnTips newInstance(String param1, String param2) {
         Fragment_OwnTips fragment = new Fragment_OwnTips();
         Bundle args = new Bundle();
@@ -70,14 +69,17 @@ public class Fragment_OwnTips extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_own_tips, container, false);
+
+        mView = inflater.inflate(R.layout.fragment_own_tips, container, false);// Inflate the layout for this fragment
 
         setUpRecyclerView();
 
         return mView;
     }
 
+    /**
+     * Nastavuje recyclerView. Řadí podle jména.
+     */
     private void setUpRecyclerView() {
         mOwnGiftTipsPublicCollection = mDb.collection("Users").document(mSelectedUserEmail).collection("OwnGiftTips");
         Query query = mOwnGiftTipsPublicCollection.orderBy("name", Query.Direction.ASCENDING);
@@ -128,7 +130,6 @@ public class Fragment_OwnTips extends Fragment {
     /**
      * Nastavuje co se stane po kliknutí na na checkbox u itemu.
      */
-    //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
     private void setCardsOnClickAction() {
         mAdapter_ownTips.setOnItemClickListener(new Adapter_OwnTips.OnItemClickListener() {
 
@@ -163,7 +164,7 @@ public class Fragment_OwnTips extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
     }
 }

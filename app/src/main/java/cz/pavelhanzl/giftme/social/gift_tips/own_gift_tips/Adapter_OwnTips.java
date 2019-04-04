@@ -78,29 +78,13 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
         return new OwnTipsHolder(v);
     }
 
+    /**
+     * Odstaní položku na předané pozici v recycleview z databáze.
+     * @param position
+     */
     public void deleteItem(int position){
         getSnapshots().getSnapshot(position).getReference().delete();
-
-
     }
-
-    public void archiveItem(int position){
-        //získá objekt dárku ze snapshotu na dané pozici
-        Gift gift =getSnapshots().getSnapshot(position).toObject(Gift.class);
-
-        //získá cestu k snapshotu na dané pozici a z něj vytvoří cestu do kolekce Archive
-        CollectionReference giftlistArchive = FirebaseFirestore.getInstance().collection(getSnapshots().getSnapshot(position).getReference().getParent().getParent().collection("GiftlistArchive").getPath());
-
-        //přidá objekt do předem definované kolekce v db
-        giftlistArchive.add(gift);
-
-        //smaže objekt z původního umístění;
-        getSnapshots().getSnapshot(position).getReference().delete();
-
-
-
-    }
-
 
 
     class OwnTipsHolder extends RecyclerView.ViewHolder{

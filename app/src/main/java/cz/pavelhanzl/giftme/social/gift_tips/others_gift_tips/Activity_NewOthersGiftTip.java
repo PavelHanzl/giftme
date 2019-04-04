@@ -22,16 +22,16 @@ public class Activity_NewOthersGiftTip extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_gifttip);
+        setContentView(R.layout.activity_new_gifttip);//nastaví layout
 
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
-        setTitle(R.string.activity_newowngifttip_add_new_gifttip);
+        setTitle(R.string.activity_newowngifttip_add_new_gifttip); //nastaví title v actionbaru
 
         //link xml a java kódu
         mEditTextName = findViewById(R.id.activity_NewGiftTip_EditText_Name);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();// získá instanci přihlášení
 
     }
 
@@ -53,6 +53,11 @@ public class Activity_NewOthersGiftTip extends AppCompatActivity {
         }
     }
 
+    /**
+     * Tato metoda získá uživatelem zadaná data, provede ověření zadaných údajů na validitu a poté
+     * je uloží do firestore databáze (případně upraví stávající data). Po uložení do databáze
+     * se vrací na předešlou aktivitu.
+     */
     private void saveGiftTip(){
         String name = mEditTextName.getText().toString();
         String bookedBy = null;
