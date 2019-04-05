@@ -36,7 +36,7 @@ public class Activity_ChangePassword extends AppCompatActivity {
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
 
-        setTitle(R.string.activity_newgift_add_new_name);
+        setTitle(R.string.activity_settings_change_pass_title);
 
 
         //link xml a java kódu

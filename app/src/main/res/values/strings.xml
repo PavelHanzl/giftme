@@ -170,6 +170,7 @@
     <string name="settings_changepass_1_enter_your_old_password">1. Enter your old password</string>
     <string name="settings_changepass_2_enter_your_new_password">2. Enter your new password</string>
     <string name="settings_changepass_3_confirm_your_new_password">3. Confirm your new password</string>
+    <string name="activity_settings_change_pass_title">Change password</string>
 
 
 </resources>

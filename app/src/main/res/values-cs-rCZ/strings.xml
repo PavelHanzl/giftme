@@ -137,4 +137,5 @@
     <string name="settings_changepass_1_enter_your_old_password">1. Zadejte své staré heslo</string>
     <string name="settings_changepass_2_enter_your_new_password">2. Zadejte své nové heslo</string>
     <string name="settings_changepass_3_confirm_your_new_password">3. Potvrďte nové heslo</string>
+    <string name="activity_settings_change_pass_title">Změnit heslo</string>
 </resources>
