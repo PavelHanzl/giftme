@@ -163,6 +163,13 @@
     <string name="activity_newaddeduser_error">Error:</string>
     <string name="stats_bought">Bought</string>
     <string name="stats_unbought">Unbought</string>
+    <string name="settings_changepass_pass_do_not_match">New passwords do not match. Please enter them again.</string>
+    <string name="settings_changepass_failed">Changing password failed.</string>
+    <string name="settings_changepass_sucessfull">Changing password was successful.</string>
+    <string name="settings_changepass_authentication_failed">Authentication Failed. Check your old password.</string>
+    <string name="settings_changepass_1_enter_your_old_password">1. Enter your old password</string>
+    <string name="settings_changepass_2_enter_your_new_password">2. Enter your new password</string>
+    <string name="settings_changepass_3_confirm_your_new_password">3. Confirm your new password</string>
 
 
 </resources>

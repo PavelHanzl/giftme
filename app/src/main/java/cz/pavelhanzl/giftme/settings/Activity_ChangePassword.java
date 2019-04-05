@@ -84,7 +84,7 @@ public class Activity_ChangePassword extends AppCompatActivity {
 
         //kontrola, zda-li se nová hesla shodují
         if (!newPass.equals(confirmNewPass)) {
-            Toast.makeText(this, "New passwords do not match. Please enter them again.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.settings_changepass_pass_do_not_match), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -102,15 +102,15 @@ public class Activity_ChangePassword extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(Activity_ChangePassword.this, "Changing password failed.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Activity_ChangePassword.this, getString(R.string.settings_changepass_failed), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(Activity_ChangePassword.this, "Changing password was successful.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Activity_ChangePassword.this, getString(R.string.settings_changepass_sucessfull), Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(Activity_ChangePassword.this, "Authentication Failed. Check your old password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_ChangePassword.this, getString(R.string.settings_changepass_authentication_failed), Toast.LENGTH_SHORT).show();
                 }
             }
         });

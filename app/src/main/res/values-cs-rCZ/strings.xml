@@ -112,10 +112,10 @@
     <string name="settings_send_feedback">Odeslat zpětnou vazbu</string>
     <string name="settings_send_feedback_summary">Nahlásit technické potíže nebo navrhnout nové funkce</string>
     <string name="taptarget_giftlist_archive_title">Vítejte v archivu</string>
-    <string name="taptarget_giftlist_archive_desription">Zde můžete nalézt dárky, které jste si již nepřáli vidět ve vašem běžném seznamu dárků. \n\nJe to perfektní místo pro dárky, které jste již dotyčnému koupili v minulosti, chcete si je pamatovat, ale nechcete je mít pomíchány s dárky, které teprve plánujete koupit. \n\nTip: \n &#128073; Posuňte položku doprava k vyjmutí z archivu \n &#128072; nebo doleva k odstranění.</string>
+    <string name="taptarget_giftlist_archive_desription">Zde můžete nalézt dárky, které jste si již nepřáli vidět ve vašem běžném seznamu dárků. \n\nJe to perfektní místo pro dárky, které jste již dotyčnému koupili v minulosti, chcete si je pamatovat, ale nechcete je mít pomíchány s těmi dárky, které teprve plánujete koupit. \n\nTip: \n &#128073; Posuňte položku doprava k vyjmutí z archivu \n &#128072; nebo doleva k odstranění.</string>
     <string name="taptarget_persons_giftlist_addbutton_title">Seznam dárků</string>
-    <string name="taptarget_persons_giftlist_archivebutton_desription">Pokud nechcete mít zmatek ve vašech seznamech dárků, můžete vždy přemístit staré - již zakoupené a předané dárky ze současného seznamu dárků do archivu právě zvolené osoby. V budoucnu tak budete vědět, co jste této osobě již dali, ale zároveň budete mít přehled o tom, co jí teprve chcete dát. \n\n Jednoduše řečeno archiv je místem dárů, které již byly dány. &#128522;</string>
-    <string name="taptarget_persons_giftlist_addbutton_desription">Blahopřejeme! Vytvořili jste váš první seznam dárků.\n\nPřidávat dárky do tohoto seznamu můžete použitím zvýraznného tlačítka.\n\nTip: Potom, co vytvoříte dárek, můžete buď \n&#128073; Posunout položku doprava, abyste ji archivovali \n&#128072; nebo posunout doleva, abyste ji odstranili.</string>
+    <string name="taptarget_persons_giftlist_archivebutton_desription">Pokud nechcete mít zmatek ve vašech seznamech dárků, můžete vždy přemístit staré - již zakoupené a předané dárky ze současného seznamu dárků do archivu momentálně zvolené osoby. V budoucnu tak budete vědět, co jste této osobě již dali, ale zároveň budete mít přehled o tom, co jí teprve chcete dát. \n\n Jednoduše řečeno archiv je místem dárků, které již byly dány. &#128522;</string>
+    <string name="taptarget_persons_giftlist_addbutton_desription">Blahopřejeme! Vytvořili jste váš první seznam dárků.\n\nPřidávat dárky do tohoto seznamu můžete použitím zvýrazněného tlačítka.\n\nTip: Potom, co vytvoříte dárek, můžete buď \n&#128073; Posunout položku doprava, abyste ji archivovali \n&#128072; nebo posunout doleva, abyste ji odstranili.</string>
     <string name="taptarget_persons_giftlist_archivebutton_title">Mějte v tom pořádek</string>
     <string name="taptarget_giftlist_title">Vítejte v Giftme &#128587;</string>
     <string name="taptarget_giftlist_description">Zatím tu nic není. Změňte to. \n\nNa této obrazovce najde seznamy dárků pro vaše přátele či blízké. Můžete je přidat kliknutím na tlačítko v pravém dolním rohu. \n\n Zkuste si to.</string>
@@ -130,4 +130,10 @@
     <string name="taptarget_gifttips_description">Podívejme se, co má na svém seznamu přání. Pokud je prázdný, můžete vždy zkusit přepnout karty a podívat se, jestli pro vašeho kamaráda či kamarádku nenavrhují nějaké tipy ostatní uživatelé. \n\nNa druhé kartě můžete také přidat vaše vlastní tipy na dárky pro tohoto konkrétního přítele, abyste pomohli druhým s případným výběrem dárku.</string>
     <string name="stats_bought">Koupeno</string>
     <string name="stats_unbought">Nekoupeno</string>
+    <string name="settings_changepass_pass_do_not_match">Nová hesla se neshodují, zadejte je prosím znovu.</string>
+    <string name="settings_changepass_failed">Změna hesla selhala.</string>
+    <string name="settings_changepass_sucessfull">Změna hesla proběhla úspěšně.</string>
+    <string name="settings_changepass_authentication_failed">Ověření selhalo. Zkontrolujte své staré heslo.</string>
+    <string name="settings_changepass_1_enter_your_old_password">1. Zadejte své staré heslo</string>
+    <string name="settings_changepass_2_enter_your_new_password">2. Zadejte své nové heslo</string>
 </resources>
