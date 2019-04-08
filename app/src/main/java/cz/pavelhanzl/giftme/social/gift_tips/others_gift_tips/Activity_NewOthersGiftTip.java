@@ -70,7 +70,7 @@ public class Activity_NewOthersGiftTip extends AppCompatActivity {
 
         //přidá hodnotu do databáze
         CollectionReference othersGiftTipsReference = FirebaseFirestore.getInstance().collection("Users").document(getIntent().getStringExtra("selectedUserEmail")).collection("OthersGiftTips");
-        othersGiftTipsReference.add(new GiftTip(name,tipBy,bookedBy));
+        othersGiftTipsReference.add(new GiftTip(name,tipBy,bookedBy,""));
         Toast.makeText(this, getString(R.string.activity_new_own_gifttip_name_added), Toast.LENGTH_SHORT).show();
         finish();
     }

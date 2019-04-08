@@ -18,12 +18,13 @@ import cz.pavelhanzl.giftme.R;
  */
 public class Activity_NewOwnGiftTip extends AppCompatActivity {
     private EditText mEditTextName;
+    private EditText mEditTextDesription;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_gifttip);
+        setContentView(R.layout.activity_new_own_gifttip);
 
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
@@ -31,6 +32,7 @@ public class Activity_NewOwnGiftTip extends AppCompatActivity {
 
         //link xml a java kódu
         mEditTextName = findViewById(R.id.activity_NewGiftTip_EditText_Name);
+        mEditTextDesription = findViewById(R.id.activity_NewGiftTip_EditText_Description);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -63,17 +65,22 @@ public class Activity_NewOwnGiftTip extends AppCompatActivity {
         String name = mEditTextName.getText().toString();
         String bookedBy = null;
         String tipBy = mAuth.getCurrentUser().getEmail();
-        //kontrola zda-li nějaké z polí není prázdné
+        String description = mEditTextDesription.getText().toString();
+
+        //kontrola zda-li name není prázdné
         if (name.trim().isEmpty()){
             Toast.makeText(this, getString(R.string.activity_newname_unfilled_fields), Toast.LENGTH_LONG).show();
             return;
         }
 
-
+        //pokud není vyplněn popis nastaví ho na prázdnou hodnotu
+        if (description.trim().isEmpty()){
+            description = "";
+        }
 
         //přidá hodnotu do databáze
         CollectionReference ownGiftTipsReference = FirebaseFirestore.getInstance().collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("OwnGiftTips");
-        ownGiftTipsReference.add(new GiftTip(name,tipBy,bookedBy));
+        ownGiftTipsReference.add(new GiftTip(name,tipBy,bookedBy,description));
         Toast.makeText(this, getString(R.string.activity_new_own_gifttip_name_added), Toast.LENGTH_SHORT).show();
         finish();
     }

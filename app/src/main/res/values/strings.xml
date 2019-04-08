@@ -171,6 +171,8 @@
     <string name="settings_changepass_2_enter_your_new_password">2. Enter your new password</string>
     <string name="settings_changepass_3_confirm_your_new_password">3. Confirm your new password</string>
     <string name="activity_settings_change_pass_title">Change password</string>
+    <string name="activity_newOwnGiftTip_description">Enter short description</string>
+    <string name="card_my_gift_tip_public_description_title">Description:</string>
 
 
 </resources>

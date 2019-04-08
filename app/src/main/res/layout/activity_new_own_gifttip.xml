@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".giftlist.Activity_NewName">
+
+    <EditText
+        android:drawableLeft="@drawable/ic_gift_color_primary"
+        android:drawablePadding="10dp"
+        android:id="@+id/activity_NewGiftTip_EditText_Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/activity_newgift_name"
+        android:inputType="text"
+        />
+
+    <EditText
+        android:drawableLeft="@drawable/ic_short_text"
+        android:drawablePadding="10dp"
+        android:id="@+id/activity_NewGiftTip_EditText_Description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/activity_newOwnGiftTip_description"
+        android:inputType="textMultiLine"
+        />
+
+
+
+</LinearLayout>

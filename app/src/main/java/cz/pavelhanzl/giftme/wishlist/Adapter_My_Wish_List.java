@@ -2,6 +2,7 @@ package cz.pavelhanzl.giftme.wishlist;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,14 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
     @Override
     protected void onBindViewHolder(@NonNull GiftTipHolder holder, int position, @NonNull GiftTip model) { //co chceme umístit do jakého view v našem cardview layoutu
         holder.textViewName.setText(model.getName());
+
+        //pokud description není null a pokud se nerovná prázdnému řetězci, tak zviditelni popis a nastavu mu hodnotu z modelu
+        if (model.getDescription() != null) {
+            if (!model.getDescription().equals("")) {
+                holder.textViewDescription.setVisibility(View.VISIBLE);
+                holder.textViewDescription.setText(model.getDescription());
+            }
+        }
     }
 
     @NonNull
@@ -46,9 +55,10 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
 
     /**
      * Odstaní položku na předané pozici v recycleview z databáze.
+     *
      * @param position
      */
-    public void deleteItem(int position){
+    public void deleteItem(int position) {
         mDeletedDocument = getSnapshots().getSnapshot(position);
         getSnapshots().getSnapshot(position).getReference().delete();
     }
@@ -56,28 +66,29 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
     /**
      * Obnoví nedávno smazanou položku z databáze.
      */
-    public void restoreItem(){
+    public void restoreItem() {
         //přidá smazanou položku zpět do databáze se stejným ID
         mDeletedDocument.getReference().set(mDeletedDocument.getData());
     }
 
 
-    class GiftTipHolder extends RecyclerView.ViewHolder{
+    class GiftTipHolder extends RecyclerView.ViewHolder {
         TextView textViewName;
-
+        TextView textViewDescription;
 
 
         public GiftTipHolder(@NonNull View itemView) { //konstruktor ;  itemView který jsme dostali je instance karty jako takové
             super(itemView);
             textViewName = itemView.findViewById(R.id.card_my_gift_tip_name);
+            textViewDescription = itemView.findViewById(R.id.card_my_gift_tip_desription);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION && mOnItemClickListener != null){ //noposition je konstanta pro -1, může nastat, když omylem klikneme, např. na odstraňovanou kartu uprostřed animace
-                        mOnItemClickListener.OnItemClick(getSnapshots().getSnapshot(position),position);
+                    if (position != RecyclerView.NO_POSITION && mOnItemClickListener != null) { //noposition je konstanta pro -1, může nastat, když omylem klikneme, např. na odstraňovanou kartu uprostřed animace
+                        mOnItemClickListener.OnItemClick(getSnapshots().getSnapshot(position), position);
                     }
                 }
             });
@@ -85,11 +96,11 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void OnItemClick(DocumentSnapshot documentSnapshot, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
 }

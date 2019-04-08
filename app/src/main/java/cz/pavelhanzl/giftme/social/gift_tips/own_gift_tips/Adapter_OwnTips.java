@@ -55,6 +55,7 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
             holder.itemView.setBackgroundColor(Color.argb(100,255,255,255)); //nastaví šedý background
 
             holder.textViewName.setText(model.getName());
+            getDescription(holder, model);
 
 
         }else {
@@ -67,8 +68,26 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
 
             holder.textViewName.setText(model.getName());
             holder.checkBoxBookedByYou.setChecked(model.isBooked());
+            getDescription(holder, model);
+
         }
 
+    }
+
+    /**
+     * Pokud description v modelu není null a pokud se nerovná prázdnému řetězci, tak zviditelní
+     * popis a nastaví mu hodnotu z modelu z databáze
+     * @param holder holder předaný z onBindHolder
+     * @param model model, ve kterém se nachází description
+     */
+    private void getDescription(@NonNull OwnTipsHolder holder, @NonNull GiftTip model) {
+        if (model.getDescription() != null) {
+            if (!model.getDescription().equals("")) {
+                holder.textViewDescription.setVisibility(View.VISIBLE);
+                holder.textViewDescription.setText(model.getDescription());
+                holder.textViewDescriptionTitle.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @NonNull
@@ -89,6 +108,8 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
 
     class OwnTipsHolder extends RecyclerView.ViewHolder{
         TextView textViewName;
+        TextView textViewDescriptionTitle;
+        TextView textViewDescription;
         TextView textViewBookedBy;
         CheckBox checkBoxBookedByYou;
         LinearLayout linearLayoutBookedBy;
@@ -107,6 +128,8 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
             defaultParams = rootView.getLayoutParams(); //původní velikost view před zmenšením na 0 - používá se v metodě OnBindViewHolder
 
             textViewName = itemView.findViewById(R.id.card_my_gift_tip_public_name);
+            textViewDescription = itemView.findViewById(R.id.card_my_gift_tip_public_desription);
+            textViewDescriptionTitle=itemView.findViewById(R.id.card_my_gift_tip_public_desription_title);
             checkBoxBookedByYou = itemView.findViewById(R.id.card_my_gift_tip_public_checkbox_booked_by_you);
             linearLayoutBookedBy = itemView.findViewById(R.id.card_my_gift_tip_public_booked_by_linear_layout);
             textViewBookedBy = itemView.findViewById(R.id.card_my_gift_tip_public_textview_booked_by);

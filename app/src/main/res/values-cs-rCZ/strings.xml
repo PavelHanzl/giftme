@@ -87,7 +87,7 @@
     <string name="checkbox_isBookedByYou_true_toast">Zarezervováno</string>
     <string name="checkbox_isBookedByYou_false_toast">Rezervace zrušena.</string>
     <string name="card_others_gift_tip_public_tipBy">Tip od:</string>
-    <string name="card_my_gift_tip_tip_public_bookedBy">Rezevováno od:</string>
+    <string name="card_my_gift_tip_tip_public_bookedBy">Rezervováno od:</string>
     <string name="swipe_deleted_undo">ZPĚT</string>
     <string name="snackbar_restored">Obnoveno.</string>
     <string name="swipe_deleted_for_all">Odstraněno pro všechny ostatní uživatele.</string>
@@ -138,4 +138,5 @@
     <string name="settings_changepass_2_enter_your_new_password">2. Zadejte své nové heslo</string>
     <string name="settings_changepass_3_confirm_your_new_password">3. Potvrďte nové heslo</string>
     <string name="activity_settings_change_pass_title">Změnit heslo</string>
+    <string name="activity_newOwnGiftTip_description">Zadejte krátký popis</string>
 </resources>

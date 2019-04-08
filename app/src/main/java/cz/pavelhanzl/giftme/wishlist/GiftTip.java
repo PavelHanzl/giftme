@@ -6,14 +6,16 @@ public class GiftTip {
     private String name;
     private String tipBy;
     private String bookedBy;
+    private String description;
 
     public GiftTip() {
     }
 
-    public GiftTip(String name, String tipBy, String bookedBy) {
+    public GiftTip(String name, String tipBy, String bookedBy,String desription) {
         this.name = name;
         this.tipBy = tipBy;
         this.bookedBy = bookedBy;
+        this.description = desription;
     }
 
     public String getName() {
@@ -28,6 +30,10 @@ public class GiftTip {
         return bookedBy;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -38,6 +44,10 @@ public class GiftTip {
 
     public void setBookedBy(String bookedBy) {
         this.bookedBy = bookedBy;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
