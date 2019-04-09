@@ -76,7 +76,8 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
 
     /**
      * Pokud description v modelu není null a pokud se nerovná prázdnému řetězci, tak zviditelní
-     * popis a nastaví mu hodnotu z modelu z databáze
+     * popis a nastaví mu hodnotu z modelu z databáze, pokud naopak je null nebo prázdný řetězec,
+     * pak jej skryje i s titlem
      * @param holder holder předaný z onBindHolder
      * @param model model, ve kterém se nachází description
      */
@@ -86,6 +87,9 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
                 holder.textViewDescription.setVisibility(View.VISIBLE);
                 holder.textViewDescription.setText(model.getDescription());
                 holder.textViewDescriptionTitle.setVisibility(View.VISIBLE);
+            }else {
+                holder.textViewDescription.setVisibility(View.GONE);
+                holder.textViewDescriptionTitle.setVisibility(View.GONE);
             }
         }
     }

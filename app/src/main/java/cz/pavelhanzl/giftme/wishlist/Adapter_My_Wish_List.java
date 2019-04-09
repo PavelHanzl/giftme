@@ -42,6 +42,8 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
             if (!model.getDescription().equals("")) {
                 holder.textViewDescription.setVisibility(View.VISIBLE);
                 holder.textViewDescription.setText(model.getDescription());
+            } else {
+                holder.textViewDescription.setVisibility(View.GONE);
             }
         }
     }
