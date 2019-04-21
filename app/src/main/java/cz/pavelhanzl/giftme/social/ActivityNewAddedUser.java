@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
 
-public class Activity_NewAddedUser extends AppCompatActivity {
+public class ActivityNewAddedUser extends AppCompatActivity {
     private EditText mEditTextName;
     private EditText mEditTextEmail;
     private FirebaseAuth mAuth;
@@ -93,13 +93,13 @@ public class Activity_NewAddedUser extends AppCompatActivity {
                         //pokud zadaný email nalezen přidá hodnotu do databáze
                         CollectionReference addedUserReference = FirebaseFirestore.getInstance().collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("AddedUsers");
                         addedUserReference.add(new AddedUser(name,email));
-                        Toast.makeText(Activity_NewAddedUser.this, getString(R.string.activity_newaddeduser_user_found), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityNewAddedUser.this, getString(R.string.activity_newaddeduser_user_found), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(Activity_NewAddedUser.this, getString(R.string.activity_newaddeduser_user_does_not_exists), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityNewAddedUser.this, getString(R.string.activity_newaddeduser_user_does_not_exists), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(Activity_NewAddedUser.this, getString(R.string.activity_newaddeduser_error)+" "+task.getException(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityNewAddedUser.this, getString(R.string.activity_newaddeduser_error)+" "+task.getException(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

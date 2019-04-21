@@ -3,7 +3,6 @@ package cz.pavelhanzl.giftme.settings;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -24,7 +23,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         changePasswordButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(getContext(), Activity_ChangePassword.class));
+                startActivity(new Intent(getContext(), ActivityChangePassword.class));
                 return true;
             }
         });

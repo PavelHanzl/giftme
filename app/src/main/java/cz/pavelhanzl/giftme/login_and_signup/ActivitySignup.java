@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import cz.pavelhanzl.giftme.R;
 
-public class Activity_Signup extends AppCompatActivity {
+public class ActivitySignup extends AppCompatActivity {
     //Deklarace členských proměnných
     private Button mButtonBack, mButtonCreateAccount;
     private EditText mEditTextEmail, mEditTextPassword, mEditTextConfirmPassword;
@@ -136,14 +136,14 @@ public class Activity_Signup extends AppCompatActivity {
                 // Sign in success, update UI with the signed-in user's information
                 Log.d("Giftee", "createUserWithEmail:success");
                 FirebaseUser user = mAuth.getCurrentUser();
-                Toast.makeText(Activity_Signup.this,R.string.account_created,
+                Toast.makeText(ActivitySignup.this,R.string.account_created,
                         Toast.LENGTH_SHORT).show();
                 finish();
                 //updateUI(user);
             } else {
                 // If sign in fails, display a message to the user.
                 Log.w("Giftee", "createUserWithEmail:failure", task.getException());
-                Toast.makeText(Activity_Signup.this, R.string.registration_failed,
+                Toast.makeText(ActivitySignup.this, R.string.registration_failed,
                         Toast.LENGTH_SHORT).show();
                 //updateUI(null);
             }

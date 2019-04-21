@@ -14,12 +14,9 @@ import android.widget.TextView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
 import cz.pavelhanzl.giftme.wishlist.GiftTip;
 
 /**
@@ -27,7 +24,7 @@ import cz.pavelhanzl.giftme.wishlist.GiftTip;
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_OwnTips.OwnTipsHolder> {
+public class AdapterOwnTips extends FirestoreRecyclerAdapter<GiftTip, AdapterOwnTips.OwnTipsHolder> {
     private OnItemClickListener mOnItemClickListener;
 
     /**
@@ -36,7 +33,7 @@ public class Adapter_OwnTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_O
      *
      * @param options
      */
-    public Adapter_OwnTips(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
+    public AdapterOwnTips(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
         super(options);
     }
 

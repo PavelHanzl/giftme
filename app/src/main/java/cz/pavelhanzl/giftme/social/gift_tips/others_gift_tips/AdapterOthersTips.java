@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 import cz.pavelhanzl.giftme.wishlist.GiftTip;
 
 /**
@@ -25,7 +24,7 @@ import cz.pavelhanzl.giftme.wishlist.GiftTip;
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_OthersTips extends FirestoreRecyclerAdapter<GiftTip, Adapter_OthersTips.OthersTipsHolder> {
+public class AdapterOthersTips extends FirestoreRecyclerAdapter<GiftTip, AdapterOthersTips.OthersTipsHolder> {
     private OnItemClickListener mOnItemClickListener;
     private DocumentSnapshot mDeletedDocument;
 
@@ -35,7 +34,7 @@ public class Adapter_OthersTips extends FirestoreRecyclerAdapter<GiftTip, Adapte
      *
      * @param options
      */
-    public Adapter_OthersTips(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
+    public AdapterOthersTips(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
         super(options);
     }
 

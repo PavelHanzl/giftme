@@ -19,7 +19,7 @@ import cz.pavelhanzl.giftme.R;
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adapter_My_Wish_List.GiftTipHolder> {
+public class AdapterMyWishList extends FirestoreRecyclerAdapter<GiftTip, AdapterMyWishList.GiftTipHolder> {
     private OnItemClickListener mOnItemClickListener;
     private DocumentSnapshot mDeletedDocument;
 
@@ -29,7 +29,7 @@ public class Adapter_My_Wish_List extends FirestoreRecyclerAdapter<GiftTip, Adap
      *
      * @param options
      */
-    public Adapter_My_Wish_List(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
+    public AdapterMyWishList(@NonNull FirestoreRecyclerOptions<GiftTip> options) {
         super(options);
     }
 

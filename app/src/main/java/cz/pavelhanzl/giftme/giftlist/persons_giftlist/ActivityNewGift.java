@@ -18,7 +18,7 @@ import cz.pavelhanzl.giftme.R;
 /**
  * Tato třída přidá nový dárek (objekt tipu Gift) do seznamu dárků vybrané osoby (Menu->Giftlists->Osoba).
  */
-public class Activity_NewGift extends AppCompatActivity {
+public class ActivityNewGift extends AppCompatActivity {
     private EditText mEditTextName;
     private EditText mEditTextPrice;
     private FirebaseAuth mAuth;

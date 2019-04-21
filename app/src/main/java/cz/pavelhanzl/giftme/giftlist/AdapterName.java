@@ -19,7 +19,7 @@ import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.NameHolder> {
+public class AdapterName extends FirestoreRecyclerAdapter<Name, AdapterName.NameHolder> {
     private OnItemClickListener mOnItemClickListener;
     private DocumentSnapshot mDeletedDocument;
 
@@ -29,7 +29,7 @@ public class Adapter_Name extends FirestoreRecyclerAdapter<Name, Adapter_Name.Na
      *
      * @param options
      */
-    public Adapter_Name(@NonNull FirestoreRecyclerOptions<Name> options) {
+    public AdapterName(@NonNull FirestoreRecyclerOptions<Name> options) {
         super(options);
     }
 

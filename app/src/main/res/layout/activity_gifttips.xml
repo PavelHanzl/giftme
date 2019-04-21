@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".giftlist.persons_giftlist.Activity_Persons_Gitflist">
+    tools:context=".giftlist.persons_giftlist.ActivityPersonsGitflist">
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"

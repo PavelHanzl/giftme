@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips;
+package cz.pavelhanzl.giftme.wishlist;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,25 +13,28 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.wishlist.GiftTip;
-
-public class Activity_NewOthersGiftTip extends AppCompatActivity {
+/**
+ * Tato třída přidá nový vlastní gifttip (objekt tipu Gifttip) do seznamu v Menu->MyWishlist.
+ */
+public class ActivityNewOwnGiftTip extends AppCompatActivity {
     private EditText mEditTextName;
+    private EditText mEditTextDesription;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_gifttip);//nastaví layout
+        setContentView(R.layout.activity_new_own_gifttip);
 
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close); //nastaví ikonku křížku v actionbaru (nahradí defaultní šipku)
-        setTitle(R.string.activity_newowngifttip_add_new_gifttip); //nastaví title v actionbaru
+        setTitle(R.string.activity_newowngifttip_add_new_gifttip);
 
         //link xml a java kódu
         mEditTextName = findViewById(R.id.activity_NewGiftTip_EditText_Name);
+        mEditTextDesription = findViewById(R.id.activity_NewGiftTip_EditText_Description);
 
-        mAuth = FirebaseAuth.getInstance();// získá instanci přihlášení
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -62,15 +65,22 @@ public class Activity_NewOthersGiftTip extends AppCompatActivity {
         String name = mEditTextName.getText().toString();
         String bookedBy = null;
         String tipBy = mAuth.getCurrentUser().getEmail();
-        //kontrola zda-li nějaké z polí není prázdné
+        String description = mEditTextDesription.getText().toString();
+
+        //kontrola zda-li name není prázdné
         if (name.trim().isEmpty()){
             Toast.makeText(this, getString(R.string.activity_newname_unfilled_fields), Toast.LENGTH_LONG).show();
             return;
         }
 
+        //pokud není vyplněn popis nastaví ho na prázdnou hodnotu
+        if (description.trim().isEmpty()){
+            description = "";
+        }
+
         //přidá hodnotu do databáze
-        CollectionReference othersGiftTipsReference = FirebaseFirestore.getInstance().collection("Users").document(getIntent().getStringExtra("selectedUserEmail")).collection("OthersGiftTips");
-        othersGiftTipsReference.add(new GiftTip(name,tipBy,bookedBy,""));
+        CollectionReference ownGiftTipsReference = FirebaseFirestore.getInstance().collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("OwnGiftTips");
+        ownGiftTipsReference.add(new GiftTip(name,tipBy,bookedBy,description));
         Toast.makeText(this, getString(R.string.activity_new_own_gifttip_name_added), Toast.LENGTH_SHORT).show();
         finish();
     }

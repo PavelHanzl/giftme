@@ -32,14 +32,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import cz.pavelhanzl.giftme.Logic_DrawerFragment;
+import cz.pavelhanzl.giftme.LogicDrawerFragment;
 import cz.pavelhanzl.giftme.R;
 
 /**
  * Tato třída se stará o zavedení a korektní zobrazení grafů v sekci statistik. Využívá knihovny
  * MPAndroidChart, data získává se singletonu StatsManagerSingleton.
  */
-public class Fragment_Stats extends Logic_DrawerFragment {
+public class FragmentStats extends LogicDrawerFragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDb;
     private View mView;

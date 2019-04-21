@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import cz.pavelhanzl.giftme.R;
 
-public class Activity_Settings extends AppCompatActivity {
+public class ActivitySettings extends AppCompatActivity {
     private CardView mCardViewChangePassword;
 
     private FirebaseAuth mAuth;

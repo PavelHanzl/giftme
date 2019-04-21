@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
-import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
@@ -34,8 +33,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import cz.pavelhanzl.giftme.Activity_Main;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive.Activity_Persons_Gitflist_Archive;
+import cz.pavelhanzl.giftme.ActivityMain;
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive.ActivityPersonsGitflistArchive;
 import cz.pavelhanzl.giftme.giftlist.Name;
 import cz.pavelhanzl.giftme.R;
 
@@ -45,11 +44,11 @@ import cz.pavelhanzl.giftme.R;
  * pracuje. V databázi najde kolekci Giftlist patřící tomuto uživateli a položky v ní zobrazí pomocí
  * recycleview uživateli.
  */
-public class Activity_Persons_Gitflist extends AppCompatActivity {
+public class ActivityPersonsGitflist extends AppCompatActivity {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mGiftReference;
-    private Adapter_Gift_Default mAdapter_gift_default;
+    private AdapterGiftDefault mAdapter_gift_default;
 
     private DocumentSnapshot mDocumentSnapshotName;
     private Name mSelectedNameObject;
@@ -121,7 +120,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
     private void setUpRecyclerView() {
         Query query = mGiftReference.orderBy("bought", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Gift> options = new FirestoreRecyclerOptions.Builder<Gift>().setQuery(query, Gift.class).build();
-        mAdapter_gift_default = new Adapter_Gift_Default(options);
+        mAdapter_gift_default = new AdapterGiftDefault(options);
 
         RecyclerView recyclerView = findViewById(R.id.activity_personsGiftlist_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -268,7 +267,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
         buttonAddGift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Activity_NewGift.class).putExtra("personsID",mDocumentReferenceName.getId()));
+                startActivity(new Intent(getApplicationContext(), ActivityNewGift.class).putExtra("personsID",mDocumentReferenceName.getId()));
             }
         });
 
@@ -276,7 +275,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
         buttonShowArchive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Activity_Persons_Gitflist_Archive.class).putExtra("path",mDocumentReferenceName.getPath()));
+                startActivity(new Intent(getApplicationContext(), ActivityPersonsGitflistArchive.class).putExtra("path",mDocumentReferenceName.getPath()));
             }
         });
     }
@@ -286,7 +285,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
      */
     //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
     private void setCardsOnClickAction() {
-        mAdapter_gift_default.setOnItemClickListener(new Adapter_Gift_Default.OnItemClickListener() {
+        mAdapter_gift_default.setOnItemClickListener(new AdapterGiftDefault.OnItemClickListener() {
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Gift gift = documentSnapshot.toObject(Gift.class);
@@ -313,7 +312,7 @@ public class Activity_Persons_Gitflist extends AppCompatActivity {
      * Využívá knihovny taptargetview.
      */
     private void showAtFirstRunOnly(){
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(ActivityMain.preferences, Context.MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStartActivityPersonsGitflist",true);
         if(firstStart){
             new TapTargetSequence(this)

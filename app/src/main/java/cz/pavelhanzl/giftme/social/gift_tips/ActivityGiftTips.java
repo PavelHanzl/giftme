@@ -23,18 +23,18 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import cz.pavelhanzl.giftme.Activity_Main;
+import cz.pavelhanzl.giftme.ActivityMain;
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Adapter_Gift_Default;
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist.AdapterGiftDefault;
 import cz.pavelhanzl.giftme.social.AddedUser;
-import cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips.Fragment_OthersTips;
-import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.Fragment_OwnTips;
+import cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips.FragmentOthersTips;
+import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.FragmentOwnTips;
 
-public class Activity_GiftTips extends AppCompatActivity implements Fragment_OwnTips.OnFragmentInteractionListener, Fragment_OthersTips.OnFragmentInteractionListener {
+public class ActivityGiftTips extends AppCompatActivity implements FragmentOwnTips.OnFragmentInteractionListener, FragmentOthersTips.OnFragmentInteractionListener {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mGiftReference;
-    private Adapter_Gift_Default mAdapter_gift_default;
+    private AdapterGiftDefault mAdapter_gift_default;
 
     private DocumentSnapshot mDocumentSnapshotName;
     private AddedUser mSelectedNameObject;
@@ -153,7 +153,7 @@ public class Activity_GiftTips extends AppCompatActivity implements Fragment_Own
      * Využívá knihovny taptargetview.
      */
     private void showAtFirstRunOnly(){
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(ActivityMain.preferences, Context.MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStartActivityGiftTips",true);
         if(firstStart){
             TapTargetView.showFor(this,

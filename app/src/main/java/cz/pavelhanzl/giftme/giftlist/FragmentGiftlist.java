@@ -32,17 +32,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import cz.pavelhanzl.giftme.Activity_Main;
-import cz.pavelhanzl.giftme.Logic_DrawerFragment;
+import cz.pavelhanzl.giftme.ActivityMain;
+import cz.pavelhanzl.giftme.LogicDrawerFragment;
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Activity_Persons_Gitflist;
+import cz.pavelhanzl.giftme.giftlist.persons_giftlist.ActivityPersonsGitflist;
 import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 
-public class Fragment_Giftlist extends Logic_DrawerFragment {
+public class FragmentGiftlist extends LogicDrawerFragment {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mNameReference;
-    private Adapter_Name mAdapter_name;
+    private AdapterName mAdapter_name;
     private View mView;
 
 
@@ -103,7 +103,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
     private void setUpRecyclerView() {
         Query query = mNameReference.orderBy("name", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Name> options = new FirestoreRecyclerOptions.Builder<Name>().setQuery(query, Name.class).build();
-        mAdapter_name = new Adapter_Name(options);
+        mAdapter_name = new AdapterName(options);
 
         RecyclerView recyclerView = mView.findViewById(R.id.frag_giftlist_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -204,7 +204,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
         buttonAddName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), Activity_NewName.class));
+                startActivity(new Intent(getContext(), ActivityNewName.class));
             }
         });
     }
@@ -214,18 +214,18 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
      * giftlist zvolené osoby a při delším podržení se zobrazí editace dané osoby.
      */
     private void setCardsOnClickAction() {
-        mAdapter_name.setOnItemClickListener(new Adapter_Name.OnItemClickListener() {
+        mAdapter_name.setOnItemClickListener(new AdapterName.OnItemClickListener() {
 
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
                 String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
-                startActivity(new Intent(getContext(), Activity_Persons_Gitflist.class).putExtra("path", path));
+                startActivity(new Intent(getContext(), ActivityPersonsGitflist.class).putExtra("path", path));
             }
 
             @Override
             public void OnItemLongClick(DocumentSnapshot documentSnapshot, int position) {
                 String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
-                startActivity(new Intent(getContext(),Activity_NewName.class).putExtra("path", path).putExtra("edit",true));
+                startActivity(new Intent(getContext(), ActivityNewName.class).putExtra("path", path).putExtra("edit",true));
             }
         });
 
@@ -236,7 +236,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
      * Využívá knihovny taptargetview.
      */
     private void showAtFirstRunOnly(){
-        SharedPreferences prefs = getContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
+        SharedPreferences prefs = getContext().getSharedPreferences(ActivityMain.preferences, Context.MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStartFragmentGiftlist",true);
         if(firstStart){
             TapTargetView.showFor(getActivity(),
@@ -246,7 +246,7 @@ public class Fragment_Giftlist extends Logic_DrawerFragment {
                         @Override
                         public void onTargetClick(TapTargetView view) {
                             super.onTargetClick(view);
-                            startActivity(new Intent(getContext(), Activity_NewName.class));
+                            startActivity(new Intent(getContext(), ActivityNewName.class));
                         }});
 
             prefs.edit().putBoolean("firstStartFragmentGiftlist",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede

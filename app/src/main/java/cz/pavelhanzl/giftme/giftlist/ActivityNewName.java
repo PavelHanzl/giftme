@@ -20,7 +20,7 @@ import cz.pavelhanzl.giftme.R;
 /**
  * Tato třída přidá novou osobu (objekt tipu Name) do seznamu obsahující gifltlisty těchto osob (Menu->Giftlists).
  */
-public class Activity_NewName extends AppCompatActivity {
+public class ActivityNewName extends AppCompatActivity {
     private EditText mEditTextName;
     private EditText mEditTextBudget;
     private FirebaseAuth mAuth;

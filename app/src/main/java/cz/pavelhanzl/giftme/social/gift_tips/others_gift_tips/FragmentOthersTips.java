@@ -32,28 +32,28 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.Fragment_OwnTips;
+import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.FragmentOwnTips;
 import cz.pavelhanzl.giftme.wishlist.GiftTip;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Fragment_OthersTips.OnFragmentInteractionListener} interface
+ * {@link FragmentOthersTips.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Fragment_OthersTips#newInstance} factory method to
+ * Use the {@link FragmentOthersTips#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_OthersTips extends Fragment {
+public class FragmentOthersTips extends Fragment {
     private String mSelectedUserEmail;
     private FirebaseFirestore mDb = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private CollectionReference mOthersGiftTipsPublicCollection;
-    private Adapter_OthersTips mAdapter_othersTips;
+    private AdapterOthersTips mAdapter_othersTips;
     private View mView;
 
     private OnFragmentInteractionListener mListener;
 
-    public Fragment_OthersTips() {
+    public FragmentOthersTips() {
         // Required empty public constructor
     }
 
@@ -66,8 +66,8 @@ public class Fragment_OthersTips extends Fragment {
      * @return A new instance of fragment Fragment_OthersTips.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_OthersTips newInstance(String param1, String param2) {
-        Fragment_OthersTips fragment = new Fragment_OthersTips();
+    public static FragmentOthersTips newInstance(String param1, String param2) {
+        FragmentOthersTips fragment = new FragmentOthersTips();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -100,7 +100,7 @@ public class Fragment_OthersTips extends Fragment {
         Query query = mOthersGiftTipsPublicCollection.orderBy("name", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<GiftTip> options = new FirestoreRecyclerOptions.Builder<GiftTip>().setQuery(query,GiftTip.class).build();
-        mAdapter_othersTips = new Adapter_OthersTips(options);
+        mAdapter_othersTips = new AdapterOthersTips(options);
         RecyclerView recyclerView =  mView.findViewById(R.id.frag_others_tips_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -223,7 +223,7 @@ public class Fragment_OthersTips extends Fragment {
         buttonAddGiftTip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), Activity_NewOthersGiftTip.class).putExtra("selectedUserEmail", mSelectedUserEmail));
+                startActivity(new Intent(getContext(), ActivityNewOthersGiftTip.class).putExtra("selectedUserEmail", mSelectedUserEmail));
             }
         });
     }
@@ -247,8 +247,8 @@ public class Fragment_OthersTips extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof Fragment_OwnTips.OnFragmentInteractionListener) {
-            mListener = (Fragment_OthersTips.OnFragmentInteractionListener) context;
+        if (context instanceof FragmentOwnTips.OnFragmentInteractionListener) {
+            mListener = (FragmentOthersTips.OnFragmentInteractionListener) context;
 
         } else {
             throw new RuntimeException(context.toString()
@@ -272,7 +272,7 @@ public class Fragment_OthersTips extends Fragment {
      */
     //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
     private void setCardsOnClickAction() {
-        mAdapter_othersTips.setOnItemClickListener(new Adapter_OthersTips.OnItemClickListener() {
+        mAdapter_othersTips.setOnItemClickListener(new AdapterOthersTips.OnItemClickListener() {
 
 
             @Override

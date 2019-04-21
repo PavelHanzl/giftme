@@ -1,7 +1,6 @@
 package cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,8 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import cz.pavelhanzl.giftme.Activity_Main;
-import cz.pavelhanzl.giftme.giftlist.Activity_NewName;
+import cz.pavelhanzl.giftme.ActivityMain;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist.Gift;
 import cz.pavelhanzl.giftme.giftlist.Name;
 import cz.pavelhanzl.giftme.R;
@@ -45,11 +42,11 @@ import cz.pavelhanzl.giftme.R;
  * pracuje. V databázi najde kolekci GiftlistArchive patřící tomuto uživateli a položky v ní zobrazí pomocí
  * recycleview uživateli.
  */
-public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
+public class ActivityPersonsGitflistArchive extends AppCompatActivity {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
     private CollectionReference mGiftReference;
-    private Adapter_Gift_Archive mAdapter_gift_archive;
+    private AdapterGiftArchive mAdapter_gift_archive;
 
     private DocumentSnapshot mDocumentSnapshotName;
     private Name mSelectedNameObject;
@@ -121,7 +118,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
     private void setUpRecyclerView() {
         Query query = mGiftReference.orderBy("bought", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Gift> options = new FirestoreRecyclerOptions.Builder<Gift>().setQuery(query, Gift.class).build();
-        mAdapter_gift_archive = new Adapter_Gift_Archive(options);
+        mAdapter_gift_archive = new AdapterGiftArchive(options);
 
         RecyclerView recyclerView = findViewById(R.id.activity_personsGiftlistArchive_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -264,7 +261,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
      */
     //TODO: přejmenovat tuto metodu, aby odpovídala svému záměru
     private void setCardsOnClickAction() {
-        mAdapter_gift_archive.setOnItemClickListener(new Adapter_Gift_Archive.OnItemClickListener() {
+        mAdapter_gift_archive.setOnItemClickListener(new AdapterGiftArchive.OnItemClickListener() {
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Gift gift = documentSnapshot.toObject(Gift.class);
@@ -289,7 +286,7 @@ public class Activity_Persons_Gitflist_Archive extends AppCompatActivity {
      * Využívá knihovny taptargetview.
      */
     private void showAtFirstRunOnly(){
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(ActivityMain.preferences, Context.MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStartActivityPersonsGitflistArchive",true);
         if(firstStart){
             //Drawable icon = getResources().getDrawable(R.drawable.ic_archive);

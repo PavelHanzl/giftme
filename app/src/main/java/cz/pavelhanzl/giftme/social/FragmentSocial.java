@@ -1,4 +1,4 @@
-package cz.pavelhanzl.giftme.wishlist;
+package cz.pavelhanzl.giftme.social;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,65 +32,71 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import cz.pavelhanzl.giftme.Activity_Main;
-import cz.pavelhanzl.giftme.Logic_DrawerFragment;
+import cz.pavelhanzl.giftme.ActivityMain;
+import cz.pavelhanzl.giftme.LogicDrawerFragment;
+import cz.pavelhanzl.giftme.social.gift_tips.ActivityGiftTips;
 import cz.pavelhanzl.giftme.R;
-import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 
-public class Fragment_Wishlist extends Logic_DrawerFragment {
+public class FragmentSocial extends LogicDrawerFragment {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;
-    private CollectionReference mMyGiftTipsReference;
-    private Adapter_My_Wish_List mAdapter_my_wish_list;
+    private CollectionReference mAddedUsersReference;
+    private AdapterAddedUser mAdapter_added_user;
     private View mView;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setActiveMenuIcon(1);//nastaví aktivní ikonu v menu
-        mView = inflater.inflate(R.layout.fragment_wishlist, container, false); //nastaví layout
+        setActiveMenuIcon(2);
+        mView = inflater.inflate(R.layout.fragment_social,container,false);
 
-        mDb = FirebaseFirestore.getInstance();//získá instanci databáze
-        mAuth = FirebaseAuth.getInstance();//získá instanci přihlášení
+        mDb = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
+        //získá kolekci jmen pro přihlášeného uživatele
+        mAddedUsersReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("AddedUsers");
 
-        setUpFloatingButton();//nastaví floating buton pro přidání nového vlastního gifttipu
-        setUpRecyclerView(); //provede nastavení recycleview
-        showAtFirstRunOnly(); //spustí tutorial pomocí tap target view při prvním spuštění této aktivity
+        setUpFloatingButton();//nastaví floating buton pro přidání nového přítele
+        setUpRecyclerView();//provede nastavení recycleview
+        setCardsOnClickAction();//nastaví co se stane po kliknutí na kartu s přítelem
+
+        showAtFirstRunOnly();//spustí tutorial pomocí tap target view při prvním spuštění této aktivity
 
         return mView;
     }
 
-    private void getDataForStatistics() {
-        //získá data potřebná pro fragment se statistikami (realizováno singletonem)
-        StatsManagerSingleton.getInstance().getStatsData();
-    }
 
 
-    @Override
-    public void onResume() {
-
-        super.onResume();
-        setActiveMenuIcon(1);
+    /**
+     * Nastaví floating button pro přidání přítele.
+     */
+    private void setUpFloatingButton() {
+        FloatingActionButton buttonAddName = mView.findViewById(R.id.frag_social_floatingButton_add_name);
+        buttonAddName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ActivityNewAddedUser.class));
+            }
+        });
     }
 
     /**
      * Nastavuje recyclerView. Řadí podle jména.
      */
     private void setUpRecyclerView() {
-        mMyGiftTipsReference = mDb.collection("Users").document(mAuth.getCurrentUser().getEmail()).collection("OwnGiftTips");
-        Query query = mMyGiftTipsReference.orderBy("name", Query.Direction.ASCENDING);
-        FirestoreRecyclerOptions<GiftTip> options = new FirestoreRecyclerOptions.Builder<GiftTip>().setQuery(query, GiftTip.class).build();
-        mAdapter_my_wish_list = new Adapter_My_Wish_List(options);
+        Query query = mAddedUsersReference.orderBy("name", Query.Direction.ASCENDING);
+        FirestoreRecyclerOptions<AddedUser> options = new FirestoreRecyclerOptions.Builder<AddedUser>().setQuery(query, AddedUser.class).build();
+        mAdapter_added_user = new AdapterAddedUser(options);
 
-        RecyclerView recyclerView = mView.findViewById(R.id.activity_my_wish_list_recycler_view);
+        RecyclerView recyclerView = mView.findViewById(R.id.frag_social_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(mAdapter_my_wish_list);
+        recyclerView.setAdapter( mAdapter_added_user);
 
         deleteItemFromRecyclerView(recyclerView);
-        setCardsOnClickAction();
     }
+
 
     /**
      * Odstraní položku z recyclerView při posunutí položky doprava nebo doleva.
@@ -98,7 +104,7 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
      * @param recyclerView
      */
     private void deleteItemFromRecyclerView(RecyclerView recyclerView) {
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
@@ -108,24 +114,21 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
-                if (i == ItemTouchHelper.LEFT) {
-                    mAdapter_my_wish_list.deleteItem(viewHolder.getAdapterPosition());
-                    snackbarUndoDelete();
-                }
-
+                mAdapter_added_user.deleteItem(viewHolder.getAdapterPosition());
+                snackbarUndoDelete();
             }
+
             /**
              * Zobrazí snackbar s možností vrátit smazání položky.
              */
             private void snackbarUndoDelete() {
                 Snackbar snackbar = Snackbar
-                        .make(getView().findViewById(R.id.coordinatorLayout_my_wish_list), getString(R.string.swipe_deleted), 6000);
+                        .make(getView().findViewById(R.id.coordinatorLayoutSocial), getString(R.string.swipe_deleted), 6000);
                 snackbar.setAction(getString(R.string.swipe_deleted_undo), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText( getContext(),  getString(R.string.snackbar_restored), Toast.LENGTH_LONG ).show();
-                        mAdapter_my_wish_list.restoreItem();
+                        mAdapter_added_user.restoreItem();
 
                     }
                 });
@@ -170,48 +173,41 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
                 background.draw(c);
                 icon.draw(c);
 
-
             }
 
         }).attachToRecyclerView(recyclerView);
     }
-    /**
-     * Znovu inicializuje obrazovku při statu této aktivity. Důléžité při přechodu zpět z vytvoření nové item, aby se znovu spustilo poslochání na Adaptéru.
-     */
+
     @Override
     public void onStart() {
         super.onStart();
-        mAdapter_my_wish_list.startListening();
+        mAdapter_added_user.startListening();
     }
-
 
     @Override
     public void onStop() {
         super.onStop();
-        mAdapter_my_wish_list.stopListening();
+        mAdapter_added_user.stopListening();
+    }
+
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        setActiveMenuIcon(2);
     }
 
     /**
-     * Nastaví floating button pro přidání dárku na giftlist. A v extra odešle ID otevřené osoby, pro kterou je určen otevřený giftlist.
-     */
-    private void setUpFloatingButton() {
-        FloatingActionButton buttonAddGift = mView.findViewById(R.id.activity_my_wish_list_floatingButton_add_gift);
-        buttonAddGift.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Activity_NewOwnGiftTip.class));
-            }
-        });
-    }
-
-    /**
-     * Nastavuje co se stane po kliknutí na na checkbox u itemu.
+     * Nastavuje co se stane po kliknutí na kartu s uživatelem/přítelem.
      */
     private void setCardsOnClickAction() {
-        mAdapter_my_wish_list.setOnItemClickListener(new Adapter_My_Wish_List.OnItemClickListener() {
+        mAdapter_added_user.setOnItemClickListener(new AdapterAddedUser.OnItemClickListener() {
             @Override
             public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
 
+                String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
+                startActivity(new Intent(getContext(), ActivityGiftTips.class).putExtra("path", path));
             }
         });
     }
@@ -222,20 +218,17 @@ public class Fragment_Wishlist extends Logic_DrawerFragment {
      * Využívá knihovny taptargetview.
      */
     private void showAtFirstRunOnly(){
-        SharedPreferences prefs = getContext().getSharedPreferences(Activity_Main.preferences, Context.MODE_PRIVATE);
-        boolean firstStart = prefs.getBoolean("firstStartFragmentWishlist",true);
+        SharedPreferences prefs = getContext().getSharedPreferences(ActivityMain.preferences, Context.MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStartFragmentSocial",true);
         if(firstStart){
             TapTargetView.showFor(getActivity(),
-                    TapTarget.forView(mView.findViewById(R.id.activity_my_wish_list_floatingButton_add_gift), getString(R.string.taptarget_wishlist_title), getString(R.string.taptarget_wishlist_description))
+                    TapTarget.forView(mView.findViewById(R.id.frag_social_floatingButton_add_name), getString(R.string.taptarget_social_title), getString(R.string.taptarget_social_description))
                             .tintTarget(false)
             );
-
-            prefs.edit().putBoolean("firstStartFragmentWishlist",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
+            prefs.edit().putBoolean("firstStartFragmentSocial",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
         }
 
 
     }
-
-
 
 }

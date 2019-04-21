@@ -18,7 +18,7 @@ import cz.pavelhanzl.giftme.R;
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
  */
-public class Adapter_Added_User extends FirestoreRecyclerAdapter<AddedUser, Adapter_Added_User.AddedUserHolder> {
+public class AdapterAddedUser extends FirestoreRecyclerAdapter<AddedUser, AdapterAddedUser.AddedUserHolder> {
     private OnItemClickListener mOnItemClickListener;
     private DocumentSnapshot mDeletedDocument;
 
@@ -28,7 +28,7 @@ public class Adapter_Added_User extends FirestoreRecyclerAdapter<AddedUser, Adap
      *
      * @param options
      */
-    public Adapter_Added_User(@NonNull FirestoreRecyclerOptions<AddedUser> options) {
+    public AdapterAddedUser(@NonNull FirestoreRecyclerOptions<AddedUser> options) {
         super(options);
     }
 

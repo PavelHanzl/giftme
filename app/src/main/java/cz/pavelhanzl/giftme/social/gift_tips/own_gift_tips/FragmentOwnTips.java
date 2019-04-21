@@ -24,22 +24,22 @@ import cz.pavelhanzl.giftme.wishlist.GiftTip;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Fragment_OwnTips.OnFragmentInteractionListener} interface
+ * {@link FragmentOwnTips.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Fragment_OwnTips#newInstance} factory method to
+ * Use the {@link FragmentOwnTips#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_OwnTips extends Fragment {
+public class FragmentOwnTips extends Fragment {
     private String mSelectedUserEmail;
     private FirebaseFirestore mDb = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private CollectionReference mOwnGiftTipsPublicCollection;
-    private Adapter_OwnTips mAdapter_ownTips;
+    private AdapterOwnTips mAdapter_ownTips;
     private View mView;
 
     private OnFragmentInteractionListener mListener;
 
-    public Fragment_OwnTips() {
+    public FragmentOwnTips() {
         // Required empty public constructor
     }
 
@@ -51,8 +51,8 @@ public class Fragment_OwnTips extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Fragment_OwnTips.
      */
-    public static Fragment_OwnTips newInstance(String param1, String param2) {
-        Fragment_OwnTips fragment = new Fragment_OwnTips();
+    public static FragmentOwnTips newInstance(String param1, String param2) {
+        FragmentOwnTips fragment = new FragmentOwnTips();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -85,7 +85,7 @@ public class Fragment_OwnTips extends Fragment {
         Query query = mOwnGiftTipsPublicCollection.orderBy("name", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<GiftTip> options = new FirestoreRecyclerOptions.Builder<GiftTip>().setQuery(query,GiftTip.class).build();
-        mAdapter_ownTips = new Adapter_OwnTips(options);
+        mAdapter_ownTips = new AdapterOwnTips(options);
         RecyclerView recyclerView =  mView.findViewById(R.id.frag_own_tips_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -131,7 +131,7 @@ public class Fragment_OwnTips extends Fragment {
      * Nastavuje co se stane po kliknutí na na checkbox u itemu.
      */
     private void setCardsOnClickAction() {
-        mAdapter_ownTips.setOnItemClickListener(new Adapter_OwnTips.OnItemClickListener() {
+        mAdapter_ownTips.setOnItemClickListener(new AdapterOwnTips.OnItemClickListener() {
 
 
             @Override

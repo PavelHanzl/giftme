@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips.Fragment_OthersTips;
-import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.Fragment_OwnTips;
+import cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips.FragmentOthersTips;
+import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.FragmentOwnTips;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumberOfTabs;
@@ -29,11 +29,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                Fragment_OwnTips ownTips = new Fragment_OwnTips();
+                FragmentOwnTips ownTips = new FragmentOwnTips();
                 ownTips.setArguments(mFragmentBundle); // nastavuje argumenty (konkrétně email zvoleného uživatele) předané z Activity_GiftTips pro fragment Fragment_OwnTips
                 return ownTips;
             case 1:
-                Fragment_OthersTips othersTips = new Fragment_OthersTips();
+                FragmentOthersTips othersTips = new FragmentOthersTips();
                 othersTips.setArguments(mFragmentBundle); // nastavuje argumenty (konkrétně email zvoleného uživatele) předané z Activity_GiftTips pro fragment Fragment_OthersTips
                 return othersTips;
             default:

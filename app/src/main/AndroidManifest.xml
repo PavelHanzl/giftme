@@ -13,57 +13,57 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".giftlist.persons_giftlist.Activity_Persons_Gitflist"
-            android:parentActivityName=".Activity_Main"
+        <activity android:name=".giftlist.persons_giftlist.ActivityPersonsGitflist"
+            android:parentActivityName=".ActivityMain"
             android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar"/>
-        <activity android:name=".giftlist.persons_giftlist_archive.Activity_Persons_Gitflist_Archive"
-            android:parentActivityName=".giftlist.persons_giftlist.Activity_Persons_Gitflist"
+        <activity android:name=".giftlist.persons_giftlist_archive.ActivityPersonsGitflistArchive"
+            android:parentActivityName=".giftlist.persons_giftlist.ActivityPersonsGitflist"
             android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar"/>
         <activity
-            android:name=".giftlist.Activity_NewName"
-            android:parentActivityName=".Activity_Main"
+            android:name=".giftlist.ActivityNewName"
+            android:parentActivityName=".ActivityMain"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
-            android:name=".settings.Activity_ChangePassword"
-            android:parentActivityName=".settings.Activity_Settings"
+            android:name=".settings.ActivityChangePassword"
+            android:parentActivityName=".settings.ActivitySettings"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
-            android:name=".wishlist.Activity_NewOwnGiftTip"
-            android:parentActivityName=".Activity_Main"
+            android:name=".wishlist.ActivityNewOwnGiftTip"
+            android:parentActivityName=".ActivityMain"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
-            android:name=".social.gift_tips.others_gift_tips.Activity_NewOthersGiftTip"
-            android:parentActivityName=".social.gift_tips.Activity_GiftTips"
+            android:name=".social.gift_tips.others_gift_tips.ActivityNewOthersGiftTip"
+            android:parentActivityName=".social.gift_tips.ActivityGiftTips"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
-            android:name=".social.gift_tips.Activity_GiftTips"
-            android:parentActivityName=".Activity_Main"
+            android:name=".social.gift_tips.ActivityGiftTips"
+            android:parentActivityName=".ActivityMain"
             android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
-            android:name=".settings.Activity_Settings"
-            android:parentActivityName=".Activity_Main"
+            android:name=".settings.ActivitySettings"
+            android:parentActivityName=".ActivityMain"
             android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
@@ -71,31 +71,31 @@
 
 
         <activity
-            android:name=".social.Activity_NewAddedUser"
-            android:parentActivityName=".Activity_Main"
+            android:name=".social.ActivityNewAddedUser"
+            android:parentActivityName=".ActivityMain"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
-            android:name=".giftlist.persons_giftlist.Activity_NewGift"
-            android:parentActivityName=".giftlist.persons_giftlist.Activity_Persons_Gitflist"
+            android:name=".giftlist.persons_giftlist.ActivityNewGift"
+            android:parentActivityName=".giftlist.persons_giftlist.ActivityPersonsGitflist"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.darkActionBar" />
 
         <activity
-            android:name=".Activity_Main"
+            android:name=".ActivityMain"
             android:configChanges="orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.transparentStatusBar" />
         <activity
-            android:name=".login_and_signup.Activity_Signup"
+            android:name=".login_and_signup.ActivitySignup"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".login_and_signup.Activity_Login"
+            android:name=".login_and_signup.ActivityLogin"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>

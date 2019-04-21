@@ -21,10 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import cz.pavelhanzl.giftme.Activity_Main;
+import cz.pavelhanzl.giftme.ActivityMain;
 import cz.pavelhanzl.giftme.R;
 
-public class Activity_Login extends AppCompatActivity {
+public class ActivityLogin extends AppCompatActivity {
     //Deklarace členských proměnných
     private ImageView mImageViewLogo;
     private LinearLayout mLinearLayout;
@@ -82,14 +82,14 @@ public class Activity_Login extends AppCompatActivity {
         avi = findViewById(R.id.avi);
 
         //inicializuje intent
-        mMainScreenIntent = new Intent(this, Activity_Main.class);
+        mMainScreenIntent = new Intent(this, ActivityMain.class);
 
 
         mHandler.postDelayed(mRunnable,3000);// 3s timeout pro splash screen
         startAnim();//startuje animaci progress
 
         // Přepne uživatele na aktivitu signup
-        final Intent signupIntent = new Intent(this, Activity_Signup.class);
+        final Intent signupIntent = new Intent(this, ActivitySignup.class);
         mButtonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
