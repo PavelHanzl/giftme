@@ -15,10 +15,10 @@
     <string name="signup_create_account_btn">Vytvořit účet</string>
     <string name="registration_failed">Registrace selhala.</string>
     <string name="account_created">Účet vytvořen.</string>
-    <string name="error_invalid_password">Hesla nejsou stejná nebo heslo není min. 6 znaků dlouhé. Případně neobsahuje velké a malé písmeno.</string>
+    <string name="error_invalid_password">Hesla nejsou stejná nebo heslo není min. 7 znaků dlouhé. Případně neobsahuje velké a malé písmeno.</string>
     <string name="error_field_required">Toto pole je povinné.</string>
     <string name="error_invalid_email">Špatně zadaný e-mail.</string>
-    <string name="giftlist">Seznam dárků</string>
+    <string name="giftlist">Seznamy dárků</string>
     <string name="groups">Tvé skupiny</string>
     <string name="stats">Statistiky</string>
     <string name="other">Ostatní</string>
@@ -104,7 +104,7 @@
     <string name="settings_stats_ideal_overall_budget_edittext">Zadejte ideální hodnotu</string>
     <string name="settings_send_feedback_title">Poslat zpětnou vazbu:</string>
     <string name="settings_feedback">Zpětná vazba</string>
-    <string name="settings_feedback_email_message">Giftme, rád bych ti sdělil svůj názor na...</string>
+    <string name="settings_feedback_email_message">Giftme, rád bych ti sdělil svůj názor na…</string>
     <string name="settings_category_title_account_settings">Nastavení účtu</string>
     <string name="settings_change_password">Změnit heslo</string>
     <string name="settings_change_password_summary">Klikněte pro změnu hesla</string>
@@ -139,4 +139,5 @@
     <string name="settings_changepass_3_confirm_your_new_password">3. Potvrďte nové heslo</string>
     <string name="activity_settings_change_pass_title">Změnit heslo</string>
     <string name="activity_newOwnGiftTip_description">Zadejte krátký popis</string>
+    <string name="card_my_gift_tip_public_description_title">Popis:</string>
 </resources>

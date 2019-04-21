@@ -23,12 +23,12 @@
     <string name="registration_failed">Registration failed.</string>
     <string name="account_created">Account created.</string>
 
-    <string name="error_invalid_password">Passwords do not match or password is not min. 6 characters long or doesn\'t contain uppercase and lowercase letter!</string>
+    <string name="error_invalid_password">Passwords do not match or password is not min. 7 characters long or doesn\'t contain uppercase and lowercase letter!</string>
     <string name="error_field_required">This field is required.</string>
     <string name="error_invalid_email">Invalid e-mail!</string>
 
     <!--Drawer menu-->
-    <string name="giftlist">Giftlist</string>
+    <string name="giftlist">Gift lists</string>
     <string name="groups">Your groups</string>
     <string name="stats">Stats</string>
     <string name="other">Other</string>
@@ -128,7 +128,7 @@
     <string name="settings_stats_ideal_overall_budget_edittext">Enter ideal value</string>
     <string name="settings_send_feedback_title">Send Feedback:</string>
     <string name="settings_feedback">feedback</string>
-    <string name="settings_feedback_email_message">Giftme, I would like to tell you my feedback about...</string>
+    <string name="settings_feedback_email_message">Giftme, I would like to tell you my feedback about…</string>
     <string name="settings_category_title_account_settings">Account settings</string>
     <string name="settings_change_password">Change password</string>
     <string name="settings_change_password_summary">Click to change your account password</string>
