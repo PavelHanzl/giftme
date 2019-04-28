@@ -108,7 +108,7 @@ public class FragmentStats extends LogicDrawerFragment {
      * Nastaví horizontální graf, který zobrazuje kolik ze zadaného budgetu jste již vyčerpali.
      */
     private void setHorizontalBarChartBudgetsInfo() {
-        Toast.makeText(getContext(), "setting bar chart", Toast.LENGTH_SHORT).show();
+
         // arraylist pro hodnoty sloupců
         ArrayList<BarEntry> yValues = new ArrayList<>();
 
@@ -217,7 +217,7 @@ public class FragmentStats extends LogicDrawerFragment {
 
     /**
      * Nastaví odpočet dní zbývajících do Vánoc, pokud je aplikace spuštěna v období 25.12.-31.12.
-     * zobrazí se hláška o aktivním eventu a nové odpočítávání se spustí zase s příchodem nového roku.
+     * zobrazí se hláška o aktivním eventu a nové odpočítávání se spustí zase na Nový rok.
      */
     public void countDownStart() {
         handler = new Handler();
@@ -230,7 +230,8 @@ public class FragmentStats extends LogicDrawerFragment {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                     Date futureDate = dateFormat.parse(Calendar.getInstance().get(Calendar.YEAR) + "-12-25");
                     Date currentDate = new Date();
-                    //pokud ještě nebyly Vánoce a pokud nenastal nový rok, tak odpočítávej. Po přechodu na nový rok se spustí nové odpočítávání.
+                    //Pokud ještě nebyly Vánoce a pokud není období mezi Vánoci a Novým rokem, tak odpočítává.
+                    //Po přechodu na nový rok se spustí nové odpočítávání.
                     if (!currentDate.after(futureDate)) {
                         long diff = futureDate.getTime()
                                 - currentDate.getTime();
@@ -242,7 +243,7 @@ public class FragmentStats extends LogicDrawerFragment {
                         diff -= minutes * (60 * 1000);
                         long seconds = diff / 1000;
 
-                        //formát kdy jsou zobrazena minimálně 2 decimální čísla, pokud je jich míň tak se doplní nulama
+                        //Formát, kdy jsou zobrazena minimálně 2 desítková čísla, pokud je jich méně tak se doplní nulami. Tedy např. 2 na 02.
                         txtTimerDay.setText("" + String.format("%02d", days));
                         txtTimerHour.setText("" + String.format("%02d", hours));
                         txtTimerMinute.setText("" + String.format("%02d", minutes));

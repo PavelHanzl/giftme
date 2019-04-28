@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -15,10 +16,12 @@ import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -145,7 +148,7 @@ public class FragmentGiftlist extends LogicDrawerFragment {
                 snackbar.setAction(getString(R.string.swipe_deleted_undo), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText( getContext(),  getString(R.string.snackbar_restored), Toast.LENGTH_LONG ).show();
+                        Toast.makeText(getContext(), getString(R.string.snackbar_restored), Toast.LENGTH_LONG).show();
                         mAdapter_name.restoreItem();
 
                     }
@@ -167,7 +170,7 @@ public class FragmentGiftlist extends LogicDrawerFragment {
                 int iconBottom = iconTop + icon.getIntrinsicHeight();
 
                 if (dX < 0) { // Swiping to the left
-                    Log.d("Swiping:","Left");
+                    Log.d("Swiping:", "Left");
 
                     //nastaví background a ikonku
                     background = new ColorDrawable(getResources().getColor(R.color.swipeToDelete));
@@ -225,7 +228,7 @@ public class FragmentGiftlist extends LogicDrawerFragment {
             @Override
             public void OnItemLongClick(DocumentSnapshot documentSnapshot, int position) {
                 String path = documentSnapshot.getReference().getPath(); //získá cestu ke kliknuté kartě
-                startActivity(new Intent(getContext(), ActivityNewName.class).putExtra("path", path).putExtra("edit",true));
+                startActivity(new Intent(getContext(), ActivityNewName.class).putExtra("path", path).putExtra("edit", true));
             }
         });
 
@@ -235,21 +238,22 @@ public class FragmentGiftlist extends LogicDrawerFragment {
      * Při prvním spuštění aplikace spustí "tutorial", který uživateli popíše základní funkčnost aplikace na této obrazovce.
      * Využívá knihovny taptargetview.
      */
-    private void showAtFirstRunOnly(){
+    private void showAtFirstRunOnly() {
         SharedPreferences prefs = getContext().getSharedPreferences(ActivityMain.preferences, Context.MODE_PRIVATE);
-        boolean firstStart = prefs.getBoolean("firstStartFragmentGiftlist",true);
-        if(firstStart){
+        boolean firstStart = prefs.getBoolean("firstStartFragmentGiftlist", true);
+        if (firstStart) {
             TapTargetView.showFor(getActivity(),
                     TapTarget.forView(mView.findViewById(R.id.frag_giftlist_floatingButton_add_name), getString(R.string.taptarget_giftlist_title), getString(R.string.taptarget_giftlist_description))
-                    .tintTarget(false).cancelable(false),
+                            .tintTarget(false).cancelable(false),
                     new TapTargetView.Listener() {          // listener, který spustí defaultní akci view na který je taptarget připojen
                         @Override
                         public void onTargetClick(TapTargetView view) {
                             super.onTargetClick(view);
                             startActivity(new Intent(getContext(), ActivityNewName.class));
-                        }});
+                        }
+                    });
 
-            prefs.edit().putBoolean("firstStartFragmentGiftlist",false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
+            prefs.edit().putBoolean("firstStartFragmentGiftlist", false).apply(); //nastaví první spuštění na false - tedy kód uvnitř tohoto ifu se již podruhé neprovede
         }
 
 

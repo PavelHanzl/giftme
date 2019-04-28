@@ -39,44 +39,45 @@ public class AdapterOwnTips extends FirestoreRecyclerAdapter<GiftTip, AdapterOwn
 
     @Override
     protected void onBindViewHolder(@NonNull OwnTipsHolder holder, int position, @NonNull GiftTip model) { //co chceme umístit do jakého view v našem cardview layoutu
-        String email=model.getBookedBy();
+        /*Pokud model.getBookedBy() a aktivní přihlášený uživatel nejsou null, tak se ptá,
+         zdali se hodnota bookedBy v GiftTip modelu rovná přihlášenému uživateli - pokud se nerovná,
+         tak skryje kartu (nastaví její velikost na 0), pokud se rovná, tak nastaví velikost
+         karty na původní hodnoty a zobrazí ji. */
+        if (model.getBookedBy() == null ? FirebaseAuth.getInstance().getCurrentUser().getEmail() == null : !model.getBookedBy().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
+            //skryje kompletně celou položku - původní záměr aplikace (proto zakomentováno)
+            //holder.rootView.setLayoutParams(holder.zeroParams);
 
-        //pokud model.getBookedBy() a aktivní přihlášený uživatel nejsou null, tak se ptá zda-li se hodnota bookedBy v gifttipu rovná přihlášenému
-        //uživateli - pokud se nerovná, tak skryje kartu (nastaví její velikost na 0), pokud se rovná, tak nastaví velikost karty na původní hodnoty a zobrazí ji
-        if (model.getBookedBy()==null ? FirebaseAuth.getInstance().getCurrentUser().getEmail()==null : !model.getBookedBy().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
-            //holder.rootView.setLayoutParams(holder.zeroParams); //skryje celou položku - splňuje zadání BP
             holder.checkBoxBookedByYou.setVisibility(View.GONE); //skryje check box pro bookování
             holder.linearLayoutBookedBy.setVisibility(View.VISIBLE); //zobrazí informace o tom,  jaký email si rezervoval dárek
             holder.textViewBookedBy.setText(model.getBookedBy()); //nastaví email, kdo si rezervoval dárek
 
-            holder.itemView.setBackgroundColor(Color.argb(100,255,255,255)); //nastaví šedý background
+            holder.itemView.setBackgroundColor(Color.argb(100, 255, 255, 255)); //nastaví šedý background
 
             holder.textViewName.setText(model.getName());
             getDescription(holder, model);
 
 
-        }else {
+        } else {
             //holder.rootView.setLayoutParams(holder.defaultParams);
 
             holder.checkBoxBookedByYou.setVisibility(View.VISIBLE); //zobrazí check box pro bookování
             holder.linearLayoutBookedBy.setVisibility(View.GONE); //skryje informace o tom,  jaký email si rezervoval dárek
 
-            holder.itemView.setBackgroundColor(Color.argb(255,255,255,255)); //nastaví bílý background
+            holder.itemView.setBackgroundColor(Color.argb(255, 255, 255, 255)); //nastaví bílý background
 
             holder.textViewName.setText(model.getName());
             holder.checkBoxBookedByYou.setChecked(model.isBooked());
             getDescription(holder, model);
-
         }
-
     }
 
     /**
      * Pokud description v modelu není null a pokud se nerovná prázdnému řetězci, tak zviditelní
      * popis a nastaví mu hodnotu z modelu z databáze, pokud naopak je null nebo prázdný řetězec,
      * pak jej skryje i s titlem
+     *
      * @param holder holder předaný z onBindHolder
-     * @param model model, ve kterém se nachází description
+     * @param model  model, ve kterém se nachází description
      */
     private void getDescription(@NonNull OwnTipsHolder holder, @NonNull GiftTip model) {
         if (model.getDescription() != null) {
@@ -84,7 +85,7 @@ public class AdapterOwnTips extends FirestoreRecyclerAdapter<GiftTip, AdapterOwn
                 holder.textViewDescription.setVisibility(View.VISIBLE);
                 holder.textViewDescription.setText(model.getDescription());
                 holder.textViewDescriptionTitle.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 holder.textViewDescription.setVisibility(View.GONE);
                 holder.textViewDescriptionTitle.setVisibility(View.GONE);
             }

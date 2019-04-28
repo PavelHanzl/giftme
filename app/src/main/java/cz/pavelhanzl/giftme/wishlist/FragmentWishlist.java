@@ -205,7 +205,8 @@ public class FragmentWishlist extends LogicDrawerFragment {
     }
 
     /**
-     * Nastavuje co se stane po kliknutí na na checkbox u itemu.
+     * Nastavuje co se stane po kliknutí na na checkbox u itemu - v tomto případě je tato metoda
+     * ponechána prázdná, tudíž se po kliknutí nic nestane, ale je připravena pro budoucí doplnění funkčnosti.
      */
     private void setCardsOnClickAction() {
         mAdapter_my_wish_list.setOnItemClickListener(new AdapterMyWishList.OnItemClickListener() {
