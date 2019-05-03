@@ -7,6 +7,10 @@ import android.util.Log;
 /**
  * Touto třídou se extendují fragmenty použité v Activity_Main. Obsahuje metodu pro nastavení
  * aktivní položky menu.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class LogicDrawerFragment extends Fragment {
 

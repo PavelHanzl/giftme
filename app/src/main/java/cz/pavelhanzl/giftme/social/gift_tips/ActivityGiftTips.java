@@ -30,6 +30,14 @@ import cz.pavelhanzl.giftme.social.AddedUser;
 import cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips.FragmentOthersTips;
 import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.FragmentOwnTips;
 
+/**
+ * Třída, která v sociální části zobrazuje pager a v něm FragmentOtherTips a FragmentOwnTips,
+ * k zobrazení využívá PagerAdapter.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class ActivityGiftTips extends AppCompatActivity implements FragmentOwnTips.OnFragmentInteractionListener, FragmentOthersTips.OnFragmentInteractionListener {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;

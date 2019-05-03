@@ -15,6 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import cz.pavelhanzl.giftme.R;
 /**
  * Tato třída přidá nový vlastní gifttip (objekt tipu Gifttip) do seznamu v Menu->MyWishlist.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class ActivityNewOwnGiftTip extends AppCompatActivity {
     private EditText mEditTextName;

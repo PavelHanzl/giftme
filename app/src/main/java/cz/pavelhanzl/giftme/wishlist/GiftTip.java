@@ -1,6 +1,10 @@
 package cz.pavelhanzl.giftme.wishlist;
 /**
  * Model pro gifttipy zobrazované v Menu->Friends->Osoba->Tab1 a Tab2.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class GiftTip {
     private String name;

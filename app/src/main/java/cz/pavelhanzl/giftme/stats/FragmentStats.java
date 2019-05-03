@@ -36,8 +36,12 @@ import cz.pavelhanzl.giftme.LogicDrawerFragment;
 import cz.pavelhanzl.giftme.R;
 
 /**
- * Tato třída se stará o zavedení a korektní zobrazení grafů v sekci statistik. Využívá knihovny
- * MPAndroidChart, data získává se singletonu StatsManagerSingleton.
+ * Fragment uvnitř ActivityMain, který se stará o zavedení a korektní zobrazení grafů v sekci statistik.
+ * Využívá knihovny MPAndroidChart, data získává se singletonu StatsManagerSingleton.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class FragmentStats extends LogicDrawerFragment {
     private FirebaseAuth mAuth;

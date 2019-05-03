@@ -8,6 +8,14 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import cz.pavelhanzl.giftme.R;
 
+/**
+ * Třída, která se zavádí do ActivitySettings. Obsahuje vlastní nastavení, která chceme ve zmiňované
+ * aktivitě zobrazit.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

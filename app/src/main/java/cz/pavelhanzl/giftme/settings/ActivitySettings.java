@@ -13,6 +13,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import cz.pavelhanzl.giftme.R;
 
+/**
+ * Třída inicializující obrazovku s nastavením, která zavádí fragment SettingsFragment.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class ActivitySettings extends AppCompatActivity {
     private CardView mCardViewChangePassword;
 

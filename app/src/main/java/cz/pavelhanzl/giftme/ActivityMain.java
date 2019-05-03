@@ -34,7 +34,14 @@ import cz.pavelhanzl.giftme.settings.ActivitySettings;
 import cz.pavelhanzl.giftme.social.FragmentSocial;
 import cz.pavelhanzl.giftme.stats.FragmentStats;
 import cz.pavelhanzl.giftme.wishlist.FragmentWishlist;
-
+/**
+ * Hlavní aktivita aplikace, spouští se po přihášení do aplikace. V případě že je uživatel již přihlášen,
+ * tak je toto defaultní aktivita, kterou uvidí.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class ActivityMain extends AppCompatActivity {
     //Deklarace členských proměnných
     private DrawerLayout mDrawerLayout;

@@ -37,13 +37,17 @@ import cz.pavelhanzl.giftme.ActivityMain;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist_archive.ActivityPersonsGitflistArchive;
 import cz.pavelhanzl.giftme.giftlist.Name;
 import cz.pavelhanzl.giftme.R;
-
 /**
  * Tato třída udává chování aplikace, pokud se uživatel nachází v seznamu dárků vybrané osoby
  * (Menu->Giftlists->Osoba). Ze získaného extras v intentu vytvoří objekt typu Name, se kterým dále
  * pracuje. V databázi najde kolekci Giftlist patřící tomuto uživateli a položky v ní zobrazí pomocí
  * recycleview uživateli.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
+
 public class ActivityPersonsGitflist extends AppCompatActivity {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;

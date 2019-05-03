@@ -41,6 +41,10 @@ import cz.pavelhanzl.giftme.R;
  * (Menu->Giftlists->Osoba->archiv). Ze získaného extras v intentu vytvoří objekt typu Name, se kterým dále
  * pracuje. V databázi najde kolekci GiftlistArchive patřící tomuto uživateli a položky v ní zobrazí pomocí
  * recycleview uživateli.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class ActivityPersonsGitflistArchive extends AppCompatActivity {
     private FirebaseFirestore mDb;

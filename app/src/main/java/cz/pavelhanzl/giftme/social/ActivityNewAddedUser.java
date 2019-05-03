@@ -18,7 +18,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
-
+/**
+ * Třída, která v sociální části Giftme přidává k účtu přátele, tedy v sekci menu Přátelé přidává
+ * nového přítele/kamaráda.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class ActivityNewAddedUser extends AppCompatActivity {
     private EditText mEditTextName;
     private EditText mEditTextEmail;

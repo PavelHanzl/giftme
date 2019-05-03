@@ -17,7 +17,13 @@ import com.google.firebase.auth.FirebaseUser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import cz.pavelhanzl.giftme.R;
-
+/**
+ * Třída starající se o změnu hesla u aktuálně přihlášeného uživatele.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class ActivityChangePassword extends AppCompatActivity {
     private EditText mEditTextOldPass;
     private EditText mEditTextNewPass;

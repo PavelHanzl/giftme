@@ -41,6 +41,13 @@ import cz.pavelhanzl.giftme.R;
 import cz.pavelhanzl.giftme.giftlist.persons_giftlist.ActivityPersonsGitflist;
 import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
 
+/**
+ * Fragment uvnitř ActivityMain, který se stará o zobrazování seznamu osob a jejich giftlistů.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class FragmentGiftlist extends LogicDrawerFragment {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;

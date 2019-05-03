@@ -24,6 +24,13 @@ import com.wang.avi.AVLoadingIndicatorView;
 import cz.pavelhanzl.giftme.ActivityMain;
 import cz.pavelhanzl.giftme.R;
 
+/**
+ * Třída starající se o přihlášení uživatele do aplikace.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class ActivityLogin extends AppCompatActivity {
     //Deklarace členských proměnných
     private ImageView mImageViewLogo;

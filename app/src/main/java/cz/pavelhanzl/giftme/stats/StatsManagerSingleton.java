@@ -15,6 +15,10 @@ import com.google.firebase.firestore.QuerySnapshot;
  * Tato třída umožnuje vytvořit současně pouze jednu instanci (Singleton), získává potřebná data pro
  * statistiky a uchovává je v sobě pomocí členských proměnných, přístup k nim je možný z celé aplikace
  * pomocí getterů.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class StatsManagerSingleton {
 

@@ -14,9 +14,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
 
-
 /**
- * Tato třída přidá nový dárek (objekt tipu Gift) do seznamu dárků vybrané osoby (Menu->Giftlists->Osoba).
+ * Tato třída přidá nový dárek (objekt tipu Gift)
+ * do seznamu dárků vybrané osoby (Menu->Giftlists->Osoba).
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class ActivityNewGift extends AppCompatActivity {
     private EditText mEditTextName;

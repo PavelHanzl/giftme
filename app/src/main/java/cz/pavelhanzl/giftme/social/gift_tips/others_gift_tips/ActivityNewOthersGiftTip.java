@@ -14,7 +14,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import cz.pavelhanzl.giftme.R;
 import cz.pavelhanzl.giftme.wishlist.GiftTip;
-
+/**
+ * Třída, která v sociální části Giftme přidává k uživateli tipy na dárky od jiných uživatelů.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class ActivityNewOthersGiftTip extends AppCompatActivity {
     private EditText mEditTextName;
     private FirebaseAuth mAuth;

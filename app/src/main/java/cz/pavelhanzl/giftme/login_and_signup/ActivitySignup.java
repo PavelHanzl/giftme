@@ -18,6 +18,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 import cz.pavelhanzl.giftme.R;
 
+/**
+ * Třída starající se o registraci uživatele do aplikace Giftme (Firebase Auth).
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class ActivitySignup extends AppCompatActivity {
     //Deklarace členských proměnných
     private Button mButtonBack, mButtonCreateAccount;

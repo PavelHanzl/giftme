@@ -19,6 +19,10 @@ import cz.pavelhanzl.giftme.R;
 
 /**
  * Tato třída přidá novou osobu (objekt tipu Name) do seznamu obsahující gifltlisty těchto osob (Menu->Giftlists).
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class ActivityNewName extends AppCompatActivity {
     private EditText mEditTextName;

@@ -36,7 +36,14 @@ import cz.pavelhanzl.giftme.ActivityMain;
 import cz.pavelhanzl.giftme.LogicDrawerFragment;
 import cz.pavelhanzl.giftme.R;
 import cz.pavelhanzl.giftme.stats.StatsManagerSingleton;
-
+/**
+ * Fragment uvnitř ActivityMain, který se stará o zobrazování vlastního seznamu přání přihlášeného
+ * uživatele a dárků v tomto seznamu přání.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class FragmentWishlist extends LogicDrawerFragment {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;

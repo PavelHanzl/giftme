@@ -42,6 +42,12 @@ import cz.pavelhanzl.giftme.wishlist.GiftTip;
  * to handle interaction events.
  * Use the {@link FragmentOthersTips#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * Fragment zobrazující návrhy na dárky od ostatních uživatelů v sociální části aplikace.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class FragmentOthersTips extends Fragment {
     private String mSelectedUserEmail;

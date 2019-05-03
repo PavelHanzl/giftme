@@ -8,6 +8,13 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import cz.pavelhanzl.giftme.social.gift_tips.others_gift_tips.FragmentOthersTips;
 import cz.pavelhanzl.giftme.social.gift_tips.own_gift_tips.FragmentOwnTips;
 
+/**
+ * Adapter pro ActivityGiftTips pager.
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumberOfTabs;
     private final Bundle mFragmentBundle;

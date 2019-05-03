@@ -36,7 +36,14 @@ import cz.pavelhanzl.giftme.ActivityMain;
 import cz.pavelhanzl.giftme.LogicDrawerFragment;
 import cz.pavelhanzl.giftme.social.gift_tips.ActivityGiftTips;
 import cz.pavelhanzl.giftme.R;
-
+/**
+ * Fragment uvnitř ActivityMain, který se stará o zobrazování sociální sekce aktivity, zde konkrétně
+ * o zobrazení jednotlivých přátel uživatele.
+ *
+ * @author  Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
+ */
 public class FragmentSocial extends LogicDrawerFragment {
     private FirebaseFirestore mDb;
     private FirebaseAuth mAuth;

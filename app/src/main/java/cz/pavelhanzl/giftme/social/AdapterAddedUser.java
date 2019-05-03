@@ -17,6 +17,10 @@ import cz.pavelhanzl.giftme.R;
  * Adaptér dostává data ze zdroje dat do recycleviev. Extendujeme FirestoreRecyclerAdapter,
  * který extenduje obyčejný RecyclerView a stará se např. o nahrávání dat z firestore,
  * reagování na změny v datasetu atp...
+ *
+ * @author Pavel Hanzl
+ * @version 1.04
+ * @since   03-05-2019
  */
 public class AdapterAddedUser extends FirestoreRecyclerAdapter<AddedUser, AdapterAddedUser.AddedUserHolder> {
     private OnItemClickListener mOnItemClickListener;
